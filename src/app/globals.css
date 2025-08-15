@@ -1,42 +1,208 @@
+/* === Modern Reset === */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* === Global Variables === */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  --main-color: rgb(224, 168, 46);
+  --text-color: #530704;
+  --shadow: 4px 4px 8px rgb(7, 6, 7);
+  --overlay: rgba(0, 0, 0, 0.61);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
+/* === Body & HTML === */
+html,
+body {
+  height: 100%;
+  overflow-x: hidden;
+  min-width: 320px;
   margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 
+/* === Links === */
 a {
-  color: inherit;
+  font-weight: 500;
+  color: rgb(131, 7, 156);
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* === Buttons (optional global style) === */
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* === Light Mode === */
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+/*accessibility styles*/
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 10px;
+  background: #fff;
+  color: #000;
+  z-index: 1000;
+  text-decoration: none;
+  border: 2px solid #000;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 10px;
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  flex: 1;
+}
+
+.italiano > img,
+.english > img {
+  width: 20px;
+  height: 16px;
+}
+
+.english,
+.italiano {
+  background-color: var(--overlay);
+  border-radius: 5px;
+  width: 20px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  transition: transform 0.2s ease, background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.english.selected,
+.italiano.selected {
+  border: 3px solid var(--main-color);
+}
+
+.italiano {
+  position: fixed;
+  top: 10px;
+  left: 20px;
+}
+
+.english {
+  position: fixed;
+  top: 10px;
+  left: 80px;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .italiano,
+  .english {
+    transform: scale(0.8);
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .italiano {
+    position: fixed;
+    top: 35px;
+    left: 0.5%;
+    /* transform: scale(0.6); */
+  }
+
+  .english {
+    position: fixed;
+    top: 5px;
+    left: 0.5%;
+    /* transform: scale(0.6); */
+  }
+}
+
+@media (hover: hover) {
+  a:hover {
+    color: #535bf2;
+  }
+
+  button:hover {
+    border-color: #646cff;
+  }
+
+  a:hover {
+    color: #747bff;
+  }
+
+  .english:hover,
+  .italiano:hover {
+    transform: scale(1.4);
   }
 }

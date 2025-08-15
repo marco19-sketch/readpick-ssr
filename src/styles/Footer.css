@@ -1,0 +1,92 @@
+.site-footer {
+  background-color: #ddd4ddc9;
+  padding: 1rem;
+  font-size: 0.7rem;
+  color: #333;
+  border-top: 1px solid #ccc;
+  margin-bottom: 0;
+  height: fit-content;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.media-credits {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.media-credits a {
+  color: #0066cc;
+}
+
+.legals {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: center;
+}
+
+.legals a {
+  color: #0066cc;
+  text-decoration: none;
+  margin: 0 20px;
+  min-width: 100px;
+}
+
+#contact  {
+  margin: 0;
+  padding: 0;
+}
+
+.legals p {
+  font-size: 0.8rem;
+}
+
+/* Desktop layout */
+@media screen and (min-width: 600px) {
+  .site-footer {
+    display: flex;
+    justify-content: center;
+    /* justify-content: space-between; */
+    /* align-items: flex-start; */
+    /* text-align: left; */
+    /* height: 15vh; */
+    height: fit-content;
+    padding: 20px;;
+  }
+
+  .media-credits {
+    flex: 1;
+    margin-bottom: 0;
+  }
+
+  .legals {
+    flex: 1;
+    /* flex: 2; */
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    text-align: right;
+  }
+
+  .legals a {
+    white-space: nowrap;
+  }
+
+  .legals p {
+    text-align: right;
+  }
+}
+
+@media (hover: hover) {
+  .legals a:hover {
+    text-decoration: underline #0066cc;
+  }
+
+  .media-credits a:hover {
+    text-decoration: underline #0066cc;
+  }
+}
