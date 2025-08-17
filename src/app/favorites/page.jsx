@@ -9,7 +9,7 @@ import BookResults from "../components/BookResults";
 import BackToTop from "../components/BackToTop";
 import FavoriteButton from "../components/FavoriteButton";
 import BookCardMinimal from "../components/BookCardMinimal";
-import '@/styles/favorites.css'
+import '@/styles/Favorites.css'
 
 function requestIdleCallbackWithFallback(callback) {
   if ("requestIdleCallback" in window) {
