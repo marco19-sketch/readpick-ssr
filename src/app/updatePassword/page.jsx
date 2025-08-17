@@ -5,8 +5,6 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { validatePassword } from "../../utils/validatePassword";
 import { useTranslation } from "react-i18next";
 import "@/styles/auth.css";
-import mobileBg from "../../assets/images/leaves-640.avif";
-import desktopBg from "../../assets/images/leaves-1280.avif";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { auth, confirmPasswordReset } from "@/firebase/firebase";
@@ -18,6 +16,8 @@ export default function UpdatePassword() {
   const [oobCode, setOobCode] = useState(null);
   const [msgGreen, setMsgGreen] = useState(false);
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const mobileBg = "/assets/images/leaves-640.avif";
+  const desktopBg = "/assets/images/leaves-1280.avif";
 
   const searchParams = useSearchParams();
   const router = useRouter();
