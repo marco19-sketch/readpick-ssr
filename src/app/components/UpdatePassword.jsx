@@ -6,6 +6,8 @@ import { auth, confirmPasswordReset } from "@/firebase/firebase";
 import "@/styles/auth.css";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
+import { validatePassword } from "../../utils/validatePassword";
+import { useTranslation } from "react-i18next";
 
 export default function UpdatePassword() {
   const [newPassword, setNewPassword] = useState("");
@@ -16,8 +18,11 @@ export default function UpdatePassword() {
     setPasswordVisibility(prev => !prev);
   }, [passwordVisibility]);
 
+console.log('Questa è la pagina updatePassword')
+
   const searchParams = useSearchParams();
   const router = useRouter();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const code = searchParams.get("oobCode");
@@ -29,12 +34,21 @@ export default function UpdatePassword() {
     }
   }, [searchParams]);
 
+  const { isValid, errors } = validatePassword(newPassword);
+
   const handleSubmit = async e => {
     e.preventDefault();
 
     if (!oobCode) {
       console.error(
         "Impossibile resettare la password. Il codice OOB è mancante."
+      );
+      return;
+    }
+    if (!isValid) {
+      setMsgGreen(false);
+      setMessage(
+        t("fixPassword", { defaultValue: "Crea una password adeguata" })
       );
       return;
     }
@@ -51,15 +65,20 @@ export default function UpdatePassword() {
 
   return (
     <div>
-      <h1>Minimal Password Reset Form</h1>
       {oobCode ? (
         <form onSubmit={handleSubmit}>
+          <h2 className="auth-header">
+            {t("setNewPass", { defaultValue: "Crea nuova password" })}
+          </h2>
           <input
-            // type="password"
+            className="auth-input password"
             type={passwordVisibility ? "text" : "password"}
-            placeholder="Inserisci nuova password"
+            placeholder={t("enterNewPass", {
+              defaultValue: "Inserisci nuova password...",
+            })}
             value={newPassword}
             onChange={e => setNewPassword(e.target.value)}
+            onBlur={() => setPasswordTouched(true)}
             required
           />
           <button
