@@ -1,4 +1,3 @@
-// src/firebase/firebase.js
 "use client";
 
 import { useState, useEffect } from "react";
@@ -9,6 +8,8 @@ import {
   setPersistence,
   browserLocalPersistence,
   signInWithEmailAndPassword,
+//   signInWithRedirect,
+//   getRedirectResult,
   createUserWithEmailAndPassword,
   confirmPasswordReset,
   sendPasswordResetEmail,
@@ -22,9 +23,10 @@ const firebaseConfig = {
   projectId: "bookfinderauth",
   storageBucket: "bookfinderauth.firebasestorage.app",
   messagingSenderId: "444728893426",
-  appId: "1:444728893426:web:af679b9a99646ef834556b",
-  measurementId: "G-Z4MP8RN7S4",
+  appId: "1:444728893426:web:f8c7263e780d43a334556b",
+  measurementId: "G-K1QWRFBDSB",
 };
+
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -35,15 +37,35 @@ setPersistence(auth, browserLocalPersistence).catch(err => {
   console.error("Error setting persistence:", err);
 });
 
-// Sign in with Google
 export function signInWithGoogle() {
   return signInWithPopup(auth, provider)
-    .then(result => result.user)
-    .catch(err => {
-      console.error("Google Sign-In error:", err);
-      throw err;
+    .then(result => {
+      //The signed-in user info
+      const user = result.user;
+      console.log("Google Sing-In successful", user);
+      return user;
+    })
+    .catch(error => {
+      console.error("Error during Google Sign-In:", error);
+      throw error;
     });
 }
+
+// ✅ Google login con redirect
+// export const signInWithGoogle = async () => {
+//   await signInWithRedirect(auth, provider);
+// };
+
+// ✅ Recupera risultato dopo redirect
+// export const getGoogleRedirectResult = async () => {
+//   try {
+//     const result = await getRedirectResult(auth);
+//     return result?.user || null;
+//   } catch (err) {
+//     console.error("Error getting redirect result:", err);
+//     return null;
+//   }
+// };
 
 // Minimal auth hook
 export function useMinimalAuth() {
@@ -53,6 +75,7 @@ export function useMinimalAuth() {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async currentUser => {
+      console.log("onAuthStateChanged fired:", currentUser);
       if (currentUser) {
         await currentUser.getIdToken();
         setUser(currentUser);
@@ -68,9 +91,11 @@ export function useMinimalAuth() {
   return { user, loading, isAuthInitialized };
 }
 
+// Export auth and onAuthStateChanged directly
+export { auth, onAuthStateChanged };
+
 // Re-export Firebase auth functions
 export {
-  auth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   confirmPasswordReset,

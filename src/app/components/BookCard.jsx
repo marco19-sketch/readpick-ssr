@@ -3,7 +3,8 @@
 import "@/styles/BookCard.css";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "@/utils/useThumbnail";
-import React, { Suspense, useState, useEffect } from "react";
+import React, { Suspense, useState, useEffect, useContext } from "react";
+import { AppContext } from '../RootClientWrapper';
 
 const LazyAmazonLink = React.lazy(() => import("./AmazonLink"));
 
@@ -33,6 +34,7 @@ export default function BookCard({
 }) {
   const thumbnail = useThumbnail(book);
   const [showAmazon, setShowAmazon] = useState(false);
+  const { mounted } = useContext(AppContext);
 
   // Delaying Amazon render, it does not improve LCP anyway
   useEffect(() => {
@@ -56,7 +58,7 @@ export default function BookCard({
   const formatCopiesSold = () => {
     if (!copiesSold) return "N/A";
     if (copiesSold >= 1000000) {
-      return (copiesSold / 1000000).toLocaleString() + " " + t("Millions");
+      return (copiesSold / 1000000).toLocaleString() + " " + mounted ? t("Millions", {defaultValue: 'Milioni'}) : '';
     } else {
       return copiesSold.toLocaleString() || "N/A";
     }
@@ -109,29 +111,29 @@ export default function BookCard({
       </div>
       <div className="book-detail">
         <p>
-          <strong>{t("author") || "Author(s)"}:</strong>{" "}
+          <strong>{mounted ? t("author", {defaultValue: 'Autore(i)'}) : ''}:{" "}</strong>
           {Array.isArray(authors) ? authors.join(", ") : authors}
         </p>
         <p>
-          <strong>{t("published") || "Published"}:</strong> {publishedYear}
+          <strong>{mounted ? t("published", {defaultValue: 'Pubblicato'}): ''}:</strong> {publishedYear}
         </p>
         <p>
-          <strong>{t("genre") || "Genre"}:</strong>{" "}
+          <strong>{mounted ? t("genre", {defaultValue: 'Genere'}) : ''}:</strong>{" "}
           {Array.isArray(categories) ? categories.join(", ") : categories}
         </p>
 
         <p>
-          <strong>{t("language") || "Language"}:</strong>{" "}
+          <strong>{mounted ? t("language", {defaultValue: 'Lingua'}) : ''}:</strong>{" "}
           {languageMap[language] || language}
         </p>
         <p>
-          <strong>{t("copiesSold") || "Copies sold"}:</strong>{" "}
+          <strong>{mounted ? t("copiesSold", {defaultValue: 'Copie vendute'}) : ''}:</strong>{" "}
           <span className="copies-sold">
             {formatCopiesSold(copiesSold) || "N/A"}
           </span>
         </p>
         <p>
-          <strong>{t("description") || "Description"}:</strong>{" "}
+          <strong>{mounted ? t("description", {defaultValue: 'Descrizione'}) : ''}:</strong>{" "}
           {description ? (
             <>
               {description.slice(0, 100)}...
@@ -139,12 +141,12 @@ export default function BookCard({
                 type="button"
                 className="read-more"
                 onClick={() => onSelect(book)}
-                aria-label={t("readMore") || "Read more"}>
-                {t("readMore") || "read more"}
+                aria-label={mounted ? t("readMore", {defaultValue: 'Leggi di più'}) : ''}>
+                {mounted ? t("readMore", {defaultValue: 'Leggi di più'}) : ''}
               </button>
             </>
           ) : (
-            t("noDescription") || "No description available."
+            mounted ? t("noDescription", {defaultValue: 'Nessuna descrizione disponibile'}) : ''
           )}
         </p>
 

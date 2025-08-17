@@ -1,9 +1,10 @@
 'use client'
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useContext } from "react";
 import CustomRadio from "./CustomRadio";
 import "@/styles/SearchBar.css";
 import { FaSearch } from "react-icons/fa";
+import { AppContext } from "@/app/RootClientWrapper";
 
 const labelsMap = {
   intitle: "Title",
@@ -25,6 +26,10 @@ export default function SearchBar({
   setSuggestions,
   handleFetchNew,
 }) {
+
+  const { mounted  } = useContext(AppContext);
+
+
   const debounceTimeout = useRef(null);
 
   const getSuggestions = useCallback(
@@ -79,10 +84,10 @@ export default function SearchBar({
     <div className="search-bar">
       <div className="label-container">
         {["intitle", "inauthor"].map(mode => (
-          // {["intitle", "inauthor", "subject"].map(mode => (
           <CustomRadio
             key={mode}
-            label={t(`searchBy${labelsMap[mode]}`)}
+            label={mounted ? t(`searchBy${labelsMap[mode]}`) : ""}
+            // label={t(`searchBy${labelsMap[mode]}`)}
             name="searchMode"
             value={mode}
             checked={searchMode === mode}
@@ -97,7 +102,12 @@ export default function SearchBar({
           className="input-element"
           value={query}
           onChange={handleInputChange}
-          placeholder={placeholderMap[searchMode] || t("selectCriteria")}
+          placeholder={
+            placeholderMap[searchMode] || mounted
+              ? t("selectCriteria", { defaultValue: "Select search by..." })
+              : ""
+          }
+          // placeholder={placeholderMap[searchMode] || t("selectCriteria")}
           onKeyDown={e => {
             if (e.key === "Escape") {
               setSuggestions([]);
@@ -136,7 +146,11 @@ export default function SearchBar({
         <button
           className="btn-element"
           type="button"
-          aria-label={t('startSearch')}
+          aria-label={
+            mounted
+              ? t("startSearch", { defaultValue: "Avvia la ricerca" })
+              : ""
+          }
           onClick={() => {
             onSearch(query);
             setSuggestions([]);

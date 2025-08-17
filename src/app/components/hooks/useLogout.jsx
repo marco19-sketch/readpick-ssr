@@ -9,7 +9,7 @@ export function useLogout() {
   const logout = async () => {
     try {
       await signOut(auth);
-      router("/login");
+      router.push("/login");
     } catch (error) {
       console.error("Logout error:", error);
     }

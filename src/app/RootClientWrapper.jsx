@@ -1,11 +1,10 @@
-// src/app/RootClientWrapper.jsx
 "use client";
 
-import { useState, useEffect, createContext } from "react";
-import { Suspense } from "react";
-import '../i18n';
+import { useState, useEffect, createContext, Suspense } from "react";
+import "../i18n";
 import { useTranslation } from "react-i18next";
-
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getGoogleRedirectResult } from '../firebase/firebase';
 import NavBar from "./components/NavBar";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
@@ -18,6 +17,19 @@ export const AppContext = createContext();
 export default function RootClientWrapper({ children, route }) {
   const [login, setLogin] = useState(false);
   const { t } = useTranslation();
+  const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null); // ✅ defines user
+
+  
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const label = mounted
+    ? t("skipToMain", { defaultValue: "Vai al contenuto principale" })
+    : "";
 
   const [favorites, setFavorites] = useState(() => {
     if (typeof window !== "undefined") {
@@ -43,7 +55,6 @@ export default function RootClientWrapper({ children, route }) {
   }, [favorites, fetchedBooks]);
 
   useGoogleAnalytics();
- 
 
   const toggleFavorite = book => {
     const isAlreadyFavorite = favorites.some(fav => fav.id === book.id);
@@ -70,27 +81,69 @@ export default function RootClientWrapper({ children, route }) {
   const hideNavBarOnRoutes = ["/reset-password", "/update-password"];
   const showNavBar = !hideNavBarOnRoutes.includes(route);
 
+  // Mount and Firebase auth state
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
+      if (currentUser) {
+        setUser(currentUser);
+        setLogin(true);
+      } else {
+        setUser(null);
+        setLogin(false);
+      }
+      setLoading(false);
+    });
+
+    // Check Google redirect result once
+    // const checkRedirect = async () => {
+    //   try {
+    //     const redirectUser = await getGoogleRedirectResult();
+    //     if (redirectUser) {
+    //       setUser(redirectUser);
+    //       setLogin(true);
+    //     }
+    //   } catch (err) {
+    //     console.error("Google redirect failed:", err);
+    //   }
+    // };
+    // checkRedirect();
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
+        user,
         login,
         setLogin,
         favorites,
         toggleFavorite,
         fetchedBooks,
         setFetchedBooks,
+        mounted,
+        setMounted,
+        loading,
+        setLoading,
       }}>
       <div className="root">
         <a href="#main-content" className="skip-link">
-          {t("skipToMain")}
+          {label}
         </a>
 
         {showNavBar && <NavBar t={t} />}
 
         <LanguageSwitcher />
 
+       
+
         <main id="main-content">
-          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+          )}
         </main>
 
         <BackToTop scrollContainerSelector="body" />

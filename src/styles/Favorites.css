@@ -1,0 +1,64 @@
+.favorites-page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+.favorites-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  display: block;
+}
+
+.favorites-main-container {
+  flex: 1;
+}
+
+.favorites-header {
+  text-align: center;
+  color: var(--main-color);
+  text-shadow: var(--shadow);
+  margin: 80px auto 60px;
+  font-size: 3rem;
+}
+
+.no-favorites-yet {
+  text-align: center;
+  color: var(--main-color);
+  font-size: 2rem;
+  text-shadow: var(--shadow);
+  margin-top: 12%;
+}
+
+.book-results {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.book-results.removing {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.fav-page-modal-fav-btn {
+  margin: 5px auto 5px;
+}
+
+/* @media screen and (max-width: 550px) {
+  .favorites-page {
+    background-image: none;
+      }
+
+  .fav-mobile-background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+  }
+
+} */
+

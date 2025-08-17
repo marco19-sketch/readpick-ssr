@@ -1,16 +1,18 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useContext } from "react";
 import { usePathname } from "next/navigation";
 import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import "@/styles/FavoriteButton.css";
+import { AppContext } from '@/app/RootClientWrapper';
 
 export default function FavoriteButton({ isFavorite, onToggle }) {
   const clickSoundRef = useRef(null);
   const removeSoundRef = useRef(null);
   const remove2SoundRef = useRef(null);
   const [soundsReady, setSoundsReady] = useState(false);
+  const { mounted } = useContext(AppContext);
 
   const { t } = useTranslation();
   const pathname = usePathname();
@@ -54,10 +56,10 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
       onMouseEnter={preloadSounds} // preload on hover
       onFocus={preloadSounds} // preload on keyboard focus
       aria-label={
-        isFavorite
-          ? t("removeFromFavorites") || "Remove from favorites"
-          : t("addToFavorites") || "Add to favorites"
-      }>
+        isFavorite 
+          ? (mounted ? t("removeFromFavorites", {defaultValue: 'Rimuovi dai favoriti'}) : '')
+          : (mounted ? t("addToFavorites", {defaultValue: 'Aggiungi ai favoriti'}) : '')
+               }>
       <FaHeart className={`heart-icon ${isFavorite ? "active" : ""}`} />
     </button>
   );

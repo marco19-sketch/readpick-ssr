@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { validatePassword } from "../../utils/validatePassword";
 import "@/styles/auth.css";
-import mobileBg from "../../assets/images/book-813x711.avif";
-import desktopBg from "../../assets/images/book-1280.avif";
 import { useTranslation } from "react-i18next";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { auth, createUserWithEmailAndPassword } from "@/firebase/firebase";
+import {AppContext} from "@/app/RootClientWrapper";
 
-export default function Register({ setLogin }) {
+export default function Register() {
+// export default function Register({ setLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -22,6 +22,31 @@ export default function Register({ setLogin }) {
   const { t } = useTranslation();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const { rules, isValid } = validatePassword(password);
+  const mobileBg = "/assets/images/book-813x711.avif";
+  const desktopBg = "/assets/images/book-1280.avif";
+  const { mounted, setLogin } = useContext(AppContext);
+
+  const register = mounted ? t("register", { defaultValue: "Registrati" }) : "";
+  const placeholder = mounted
+    ? t("passRegister", {
+        defaultValue: "Inserisci una password forte...",
+      })
+    : "";
+  const createAccount = mounted
+    ? t("createAccount", { defaultValue: "Crea account" })
+    : "";
+  const chars8 = mounted
+    ? t("8chars", { defaultValue: "Almeno 8 caratteri" })
+    : "";
+  const registerSuccess = mounted
+    ? t("regSuccess", {
+        defaultValue: "Registrazione avvenuta con successo! Sei connesso. ",
+      })
+    : "";
+  const accountAlready = mounted
+    ? t("alreadyAccount", { defaultValue: "Hai già un account?" })
+    : "";
+  const loginNow = mounted ? t("login", { defaultValue: "Accedi" }) : "";
 
   const handleVisibility = useCallback(() => {
     setPasswordVisibility(!passwordVisibility);
@@ -57,9 +82,7 @@ export default function Register({ setLogin }) {
       />
       <div className="auth-page">
         <form onSubmit={handleRegister} className="auth-form">
-          <h2 className="auth-header">
-            {t("register", { defaultValue: "Registrati" })}
-          </h2>
+          <h2 className="auth-header">{register}</h2>
           <input
             className="auth-input"
             type="email"
@@ -72,9 +95,7 @@ export default function Register({ setLogin }) {
             <input
               className="auth-input password"
               type={passwordVisibility ? "text" : "password"}
-              placeholder={t("passRegister", {
-                defaultValue: "Inserisci una password forte...",
-              })}
+              placeholder={placeholder}
               value={password}
               onChange={e => setPassword(e.target.value)}
               onBlur={() => setPasswordTouched(true)}
@@ -89,32 +110,42 @@ export default function Register({ setLogin }) {
           {passwordTouched && (
             <ul style={{ listStyle: "none", padding: 0 }}>
               <li style={{ color: rules.length ? "green" : "red" }}>
-                {rules.length ? "✅" : "❌"}{" "}
-                {t("8chars", { defaultValue: "Almeno 8 caratteri" })}
+                {rules.length ? "✅" : "❌"} {chars8}
               </li>
+
+              {/* <li style={{ color: rules.uppercase ? "green" : "red" }}>
+                {rules.uppercase ? "✅" : "❌"}{" "}
+                {t("upperCase", {
+                  defaultValue: "Almeno una lettera maiuscola",
+                })}
+              </li>
+              <li style={{ color: rules.number ? "green" : "red" }}>
+                {rules.number ? "✅" : "❌"}{" "}
+                {t("number", { defaultValue: "Almeno un numero" })}
+              </li>
+              <li style={{ color: rules.symbol ? "green" : "red" }}>
+                {rules.symbol ? "✅" : "❌"}{" "}
+                {t("specialChar", {
+                  defaultValue: "Almeno un carattere speciale (e.g. !, @, #)",
+                })}
+                (e.g. !, @, #)
+              </li> */}
             </ul>
           )}
           <br />
           <button className="auth-btn" type="submit" disabled={!isValid}>
-            {t("createAccount", { defaultValue: "Crea account" })}
+            {createAccount}
           </button>
           {error && (
             <p className="auth-error" style={{ color: "red" }}>
               {error}
             </p>
           )}
-          {success && (
-            <p className="auth-success">
-              {t("regSuccess", {
-                defaultValue:
-                  "Registrazione avvenuta con successo! Sei connesso. ",
-              })}
-            </p>
-          )}
+          {success && <p className="auth-success">{registerSuccess}</p>}
           <p className="auth-p-link">
-            {t("alreadyAccount", { defaultValue: "Hai già un account?" })}{" "}
+            {accountAlready}{" "}
             <Link className="auth-nav-link" href="/login">
-              {t("login")}
+              {loginNow}
             </Link>
           </p>
         </form>

@@ -2,7 +2,8 @@
 
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-
+import { useContext } from 'react';
+import { AppContext } from './RootClientWrapper';
 import Modal from "./components/Modal";
 import SearchBar from "./components/SearchBar";
 import itaTrendingBooks from "../data/itaTrendingBooks";
@@ -15,9 +16,7 @@ import LoadingSkeleton from "./components/LoadingSkeleton";
 
 export default function Home({
   favorites,
-  toggleFavorite,
-  fetchedBooks,
-  setFetchedBooks,
+  toggleFavorite
 }) {
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,11 +32,19 @@ export default function Home({
   const [activeQuery, setActiveQuery] = useState("");
   const [activeMode, setActiveMode] = useState("intitle");
   const [suggestions, setSuggestions] = useState([]);
+  const { fetchedBooks, setFetchedBooks, mounted} = useContext(AppContext);
+
+  const titleMap = mounted
+    ? t("searchPlaceholder.intitle", { defaultValue: "inserisci il titolo..." })
+    : "";
+  const authorMap = mounted
+    ? t("searchPlaceholder.inauthor", { defaultValue: "inserisci il nome..." })
+    : "";
+   
 
   const placeholderMap = {
-    intitle: t("searchPlaceholder.intitle"),
-    inauthor: t("searchPlaceholder.inauthor"),
-    subject: t("searchPlaceholder.subject"),
+    intitle: {titleMap},
+    inauthor: {authorMap}
   };
 
   const handleFetch = useCallback(async () => {
@@ -143,7 +150,7 @@ export default function Home({
     setSuggestions([]);
   }, [setFetchedBooks]);
 
-  const isFavorite = book => favorites.some(fav => fav.id === book.id);
+  const isFavorite = book => (favorites || []).some(fav => fav.id === book.id);
 
   useEffect(() => {
     if ((fetchedBooks || []).length > 0) setHasSearched(true);
@@ -193,7 +200,7 @@ export default function Home({
           />
 
           {!hasSearched && (
-            <h2 className="trending-books">{t("trendingBooks")}</h2>
+            <h2 className="trending-books">{mounted ? t("trendingBooks", {defaultValue: 'Libri del momento'}) : ''}</h2>
           )}
 
           {loading && <LoadingSkeleton />}
@@ -222,14 +229,14 @@ export default function Home({
                 type="button"
                 ref={loadMoreRef}
                 onClick={() => setStartIndex(prev => prev + maxResult)}>
-                {t("loadMore") || "Load more"}
+                {mounted ? t("loadMore", {defaultValue: "Load more"}) : ''};
               </button>
             </>
           )}
 
           {!loading && showNoResultsModal && (
             <Modal onClose={() => setShowNoResultsModal(false)}>
-              <p className="no-results">{t("noResults")}</p>
+              <p className="no-results">{mounted ? t("noResults", {defaultValue: 'Nessun risultato'}) : ''}</p>
             </Modal>
           )}
 
@@ -239,7 +246,7 @@ export default function Home({
                 <h2 id="modal-title">{selectedTitle?.volumeInfo?.title}</h2>
                 <p className="full-description">
                   <strong>{t("fullDescription")}:</strong>{" "}
-                  {selectedTitle.volumeInfo?.description || t("noDescription")}
+                  {selectedTitle.volumeInfo?.description || mounted ? t("noDescription", {defaultValue: 'Nessuna descrizione'}) : ''}
                 </p>
               </div>
               <FavoriteButton

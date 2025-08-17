@@ -1,7 +1,7 @@
-// src/app/components/NavBar.jsx
 "use client";
-import { useContext } from "react";
-import { AppContext } from "../RootClientWrapper";
+
+import { useContext, useState, useEffect } from "react";
+import { AppContext } from "@/app/RootClientWrapper";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
@@ -13,13 +13,27 @@ import useIsMobile from "./hooks/useIsMobile";
 import "@/styles/NavBar.css";
 
 export default function NavBar() {
-  const { login, setLogin, favorites } = useContext(AppContext);
+  const {login, setLogin, favorites } = useContext(AppContext);
   const logout = useLogout();
   const isMobile = useIsMobile();
   const pathname = usePathname();
   const { t } = useTranslation();
+  const [mounted, setMounted] = useState(false);
 
   const isLoginPage = pathname === "/login";
+
+  const [loginTransl, setLoginTransl] = useState(false);
+  
+  useEffect(() => {
+    setLoginTransl(true);
+  }, []);
+
+  const loginAccedi = loginTransl ? t("login", { defaultValue: "Accedi" }) : "";
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+  const count = mounted ? favorites.length : 0;
 
   return (
     <nav>
@@ -39,25 +53,31 @@ export default function NavBar() {
         {isMobile ? (
           <MdFavorite />
         ) : (
-          `${t("favorites")} (${(favorites || []).length})`
+          `${mounted ? t("favorites", { defaultValue: "Favorites" }) : ''} ${
+            // (favorites || []).length
+            count
+          }`
         )}
       </Link>
 
       {login ? (
         <button
           className="logout"
-          aria-label={t("logout")}
+          aria-label={mounted ? t("logout", {defaultValue: 'Esci'}) : ''}
           onClick={() => {
             logout();
             setLogin(false);
           }}>
-          {isMobile ? <IoLogOut /> : t("logout") || "Esci"}
+          {isMobile ? <IoLogOut /> : mounted ? t("logout", {defaultValue: 'Esci'}) : ''}
         </button>
       ) : isLoginPage ? null : (
-        <Link href="/login" className="login" aria-label={t("login")}>
-          {isMobile ? <IoLogIn /> : t("login", { defaultValue: "Accedi" })}
+        <Link href="/login" className="login" aria-label={loginAccedi}>
+          {isMobile ? <IoLogIn /> : loginAccedi}
+        {/* <Link href="/login" className="login" aria-label={t("login", { defaultValue: 'Accedi'})}>
+          {isMobile ? <IoLogIn /> : t("login", { defaultValue: "Accedi" })} */}
         </Link>
       )}
     </nav>
   );
 }
+
