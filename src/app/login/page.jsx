@@ -160,7 +160,7 @@ export default function Login() {
           setLoading={setLoading}
           setLogin={setLogin}
         />
-        {/* <TestGoogleRedirect /> */}
+       
       </div>
     </div>
   );

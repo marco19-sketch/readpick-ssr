@@ -4,7 +4,7 @@ import { useState, useEffect, createContext, Suspense } from "react";
 import "../i18n";
 import { useTranslation } from "react-i18next";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getGoogleRedirectResult } from '../firebase/firebase';
+import { getGoogleRedirectResult } from "../firebase/firebase";
 import NavBar from "./components/NavBar";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
@@ -20,8 +20,6 @@ export default function RootClientWrapper({ children, route }) {
   const [mounted, setMounted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState(null); // ✅ defines user
-
-  
 
   useEffect(() => {
     setMounted(true);
@@ -136,14 +134,8 @@ export default function RootClientWrapper({ children, route }) {
 
         <LanguageSwitcher />
 
-       
-
         <main id="main-content">
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-          )}
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
         </main>
 
         <BackToTop scrollContainerSelector="body" />

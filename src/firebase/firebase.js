@@ -8,8 +8,6 @@ import {
   setPersistence,
   browserLocalPersistence,
   signInWithEmailAndPassword,
-//   signInWithRedirect,
-//   getRedirectResult,
   createUserWithEmailAndPassword,
   confirmPasswordReset,
   sendPasswordResetEmail,
@@ -50,22 +48,6 @@ export function signInWithGoogle() {
       throw error;
     });
 }
-
-// ✅ Google login con redirect
-// export const signInWithGoogle = async () => {
-//   await signInWithRedirect(auth, provider);
-// };
-
-// ✅ Recupera risultato dopo redirect
-// export const getGoogleRedirectResult = async () => {
-//   try {
-//     const result = await getRedirectResult(auth);
-//     return result?.user || null;
-//   } catch (err) {
-//     console.error("Error getting redirect result:", err);
-//     return null;
-//   }
-// };
 
 // Minimal auth hook
 export function useMinimalAuth() {

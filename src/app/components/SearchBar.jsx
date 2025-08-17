@@ -102,11 +102,12 @@ export default function SearchBar({
           className="input-element"
           value={query}
           onChange={handleInputChange}
-          placeholder={
-            placeholderMap[searchMode] || mounted
-              ? t("selectCriteria", { defaultValue: "Select search by..." })
-              : ""
-          }
+          placeholder='Cerca per...'
+          // placeholder={
+          //   placeholderMap[searchMode] || mounted
+          //     ? t("selectCriteria", { defaultValue: "Select search by..." })
+          //     : ""
+          // }
           // placeholder={placeholderMap[searchMode] || t("selectCriteria")}
           onKeyDown={e => {
             if (e.key === "Escape") {

@@ -14,10 +14,11 @@ import { devLog } from "@/utils/devLog";
 import BookResults from "./components/BookResults";
 import LoadingSkeleton from "./components/LoadingSkeleton";
 
-export default function Home({
-  favorites,
-  toggleFavorite
-}) {
+export default function Home() {
+// export default function Home({
+//   favorites,
+//   toggleFavorite
+// }) {
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -32,14 +33,18 @@ export default function Home({
   const [activeQuery, setActiveQuery] = useState("");
   const [activeMode, setActiveMode] = useState("intitle");
   const [suggestions, setSuggestions] = useState([]);
-  const { fetchedBooks, setFetchedBooks, mounted} = useContext(AppContext);
+  const { favorites, toggleFavorite, fetchedBooks, setFetchedBooks} = useContext(AppContext);
 
-  const titleMap = mounted
-    ? t("searchPlaceholder.intitle", { defaultValue: "inserisci il titolo..." })
-    : "";
-  const authorMap = mounted
-    ? t("searchPlaceholder.inauthor", { defaultValue: "inserisci il nome..." })
-    : "";
+  const titleMap = 
+     t("searchPlaceholder.intitle", { defaultValue: "inserisci il titolo..." });
+  const authorMap = 
+    t("searchPlaceholder.inauthor", { defaultValue: "inserisci il nome..." });
+  // const titleMap = mounted
+  //   ? t("searchPlaceholder.intitle", { defaultValue: "inserisci il titolo..." })
+  //   : "";
+  // const authorMap = mounted
+  //   ? t("searchPlaceholder.inauthor", { defaultValue: "inserisci il nome..." })
+  //   : "";
    
 
   const placeholderMap = {
@@ -200,7 +205,8 @@ export default function Home({
           />
 
           {!hasSearched && (
-            <h2 className="trending-books">{mounted ? t("trendingBooks", {defaultValue: 'Libri del momento'}) : ''}</h2>
+            <h2 className="trending-books"> {t("trendingBooks", {defaultValue: 'Libri del momento'})}</h2>
+            // <h2 className="trending-books">{mounted ? t("trendingBooks", {defaultValue: 'Libri del momento'}) : ''}</h2>
           )}
 
           {loading && <LoadingSkeleton />}
@@ -229,14 +235,16 @@ export default function Home({
                 type="button"
                 ref={loadMoreRef}
                 onClick={() => setStartIndex(prev => prev + maxResult)}>
-                {mounted ? t("loadMore", {defaultValue: "Load more"}) : ''};
+                {t("loadMore", {defaultValue: "Load more"})};
+                {/* {mounted ? t("loadMore", {defaultValue: "Load more"}) : ''}; */}
               </button>
             </>
           )}
 
           {!loading && showNoResultsModal && (
             <Modal onClose={() => setShowNoResultsModal(false)}>
-              <p className="no-results">{mounted ? t("noResults", {defaultValue: 'Nessun risultato'}) : ''}</p>
+              <p className="no-results">{ t("noResults", {defaultValue: 'Nessun risultato'})}</p>
+              {/* <p className="no-results">{mounted ? t("noResults", {defaultValue: 'Nessun risultato'}) : ''}</p> */}
             </Modal>
           )}
 
@@ -245,8 +253,9 @@ export default function Home({
               <div className="modal">
                 <h2 id="modal-title">{selectedTitle?.volumeInfo?.title}</h2>
                 <p className="full-description">
-                  <strong>{t("fullDescription")}:</strong>{" "}
-                  {selectedTitle.volumeInfo?.description || mounted ? t("noDescription", {defaultValue: 'Nessuna descrizione'}) : ''}
+                  <strong>{t("fullDescription", {defaultValue: 'Descrizione completa'})}:</strong>{" "}
+                  {selectedTitle.volumeInfo?.description || t("noDescription", {defaultValue: 'Nessuna descrizione'})}
+                  {/* {selectedTitle.volumeInfo?.description || mounted ? t("noDescription", {defaultValue: 'Nessuna descrizione'}) : ''} */}
                 </p>
               </div>
               <FavoriteButton
