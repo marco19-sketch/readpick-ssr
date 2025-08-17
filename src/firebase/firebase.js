@@ -15,15 +15,29 @@ import {
   GoogleAuthProvider,
 } from "firebase/auth";
 
+
+
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyCFEFHFxIHn2G6xexV8R4Fb1LyhdpaAnw8",
-  authDomain: "my-ssr-read-pick-app.firebaseapp.com",
-  projectId: "my-ssr-read-pick-app",
-  storageBucket: "my-ssr-read-pick-app.firebasestorage.app",
-  messagingSenderId: "499698746925",
-  appId: "1:499698746925:web:4077c74901ec191cfa9aa4",
-  measurementId: "G-XQKP0P3P8X",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyCFEFHF,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
+// const firebaseConfig = {
+//   apiKey: "AIzaSyCFEFHFxIHn2G6xexV8R4Fb1LyhdpaAnw8",
+//   authDomain: "my-ssr-read-pick-app.firebaseapp.com",
+//   projectId: "my-ssr-read-pick-app",
+//   storageBucket: "my-ssr-read-pick-app.firebasestorage.app",
+//   messagingSenderId: "499698746925",
+//   appId: "1:499698746925:web:4077c74901ec191cfa9aa4",
+//   measurementId: "G-XQKP0P3P8X",
+// };
+
 
 
 const app = initializeApp(firebaseConfig);
