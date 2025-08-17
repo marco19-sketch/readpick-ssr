@@ -1,23 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { auth, confirmPasswordReset } from "@/firebase/firebase";
 
-/**
- * Componente essenziale per testare la funzionalità di reset password.
- * Mantiene solo la logica strettamente necessaria per confermare
- * il cambio password con Firebase.
- */
+
 export default function UpdatePassword() {
   const [newPassword, setNewPassword] = useState("");
   const [oobCode, setOobCode] = useState(null);
 
-  // Hook per ottenere i parametri dall'URL
+ 
   const searchParams = useSearchParams();
+  const router = useRouter();
 
-  // Effetto per recuperare l'oobCode dall'URL al caricamento del componente
-  useEffect(() => {
+   useEffect(() => {
     const code = searchParams.get("oobCode");
     if (code) {
       setOobCode(code);
@@ -40,6 +36,7 @@ export default function UpdatePassword() {
     try {
       await confirmPasswordReset(auth, oobCode, newPassword);
       console.log("Successo: Password resettata con successo.");
+      setTimeout(() => router.push("/login"), 3000);
       // Qui puoi aggiungere la logica di reindirizzamento
     } catch (error) {
       console.error("Errore nel reset della password:", error);
