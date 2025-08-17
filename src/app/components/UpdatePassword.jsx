@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { auth, confirmPasswordReset } from "@/firebase/firebase";
-
+import "@/styles/auth.css";
 
 export default function UpdatePassword() {
   const [newPassword, setNewPassword] = useState("");
