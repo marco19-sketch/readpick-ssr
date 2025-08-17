@@ -15,8 +15,10 @@ export default function ResetPassword() {
 
   const resetPassword = async email => {
     const actionCodeSettings = {
+      // url: `http://localhost:3000/update-password`, // local SSR link for testing
+      // url: "https://readpick-ssr.netlify.app/update-password", // link pointing to this SSR app
       url: `${window.location.origin}/update-password`, // dynamic link to the app
-      handleCodeInApp: true,
+      handleCodeInApp: true
     };
     try {
       await sendPasswordResetEmail(auth, email, actionCodeSettings);
@@ -25,6 +27,18 @@ export default function ResetPassword() {
       return { success: false, error: error.message || error.toString() };
     }
   };
+  // const resetPassword = async email => {
+  //   const actionCodeSettings = {
+  //     url: `${window.location.origin}/update-password`, // dynamic link to the app
+  //     handleCodeInApp: true,
+  //   };
+  //   try {
+  //     await sendPasswordResetEmail(auth, email, actionCodeSettings);
+  //     return { success: true };
+  //   } catch (error) {
+  //     return { success: false, error: error.message || error.toString() };
+  //   }
+  // };
 
   const handleSubmit = async e => {
     e.preventDefault();

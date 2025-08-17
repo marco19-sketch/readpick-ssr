@@ -16,13 +16,13 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyA3DdjjO7VoWN1cXThbIyfWBJMAGcluDrQ",
-  authDomain: "bookfinderauth.firebaseapp.com",
-  projectId: "bookfinderauth",
-  storageBucket: "bookfinderauth.firebasestorage.app",
-  messagingSenderId: "444728893426",
-  appId: "1:444728893426:web:f8c7263e780d43a334556b",
-  measurementId: "G-K1QWRFBDSB",
+  apiKey: "AIzaSyCFEFHFxIHn2G6xexV8R4Fb1LyhdpaAnw8",
+  authDomain: "my-ssr-read-pick-app.firebaseapp.com",
+  projectId: "my-ssr-read-pick-app",
+  storageBucket: "my-ssr-read-pick-app.firebasestorage.app",
+  messagingSenderId: "499698746925",
+  appId: "1:499698746925:web:4077c74901ec191cfa9aa4",
+  measurementId: "G-XQKP0P3P8X",
 };
 
 

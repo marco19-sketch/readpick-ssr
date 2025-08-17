@@ -27,24 +27,20 @@ export default function Login() {
   //   const [loading, setLoading] = useState(false);
   const mobileBg = "/assets/images/girl-907x700.avif";
   const desktopBg = "/assets/images/girl-1280-cropped.avif";
-  const { mounted, setLogin, login, loading, setLoading } =
-    useContext(AppContext);
+  const { setLogin, login, loading, setLoading } = useContext(AppContext);
 
-  const label = mounted ? t("login", { defaultValue: "Accedi" }) : "";
-  const forgotPass = mounted
-    ? t("forgotPassword", { defaultValue: "Password dimenticata?" })
-    : "";
-  const noAccount = mounted
-    ? t("noAccount", { defaultValue: "Non hai un account?" })
-    : "";
-  const singIn = mounted ? t("signIn", { defaultValue: "Registrati" }) : "";
-  const loginSuccess = mounted
-    ? t("loggedSuccess", { defaultValue: "Accesso in corso..." })
-    : "";
-  const missCredential = mounted
-    ? t("missingCredentials", { defaultValue: "Inserisci email e password" })
-    : "";
-
+  const label = t("login", { defaultValue: "Accedi" });
+  const forgotPass = t("forgotPassword", {
+    defaultValue: "Password dimenticata?",
+  });
+  const noAccount = t("noAccount", { defaultValue: "Non hai un account?" });
+  const singIn = t("signIn", { defaultValue: "Registrati" });
+  const loginSuccess = t("loggedSuccess", {
+    defaultValue: "Accesso in corso...",
+  });
+  const missCredential = t("missingCredentials", {
+    defaultValue: "Inserisci email e password",
+  });
   const handleVisibility = useCallback(() => {
     setPasswordVisibility(!passwordVisibility);
   }, [passwordVisibility]);
@@ -65,31 +61,16 @@ export default function Login() {
       setTimeout(() => {
         router.push("/"); // navigate to homepage
         setLoading(false);
-      }, 2000);
+      }, 500);
     } catch (err) {
-    //   console.error("error", err);
+      //   console.error("error", err);
       setError(
-        mounted
-          ? t("loginError", {
-              error: err.message,
-              defaultValue: "Credenziali errate",
-            })
-          : "Credenziali errate"
+        t("loginError", {
+          defaultValue: "Credenziali errate",
+        })
       );
     }
   };
-
-  //   useEffect(() => {
-  //     async function handleRedirectResult() {
-  //       const user = await getGoogleRedirectResult();
-  //       console.log("getGoogle", getGoogleRedirectResult);
-  //       if (user) {
-  //         setLogin(true);
-  //         router.push("/"); // ✅ redirect dopo login
-  //       }
-  //     }
-  //     handleRedirectResult();
-  //   }, [router, setLogin]);
 
   return (
     <div className="auth-background">
@@ -160,7 +141,6 @@ export default function Login() {
           setLoading={setLoading}
           setLogin={setLogin}
         />
-       
       </div>
     </div>
   );

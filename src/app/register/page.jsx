@@ -9,10 +9,10 @@ import { useTranslation } from "react-i18next";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { auth, createUserWithEmailAndPassword } from "@/firebase/firebase";
-import {AppContext} from "@/app/RootClientWrapper";
+import { AppContext } from "@/app/RootClientWrapper";
 
 export default function Register() {
-// export default function Register({ setLogin }) {
+  // export default function Register({ setLogin }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");

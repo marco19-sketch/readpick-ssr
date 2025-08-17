@@ -58,7 +58,7 @@ export default function BookCard({
   const formatCopiesSold = () => {
     if (!copiesSold) return "N/A";
     if (copiesSold >= 1000000) {
-      return (copiesSold / 1000000).toLocaleString() + " " + mounted ? t("Millions", {defaultValue: 'Milioni'}) : '';
+      return (copiesSold / 1000000).toLocaleString() + " " + t("Millions", {defaultValue: 'Milioni'});
     } else {
       return copiesSold.toLocaleString() || "N/A";
     }
@@ -111,29 +111,29 @@ export default function BookCard({
       </div>
       <div className="book-detail">
         <p>
-          <strong>{mounted ? t("author", {defaultValue: 'Autore(i)'}) : ''}:{" "}</strong>
+          <strong>{ t("author", {defaultValue: 'Autore(i)'})}:{" "}</strong>
           {Array.isArray(authors) ? authors.join(", ") : authors}
         </p>
         <p>
-          <strong>{mounted ? t("published", {defaultValue: 'Pubblicato'}): ''}:</strong> {publishedYear}
+          <strong>{ t("published", {defaultValue: 'Pubblicato'})}:</strong> {publishedYear}
         </p>
         <p>
-          <strong>{mounted ? t("genre", {defaultValue: 'Genere'}) : ''}:</strong>{" "}
+          <strong>{ t("genre", {defaultValue: 'Genere'})}:</strong>{" "}
           {Array.isArray(categories) ? categories.join(", ") : categories}
         </p>
 
         <p>
-          <strong>{mounted ? t("language", {defaultValue: 'Lingua'}) : ''}:</strong>{" "}
+          <strong>{ t("language", {defaultValue: 'Lingua'})}:</strong>{" "}
           {languageMap[language] || language}
         </p>
         <p>
-          <strong>{mounted ? t("copiesSold", {defaultValue: 'Copie vendute'}) : ''}:</strong>{" "}
+          <strong>{ t("copiesSold", {defaultValue: 'Copie vendute'})}:</strong>{" "}
           <span className="copies-sold">
             {formatCopiesSold(copiesSold) || "N/A"}
           </span>
         </p>
         <p>
-          <strong>{mounted ? t("description", {defaultValue: 'Descrizione'}) : ''}:</strong>{" "}
+          <strong>{ t("description", {defaultValue: 'Descrizione'})}:</strong>{" "}
           {description ? (
             <>
               {description.slice(0, 100)}...
@@ -141,12 +141,12 @@ export default function BookCard({
                 type="button"
                 className="read-more"
                 onClick={() => onSelect(book)}
-                aria-label={mounted ? t("readMore", {defaultValue: 'Leggi di più'}) : ''}>
-                {mounted ? t("readMore", {defaultValue: 'Leggi di più'}) : ''}
+                aria-label={ t("readMore", {defaultValue: 'Leggi di più'})}>
+                {t("readMore", {defaultValue: 'Leggi di più'})}
               </button>
             </>
           ) : (
-            mounted ? t("noDescription", {defaultValue: 'Nessuna descrizione disponibile'}) : ''
+           t("noDescription", {defaultValue: 'Nessuna descrizione disponibile'}) 
           )}
         </p>
 

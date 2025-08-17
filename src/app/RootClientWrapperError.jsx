@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect, createContext, Suspense } from "react";
+import "../i18n";
 import { useTranslation } from "react-i18next";
-// import "../i18n";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getGoogleRedirectResult } from "../firebase/firebase";
 import NavBar from "./components/NavBar";
-
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
 import FooterLoader from "./components/FooterLoader";
@@ -15,22 +15,17 @@ import useGoogleAnalytics from "./components/hooks/useGoogleAnalytics";
 export const AppContext = createContext();
 
 export default function RootClientWrapper({ children, route }) {
-  const [mounted, setMounted] = useState(false);
   const [login, setLogin] = useState(false);
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-
-  // const [fetchedBooks, setFetchedBooks] = useState([]);
   const { t } = useTranslation();
+  const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null); // ✅ defines user
 
-  // Mark as mounted only on client
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const label = t("skipToMain", {
-    defaultValue: "Vai al contenuto principale",
-  });
+  const label = t("skipToMain", { defaultValue: "Vai al contenuto principale" });
 
   const [favorites, setFavorites] = useState(() => {
     if (typeof window !== "undefined") {
@@ -54,23 +49,6 @@ export default function RootClientWrapper({ children, route }) {
       localStorage.setItem("cachedBooks", JSON.stringify(fetchedBooks));
     }
   }, [favorites, fetchedBooks]);
-
-  // Mount and Firebase auth state
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
-      if (currentUser) {
-        setUser(currentUser);
-        setLogin(true);
-      } else {
-        setUser(null);
-        setLogin(false);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   useGoogleAnalytics();
 
@@ -99,33 +77,56 @@ export default function RootClientWrapper({ children, route }) {
   const hideNavBarOnRoutes = ["/reset-password", "/update-password"];
   const showNavBar = !hideNavBarOnRoutes.includes(route);
 
+  // Mount and Firebase auth state
+  useEffect(() => {
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
+      if (currentUser) {
+        setUser(currentUser);
+        setLogin(true);
+      } else {
+        setUser(null);
+        setLogin(false);
+      }
+      setLoading(false);
+    });
+
+  
+
+    return () => unsubscribe();
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
-        mounted,
+        user,
         login,
         setLogin,
-        user,
-        setUser,
-        loading,
-        setLoading,
-        toggleFavorite,
         favorites,
-        setFavorites,
+        toggleFavorite,
         fetchedBooks,
         setFetchedBooks,
-        t,
+        mounted,
+        setMounted,
+        loading,
+        setLoading,
       }}>
-      {showNavBar && <NavBar t={t} />}
-      <LanguageSwitcher />
+      <div className="root">
+        <a href="#main-content" className="skip-link">
+          {label}
+        </a>
 
-      <main id="main-content">
-        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-      </main>
+        {showNavBar && <NavBar t={t} />}
 
-      {children}
-      <BackToTop scrollContainerSelector="body" />
-      <FooterLoader />
+        <LanguageSwitcher />
+
+        <main id="main-content">
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+        </main>
+
+        <BackToTop scrollContainerSelector="body" />
+        <FooterLoader />
+      </div>
     </AppContext.Provider>
   );
 }

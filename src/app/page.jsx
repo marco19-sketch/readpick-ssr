@@ -2,23 +2,23 @@
 
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { useContext } from 'react';
-import { AppContext } from './RootClientWrapper';
+import { useContext } from "react";
+import { AppContext } from "./RootClientWrapper";
 import Modal from "./components/Modal";
 import SearchBar from "./components/SearchBar";
 import itaTrendingBooks from "../data/itaTrendingBooks";
 import "@/styles/Home.css";
-import { scrollup } from "../utils/scrollup";
+import { scrollUp } from "../utils/scrollUp";
 import FavoriteButton from "./components/FavoriteButton";
 import { devLog } from "@/utils/devLog";
 import BookResults from "./components/BookResults";
 import LoadingSkeleton from "./components/LoadingSkeleton";
 
 export default function Home() {
-// export default function Home({
-//   favorites,
-//   toggleFavorite
-// }) {
+  // export default function Home({
+  //   favorites,
+  //   toggleFavorite
+  // }) {
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -33,23 +33,19 @@ export default function Home() {
   const [activeQuery, setActiveQuery] = useState("");
   const [activeMode, setActiveMode] = useState("intitle");
   const [suggestions, setSuggestions] = useState([]);
-  const { favorites, toggleFavorite, fetchedBooks, setFetchedBooks} = useContext(AppContext);
+  const { favorites, toggleFavorite, fetchedBooks, setFetchedBooks } =
+    useContext(AppContext);
 
-  const titleMap = 
-     t("searchPlaceholder.intitle", { defaultValue: "inserisci il titolo..." });
-  const authorMap = 
-    t("searchPlaceholder.inauthor", { defaultValue: "inserisci il nome..." });
-  // const titleMap = mounted
-  //   ? t("searchPlaceholder.intitle", { defaultValue: "inserisci il titolo..." })
-  //   : "";
-  // const authorMap = mounted
-  //   ? t("searchPlaceholder.inauthor", { defaultValue: "inserisci il nome..." })
-  //   : "";
-   
+  const titleMap = t("searchPlaceholder.intitle", {
+    defaultValue: "inserisci il titolo...",
+  });
+  const authorMap = t("searchPlaceholder.inauthor", {
+    defaultValue: "inserisci il nome...",
+  });
 
   const placeholderMap = {
-    intitle: {titleMap},
-    inauthor: {authorMap}
+    intitle: { titleMap },
+    inauthor: { authorMap },
   };
 
   const handleFetch = useCallback(async () => {
@@ -82,7 +78,7 @@ export default function Home() {
 
       setFetchedBooks(prev => (startIndex === 0 ? items : [...prev, ...items]));
       setLoading(false);
-      scrollup(350);
+      scrollUp(350);
     } catch (error) {
       console.error("Fetch error:", error);
       setLoading(false);
@@ -205,8 +201,10 @@ export default function Home() {
           />
 
           {!hasSearched && (
-            <h2 className="trending-books"> {t("trendingBooks", {defaultValue: 'Libri del momento'})}</h2>
-            // <h2 className="trending-books">{mounted ? t("trendingBooks", {defaultValue: 'Libri del momento'}) : ''}</h2>
+            <h2 className="trending-books">
+              {" "}
+              {t("trendingBooks", { defaultValue: "Libri del momento" })}
+            </h2>
           )}
 
           {loading && <LoadingSkeleton />}
@@ -235,16 +233,16 @@ export default function Home() {
                 type="button"
                 ref={loadMoreRef}
                 onClick={() => setStartIndex(prev => prev + maxResult)}>
-                {t("loadMore", {defaultValue: "Load more"})};
-                {/* {mounted ? t("loadMore", {defaultValue: "Load more"}) : ''}; */}
+                {t("loadMore", { defaultValue: "Load more" })};
               </button>
             </>
           )}
 
           {!loading && showNoResultsModal && (
             <Modal onClose={() => setShowNoResultsModal(false)}>
-              <p className="no-results">{ t("noResults", {defaultValue: 'Nessun risultato'})}</p>
-              {/* <p className="no-results">{mounted ? t("noResults", {defaultValue: 'Nessun risultato'}) : ''}</p> */}
+              <p className="no-results">
+                {t("noResults", { defaultValue: "Nessun risultato" })}
+              </p>
             </Modal>
           )}
 
@@ -253,9 +251,14 @@ export default function Home() {
               <div className="modal">
                 <h2 id="modal-title">{selectedTitle?.volumeInfo?.title}</h2>
                 <p className="full-description">
-                  <strong>{t("fullDescription", {defaultValue: 'Descrizione completa'})}:</strong>{" "}
-                  {selectedTitle.volumeInfo?.description || t("noDescription", {defaultValue: 'Nessuna descrizione'})}
-                  {/* {selectedTitle.volumeInfo?.description || mounted ? t("noDescription", {defaultValue: 'Nessuna descrizione'}) : ''} */}
+                  <strong>
+                    {t("fullDescription", {
+                      defaultValue: "Descrizione completa",
+                    })}
+                    :
+                  </strong>{" "}
+                  {selectedTitle.volumeInfo?.description ||
+                    t("noDescription", { defaultValue: "Nessuna descrizione" })}
                 </p>
               </div>
               <FavoriteButton
