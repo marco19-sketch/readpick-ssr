@@ -8,7 +8,7 @@ import Modal from "./components/Modal";
 import SearchBar from "./components/SearchBar";
 import itaTrendingBooks from "../data/itaTrendingBooks";
 import "@/styles/Home.css";
-import { scrollUp } from "../utils/scrollUp";
+// import { scrollUp } from "../utils/scrollUp";
 import FavoriteButton from "./components/FavoriteButton";
 import { devLog } from "@/utils/devLog";
 import BookResults from "./components/BookResults";
@@ -78,7 +78,7 @@ export default function Home() {
 
       setFetchedBooks(prev => (startIndex === 0 ? items : [...prev, ...items]));
       setLoading(false);
-      scrollUp(350);
+      // scrollUp(350);
     } catch (error) {
       console.error("Fetch error:", error);
       setLoading(false);
