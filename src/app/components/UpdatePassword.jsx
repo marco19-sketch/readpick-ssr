@@ -1,19 +1,25 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { auth, confirmPasswordReset } from "@/firebase/firebase";
 import "@/styles/auth.css";
+import { IoMdEyeOff } from "react-icons/io";
+import { IoEye } from "react-icons/io5";
 
 export default function UpdatePassword() {
   const [newPassword, setNewPassword] = useState("");
   const [oobCode, setOobCode] = useState(null);
+  const [passwordVisibility, setPasswordVisibility] = useState(false);
 
- 
+  const handleVisibility = useCallback(() => {
+    setPasswordVisibility(prev => !prev);
+  }, [passwordVisibility]);
+
   const searchParams = useSearchParams();
   const router = useRouter();
 
-   useEffect(() => {
+  useEffect(() => {
     const code = searchParams.get("oobCode");
     if (code) {
       setOobCode(code);
@@ -49,12 +55,19 @@ export default function UpdatePassword() {
       {oobCode ? (
         <form onSubmit={handleSubmit}>
           <input
-            type="password"
+            // type="password"
+            type={passwordVisibility ? "text" : "password"}
             placeholder="Inserisci nuova password"
             value={newPassword}
             onChange={e => setNewPassword(e.target.value)}
             required
           />
+          <button
+            className="auth-toggle-visibility"
+            type="button"
+            onClick={handleVisibility}>
+            {passwordVisibility ? <IoEye /> : <IoMdEyeOff />}
+          </button>
           <button type="submit">Aggiorna Password</button>
         </form>
       ) : (
