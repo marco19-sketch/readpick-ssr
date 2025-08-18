@@ -18,7 +18,7 @@ export default function UpdatePassword() {
     setPasswordVisibility(prev => !prev);
   }, [passwordVisibility]);
 
-console.log('Questa è la pagina updatePassword')
+
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -28,6 +28,7 @@ console.log('Questa è la pagina updatePassword')
     const code = searchParams.get("oobCode");
     if (code) {
       setOobCode(code);
+      console.log("Questa è la pagina updatePassword");
       console.log("Codice OOB trovato.");
     } else {
       console.error("Errore: Codice OOB non trovato nell'URL.");

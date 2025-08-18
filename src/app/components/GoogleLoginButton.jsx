@@ -13,7 +13,7 @@ import { AppContext } from "@/app/RootClientWrapper";
 export default function GoogleLoginButton() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { setLogin, mounted, loading, setLoading } = useContext(AppContext);
+  const { setLogin, mounted, loading, setLoading, error } = useContext(AppContext);
 
   const logGoogle = mounted
     ? t("googleSingIn", { defaultValue: "Accedi con Google" })
@@ -38,7 +38,7 @@ export default function GoogleLoginButton() {
     <button
       className="google-btn"
       onClick={handleGoogleSignIn}
-      disabled={loading}>
+      disabled={loading && error === ''}>
       <span className="google-span">
         <FcGoogle className="google-icon" />
       </span>{" "}

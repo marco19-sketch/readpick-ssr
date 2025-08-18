@@ -66,9 +66,11 @@ export default function Login() {
       //   console.error("error", err);
       setError(
         t("loginError", {
-          defaultValue: "Credenziali errate",
+          defaultValue: "Credenziali errate, riprova",
         })
       );
+      setEmail('');
+      setPassword('');
     }
   };
 
@@ -114,7 +116,7 @@ export default function Login() {
             </button>
           </div>
           <br />
-          <button disabled={loading} className="auth-btn" type="submit">
+          <button disabled={loading && error === ''} className="auth-btn" type="submit">
             {label}
           </button>
           {login && <p className="auth-success">{loginSuccess}</p>}
@@ -138,6 +140,7 @@ export default function Login() {
         <p className="oppure">oppure</p>
         <GoogleLoginButton
           loading={loading}
+          error={error}
           setLoading={setLoading}
           setLogin={setLogin}
         />

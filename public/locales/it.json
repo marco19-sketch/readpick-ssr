@@ -45,7 +45,7 @@
   "passwordSent": "Password inviata, controlla la posta in arrivo",
   "invalidEmail": "Email non valida",
   "loggedSuccess": "Accesso in corso...",
-  "loginError": "Credenziali errate ",
+  "loginError": "Credenziali errate, riprova ",
   "forgotPassword": "Password dimenticata?",
   "noAccount": "Non hai un account?",
   "signIn": "Registrati",

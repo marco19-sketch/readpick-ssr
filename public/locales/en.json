@@ -45,7 +45,7 @@
   "passwordSent": "Password sent, check your inbox",
   "invalidEmail": "Invalid email",
   "loggedSuccess": "Logging in...",
-  "loginError": "Wrong credentials",
+  "loginError": "Wrong credentials, retry",
   "forgotPassword": "Forgot password?",
   "noAccount": "Don't have an account yet?",
   "signIn": "Sign in",
