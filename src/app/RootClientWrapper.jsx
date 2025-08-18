@@ -103,6 +103,7 @@ export default function RootClientWrapper({ children, route }) {
     <AppContext.Provider
       value={{
         mounted,
+        setMounted,
         login,
         setLogin,
         user,

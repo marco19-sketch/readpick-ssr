@@ -4,7 +4,7 @@ import { useState, useEffect, createContext, Suspense } from "react";
 import "../i18n";
 import { useTranslation } from "react-i18next";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { getGoogleRedirectResult } from "../firebase/firebase";
+// import { getGoogleRedirectResult } from "../firebase/firebase";
 import NavBar from "./components/NavBar";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
