@@ -13,12 +13,15 @@ export default function UpdatePassword() {
   const [newPassword, setNewPassword] = useState("");
   const [oobCode, setOobCode] = useState(null);
   const [passwordVisibility, setPasswordVisibility] = useState(false);
+  const mobileBg = "/assets/images/leaves-640.avif";
+  const desktopBg = "/assets/images/leaves-1280.avif";
+  const [passwordTouched, setPasswordTouched] = useState(false);
+  const [message, setMessage] = useState(null);
+  const [msgGreen, setMsgGreen] = useState(false);
 
   const handleVisibility = useCallback(() => {
     setPasswordVisibility(prev => !prev);
   }, [passwordVisibility]);
-
-
 
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -31,7 +34,10 @@ export default function UpdatePassword() {
       console.log("Questa è la pagina updatePassword");
       console.log("Codice OOB trovato.");
     } else {
-      console.error("Errore: Codice OOB non trovato nell'URL.");
+      // console.error("Errore: Codice OOB non trovato nell'URL.");
+      setMessage(
+        t("invalidCode", { defaultValue: "Codice reset non valido o mancante" })
+      );
     }
   }, [searchParams]);
 
@@ -56,43 +62,90 @@ export default function UpdatePassword() {
 
     try {
       await confirmPasswordReset(auth, oobCode, newPassword);
+      setMsgGreen(true);
+      setMessage(
+        t("updateSuccess", {
+          defaultValue:
+            "Password aggiornata con successo. Reindirizzamento al login...",
+        })
+      );
       console.log("Successo: Password resettata con successo.");
       setTimeout(() => router.push("/login"), 3000);
       // Qui puoi aggiungere la logica di reindirizzamento
     } catch (error) {
+      setMsgGreen(false);
       console.error("Errore nel reset della password:", error);
+      setMessage(
+        t("errorUpdating", { defaultValue: "Errore riprova" })
+        // t("errorUpdating", { defaultValue: `Errore: ${error.message}` })
+      );
     }
   };
 
   return (
-    <div>
-      {oobCode ? (
-        <form onSubmit={handleSubmit}>
-          <h2 className="auth-header">
-            {t("setNewPass", { defaultValue: "Crea nuova password" })}
-          </h2>
-          <input
-            className="auth-input password"
-            type={passwordVisibility ? "text" : "password"}
-            placeholder={t("enterNewPass", {
-              defaultValue: "Inserisci nuova password...",
-            })}
-            value={newPassword}
-            onChange={e => setNewPassword(e.target.value)}
-            onBlur={() => setPasswordTouched(true)}
-            required
-          />
-          <button
-            className="auth-toggle-visibility"
-            type="button"
-            onClick={handleVisibility}>
-            {passwordVisibility ? <IoEye /> : <IoMdEyeOff />}
-          </button>
-          <button type="submit">Aggiorna Password</button>
-        </form>
-      ) : (
-        <p>Codice non valido o mancante.</p>
-      )}
+    <div className="auth-background">
+      <img
+        className="auth-bg-auto-size"
+        src={mobileBg}
+        srcSet={`${mobileBg} 907w, ${desktopBg} 1280w`}
+        sizes="(max-width: 640px) 100vw, 1280px"
+        alt=""
+        aria-hidden="true"
+        decoding="auto"
+      />
+      <div className="auth-page">
+        {oobCode ? (
+          <form className="auth-form" onSubmit={handleSubmit}>
+            <h2 className="auth-header">
+              {t("setNewPass", { defaultValue: "Crea nuova password" })}
+            </h2>
+            <div className="auth-input-container">
+              <input
+                className="auth-input password"
+                type={passwordVisibility ? "text" : "password"}
+                placeholder={t("enterNewPass", {
+                  defaultValue: "Inserisci nuova password...",
+                })}
+                value={newPassword}
+                onChange={e => setNewPassword(e.target.value)}
+                onBlur={() => setPasswordTouched(true)}
+                required
+              />
+              <button
+                className="auth-toggle-visibility"
+                type="button"
+                onClick={handleVisibility}>
+                {passwordVisibility ? <IoEye /> : <IoMdEyeOff />}
+              </button>
+            </div>
+
+            {passwordTouched && !isValid && (
+              <ul className="auth-rules">
+                {errors.map((err, index) => (
+                  <li
+                    className="auth-msgs"
+                    key={index}
+                    style={{ color: "red" }}>
+                    {err}
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            <button className="auth-btn" type="submit">
+              Update Password
+            </button>
+
+            {message && (
+              <p className={`auth-${msgGreen ? "success" : "error"}`}>
+                {message}
+              </p>
+            )}
+          </form>
+        ) : (
+          <p>Codice non valido o mancante.</p>
+        )}
+      </div>
     </div>
   );
 }
