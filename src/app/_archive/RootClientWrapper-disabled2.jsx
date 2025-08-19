@@ -2,30 +2,27 @@
 
 import { useState, useEffect, createContext, Suspense, useMemo } from "react";
 import { useTranslation, I18nextProvider } from "react-i18next";
-import i18n from "../i18n";
+import i18n from "../i18n"; // Importa il file di configurazione di i18next
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import NavBar from "./components/NavBar";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
 import FooterLoader from "./components/FooterLoader";
+import SkipLink from './components/SkipLink';
 import useGoogleAnalytics from "./components/hooks/useGoogleAnalytics";
-import SkipLink from "./components/SkipLink";
 
-// Importa la logica di autenticazione
-import { useMinimalAuth } from "../firebase/firebase";
-
-// Crea il contesto per lo stato dell'app
+// Crea il contesto per fornire lo stato di login, i preferiti e il toggle
 export const AppContext = createContext();
 
-// Crea il contesto per l'autenticazione
+// Crea un contesto per l'autenticazione. Questo sostituisce il tuo AuthProvider.
 export const AuthContext = createContext();
 
 export default function RootClientWrapper({ children, route }) {
-  // Stati di autenticazione e di caricamento
-  const { user, loading, isAuthInitialized } = useMinimalAuth();
-
-  // Stati dell'app
   const [mounted, setMounted] = useState(false);
   const [login, setLogin] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const [favorites, setFavorites] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("favorites");
@@ -33,6 +30,7 @@ export default function RootClientWrapper({ children, route }) {
     }
     return [];
   });
+
   const [fetchedBooks, setFetchedBooks] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("cachedBooks");
@@ -41,12 +39,6 @@ export default function RootClientWrapper({ children, route }) {
     return [];
   });
 
-  // Aggiorna lo stato di login in base a user di useMinimalAuth
-  useEffect(() => {
-    setLogin(!!user);
-  }, [user]);
-
-  // Gestione della persistenza locale dei dati
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -54,8 +46,21 @@ export default function RootClientWrapper({ children, route }) {
     }
   }, [favorites, fetchedBooks]);
 
+  // Gestione dello stato di autenticazione con Firebase
   useEffect(() => {
-    setMounted(true);
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
+      if (currentUser) {
+        setUser(currentUser);
+        setLogin(true);
+      } else {
+        setUser(null);
+        setLogin(false);
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   useGoogleAnalytics();
@@ -81,47 +86,32 @@ export default function RootClientWrapper({ children, route }) {
   };
 
   const authContextValue = useMemo(
-    () => ({ user, loading, isAuthInitialized }),
-    [user, loading, isAuthInitialized]
-  );
-
-  const appStateValue = useMemo(
-    () => ({
-      mounted,
-      setMounted,
-      login,
-      setLogin,
-      user,
-      toggleFavorite,
-      favorites,
-      setFavorites,
-      fetchedBooks,
-      setFetchedBooks,
-    }),
-    [
-      mounted,
-      login,
-      user,
-      toggleFavorite,
-      favorites,
-      setFavorites,
-      fetchedBooks,
-      setFetchedBooks,
-    ]
+    () => ({ user, loading, login }),
+    [user, loading, login]
   );
 
   const { t } = useTranslation();
   const hideNavBarOnRoutes = ["/reset-password", "/update-password"];
   const showNavBar = !hideNavBarOnRoutes.includes(route);
 
-  // Se l'autenticazione non è ancora inizializzata, mostra un loader
-  if (!isAuthInitialized) {
-    return <p>Loading authentication...</p>;
-  }
-
   return (
     <I18nextProvider i18n={i18n}>
-      <AppContext.Provider value={appStateValue}>
+      <AppContext.Provider
+        value={{
+          mounted,
+          setMounted,
+          login,
+          setLogin,
+          user,
+          setUser,
+          loading,
+          setLoading,
+          toggleFavorite,
+          favorites,
+          setFavorites,
+          fetchedBooks,
+          setFetchedBooks,
+        }}>
         <AuthContext.Provider value={authContextValue}>
           <SkipLink />
           {showNavBar && <NavBar t={t} />}
