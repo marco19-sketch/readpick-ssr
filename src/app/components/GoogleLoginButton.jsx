@@ -1,33 +1,28 @@
 "use client";
 
-import {
-  signInWithGoogle
-} from "@/firebase/firebase";
+import { signInWithGoogle } from "@/firebase/firebase";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { FcGoogle } from "react-icons/fc";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AppContext } from "@/app/RootClientWrapper";
 // import { onAuthStateChanged } from "firebase/auth";
 
 export default function GoogleLoginButton() {
   const router = useRouter();
   const { t } = useTranslation();
-  const { setLogin, mounted, loading, setLoading, error } = useContext(AppContext);
-
-  const logGoogle = mounted
-    ? t("googleSingIn", { defaultValue: "Accedi con Google" })
-    : "";
+  const { setLogin, loading, setLoading, error } =
+    useContext(AppContext);
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
     try {
       await signInWithGoogle(); // redirect flow
-      setLogin(true)
+      setLogin(true);
       setTimeout(() => {
-        router.push('/');
+        router.push("/");
         setLoading(false);
-      }, 2000)
+      }, 2000);
     } catch (error) {
       console.error("Google sign-in failed: ", error);
       setLoading(false);
@@ -38,11 +33,11 @@ export default function GoogleLoginButton() {
     <button
       className="google-btn"
       onClick={handleGoogleSignIn}
-      disabled={loading && error === ''}>
+      disabled={loading && error === ""}>
       <span className="google-span">
         <FcGoogle className="google-icon" />
       </span>{" "}
-      {logGoogle}
+      {t("googleSingIn", { defaultValue: "Accedi con Google" })}
     </button>
   );
 }

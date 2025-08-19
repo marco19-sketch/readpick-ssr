@@ -28,17 +28,6 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
-// const firebaseConfig = {
-//   apiKey: "AIzaSyCFEFHFxIHn2G6xexV8R4Fb1LyhdpaAnw8",
-//   authDomain: "my-ssr-read-pick-app.firebaseapp.com",
-//   projectId: "my-ssr-read-pick-app",
-//   storageBucket: "my-ssr-read-pick-app.firebasestorage.app",
-//   messagingSenderId: "499698746925",
-//   appId: "1:499698746925:web:4077c74901ec191cfa9aa4",
-//   measurementId: "G-XQKP0P3P8X",
-// };
-
-
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -66,7 +55,8 @@ export function signInWithGoogle() {
 // Minimal auth hook
 export function useMinimalAuth() {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loadingAuth, setLoadingAuth] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [isAuthInitialized, setIsAuthInitialized] = useState(false);
 
   useEffect(() => {
@@ -78,13 +68,13 @@ export function useMinimalAuth() {
       } else {
         setUser(null);
       }
-      setLoading(false);
+      setLoadingAuth(false);
       setIsAuthInitialized(true);
     });
     return () => unsubscribe();
   }, []);
 
-  return { user, loading, isAuthInitialized };
+  return { user, loadingAuth, isAuthInitialized };
 }
 
 // Export auth and onAuthStateChanged directly

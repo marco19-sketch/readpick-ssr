@@ -1,25 +1,28 @@
 import "@/styles/auth.css";
 import { Suspense } from "react";
 import RegisterForm from "../components/RegisterForm";
+import Image from "next/image";
 
 export default function RegisterPage() {
-  const mobileBg = "/assets/images/book-813x711.avif";
-  const desktopBg = "/assets/images/book-1280.avif";
+  // const mobileBg = "/assets/images/book-813x711.avif";
+  const desktopBg = "/assets/images/book-1920.avif";
 
   return (
-    <>
-      <img
+    <div className="auth-background">
+      <Image
         className="auth-bg-auto-size"
-        src={mobileBg}
-        srcSet={`${mobileBg} 813w, ${desktopBg} 1280w`}
+        src={desktopBg}
+        // srcSet={`${mobileBg} 813w, ${desktopBg} 1280w`}
         sizes="(max-width: 640px) 100vw, 1280px"
+        width="1920"
+        height="1282"
         alt=""
         aria-hidden="true"
-        decoding="auto"
+        decoding="async"
       />
       <Suspense>
         <RegisterForm />
       </Suspense>
-    </>
+    </div>
   );
 }

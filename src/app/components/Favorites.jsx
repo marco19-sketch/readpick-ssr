@@ -1,15 +1,15 @@
 "use client";
 
 import { useState, useEffect, useContext } from "react";
-import { AppContext } from '../RootClientWrapper';
-import { useRouter } from 'next/navigation';
+import { AppContext } from "../RootClientWrapper";
+import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import Modal from "../components/Modal";
 import BookResults from "../components/BookResults";
 import BackToTop from "../components/BackToTop";
 import FavoriteButton from "../components/FavoriteButton";
 import BookCardMinimal from "../components/BookCardMinimal";
-import '@/styles/Favorites.css'
+import "@/styles/Favorites.css";
 
 function requestIdleCallbackWithFallback(callback) {
   if ("requestIdleCallback" in window) {
@@ -29,13 +29,18 @@ function cancelIdleCallbackWithFallback(id) {
 
 export default function Favorites() {
   const { t } = useTranslation();
-  const { user, loading, favorites = [], toggleFavorite } = useContext(AppContext);
+  const {
+    user,
+    loading,
+    favorites = [],
+    toggleFavorite,
+  } = useContext(AppContext);
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showFullList, setShowFullList] = useState(false);
-//   const mobileBgFav = "/assets/images/vitaly-girl-566x700.avif";
-//   const desktopBgFav = "/assets/images/vitaly-girl-1920.avif";
+  //   const mobileBgFav = "/assets/images/vitaly-girl-566x700.avif";
+  //   const desktopBgFav = "/assets/images/vitaly-girl-1920.avif";
 
   // ✅ redirect if not logged in
   useEffect(() => {
@@ -60,74 +65,73 @@ export default function Favorites() {
 
   // ✅ while checking auth
   if (loading) {
-    return <p>{ t("loading", {defaultValue: "Loading..."})}</p>;
+    return <p>{t("loading", { defaultValue: "Loading..." })}</p>;
   }
 
   // ✅ in case router.push hasn’t redirected yet
   if (!user) {
-    return <p>{ t("pleaseLogin", {defaultValue: "Please log in to view your favorites."})}</p>;
+    return (
+      <p>
+        {t("pleaseLogin", {
+          defaultValue: "Please log in to view your favorites.",
+        })}
+      </p>
+    );
   }
 
   return (
-    // <div className="favorites-page">
-    //   <img
-    //     src={mobileBgFav}
-    //     srcSet={`${mobileBgFav} 566w, ${desktopBgFav} 1920w`}
-    //     sizes="(max-width: 640px) 100vw, 1920px"
-    //     className="favorites-bg"
-    //     alt=""
-    //     aria-hidden="true"
-    //   />
+    <div className="favorites-main-container">
+      <h2 className="favorites-header">
+        {t("yourFavorites", { defaultValue: "I tuoi favoriti" })}:
+      </h2>
 
-      <div className="favorites-main-container">
-        <h2 className="favorites-header">
-          {t("yourFavorites", { defaultValue: "I tuoi favoriti" })}:
+      {(favorites || []).length === 0 ? (
+        <h2 className="no-favorites-yet">
+          {t("noFavoritesYet", { defaultValue: "Nessun favorito ancora." })}
         </h2>
-
-        {(favorites || []).length === 0 ? (
-          <h2 className="no-favorites-yet">
-            {t("noFavoritesYet", {defaultValue: 'Nessun favorito ancora.'})}
-          </h2>
-        ) : (
-          <>
-            {!showFullList ? (
-              <div className="book-results-minimal">
-                <BookCardMinimal book={favorites[0]} onSelect={handleSelect} />
-              </div>
-            ) : (
-              <BookResults
-                books={favorites}
-                favorites={favorites}
-                onSelect={handleSelect}
-                toggleFavorite={toggleFavorite}
-                // onToggleFavorite={toggleFavorite}
-                t={t}
-              />
-            )}
-          </>
-        )}
-
-        {showModal && selectedBook && (
-          <Modal onClose={() => setShowModal(false)}>
-            <div className="modal">
-              <h2 id="modal-title" className="header">
-                {selectedBook?.volumeInfo?.title || "No title"}
-              </h2>
-              <p className="full-description">
-                <strong>{t("fullDescription", {defaultValue: "Full Description"})}: </strong>{" "}
-                {selectedBook.volumeInfo?.description ||
-                  t("noDescription", {defaultValue: "No description available"})}
-              </p>
-
-              <FavoriteButton
-                isFavorite={isFavorite(selectedBook)}
-                onToggle={() => toggleFavorite(selectedBook)}
-              />
+      ) : (
+        <>
+          {!showFullList ? (
+            <div className="book-results-minimal">
+              <BookCardMinimal book={favorites[0]} onSelect={handleSelect} />
             </div>
-          </Modal>
-        )}
-        <BackToTop scrollContainerSelector=".favorites-page" />
-      </div>
-    // </div>
+          ) : (
+            <BookResults
+              books={favorites}
+              favorites={favorites}
+              onSelect={handleSelect}
+              toggleFavorite={toggleFavorite}
+              // onToggleFavorite={toggleFavorite}
+              t={t}
+            />
+          )}
+        </>
+      )}
+
+      {showModal && selectedBook && (
+        <Modal onClose={() => setShowModal(false)}>
+          <div className="modal">
+            <h2 id="modal-title" className="header">
+              {selectedBook?.volumeInfo?.title || "No title"}
+            </h2>
+            <p className="full-description">
+              <strong>
+                {t("fullDescription", { defaultValue: "Full Description" })}:{" "}
+              </strong>{" "}
+              {selectedBook.volumeInfo?.description ||
+                t("noDescription", {
+                  defaultValue: "No description available",
+                })}
+            </p>
+
+            <FavoriteButton
+              isFavorite={isFavorite(selectedBook)}
+              onToggle={() => toggleFavorite(selectedBook)}
+            />
+          </div>
+        </Modal>
+      )}
+      <BackToTop scrollContainerSelector=".favorites-page" />
+    </div>
   );
 }

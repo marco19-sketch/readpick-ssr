@@ -14,13 +14,12 @@ export default function LoginPage() {
         src={desktopBg}
         // src={mobileBg}
         // srcSet={`${mobileBg} 907w, ${desktopBg} 1280w`}
-        sizes="(max-width: 640px) 100vw, 1280px"
+        sizes="(max-width: 640px) 100vw, 1279px"
         alt=""
         // fill
         width='1279'
         height='827'
         aria-hidden='true'
-        priority={true} // Ottimizza il caricamento
         decoding="async"
       />
 

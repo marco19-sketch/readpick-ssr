@@ -12,7 +12,8 @@ import {
   signInWithEmailAndPassword,
   //   getGoogleRedirectResult,
 } from "@/firebase/firebase";
-import GoogleLoginButton from "../components/GoogleLoginButton";
+import GoogleLoginButton from "./GoogleLoginButton";
+// import GoogleLoginButton from "../components/GoogleLoginButton";
 import { AppContext } from "@/app/RootClientWrapper";
 // import TestGoogleRedirect from "../components/TestGoogleRedirect";
 
@@ -25,8 +26,8 @@ export default function Login() {
   const { t } = useTranslation();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   //   const [loading, setLoading] = useState(false);
-  const mobileBg = "/assets/images/girl-907x700.avif";
-  const desktopBg = "/assets/images/girl-1280-cropped.avif";
+  // const mobileBg = "/assets/images/girl-907x700.avif";
+  // const desktopBg = "/assets/images/girl-1280-cropped.avif";
   const { setLogin, login, loading, setLoading } = useContext(AppContext);
 
   const label = t("login", { defaultValue: "Accedi" });

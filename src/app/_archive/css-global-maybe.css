@@ -1,0 +1,19 @@
+/* Assicura che l'HTML e il BODY abbiano un'altezza minima del 100% */
+html, body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+/* Usa Flexbox sul contenitore del layout per disporre gli elementi in colonna */
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Usa min-height per non forzare un'altezza fissa */
+}
+
+/* "allunga" il contenuto principale per riempire lo spazio vuoto */
+.layout-main-content {
+  flex-grow: 1;
+}
+

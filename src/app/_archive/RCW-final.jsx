@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, createContext, Suspense, useMemo } from "react";
+import { useState, useEffect, createContext, Suspense, useMemo } from "react-2";
 import { useTranslation, I18nextProvider } from "react-i18next";
 import i18n from "../i18n";
 import NavBar from "./components/NavBar";
@@ -9,24 +9,16 @@ import BackToTop from "./components/BackToTop";
 import FooterLoader from "./components/FooterLoader";
 import useGoogleAnalytics from "./components/hooks/useGoogleAnalytics";
 import SkipLink from "./components/SkipLink";
-
-// Importa la logica di autenticazione
 import { useMinimalAuth } from "../firebase/firebase";
 
-// Crea il contesto per lo stato dell'app
 export const AppContext = createContext();
-
-// Crea il contesto per l'autenticazione
 export const AuthContext = createContext();
 
 export default function RootClientWrapper({ children, route }) {
-  // Stati di autenticazione e di caricamento
-  const { user, loadingAuth, isAuthInitialized } = useMinimalAuth();
+  const { user, loading, isAuthInitialized } = useMinimalAuth();
 
-  // Stati dell'app
   const [mounted, setMounted] = useState(false);
   const [login, setLogin] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("favorites");
@@ -42,17 +34,10 @@ export default function RootClientWrapper({ children, route }) {
     return [];
   });
 
-  // useEffect essenziale per la separazione tra server e client rendering
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Aggiorna lo stato di login in base a user di useMinimalAuth
   useEffect(() => {
     setLogin(!!user);
   }, [user]);
 
-  // Gestione della persistenza locale dei dati
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("favorites", JSON.stringify(favorites));
@@ -60,9 +45,9 @@ export default function RootClientWrapper({ children, route }) {
     }
   }, [favorites, fetchedBooks]);
 
-  // useEffect(() => {
-  //   setMounted(true);
-  // }, []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useGoogleAnalytics();
 
@@ -87,16 +72,14 @@ export default function RootClientWrapper({ children, route }) {
   };
 
   const authContextValue = useMemo(
-    () => ({ user, loadingAuth, isAuthInitialized }),
-    [user, loadingAuth, isAuthInitialized]
+    () => ({ user, loading, isAuthInitialized }),
+    [user, loading, isAuthInitialized]
   );
 
   const appStateValue = useMemo(
     () => ({
-      // mounted,
-      // setMounted,
-      loading,
-      setLoading,
+      mounted,
+      setMounted,
       login,
       setLogin,
       user,
@@ -107,9 +90,7 @@ export default function RootClientWrapper({ children, route }) {
       setFetchedBooks,
     }),
     [
-      // mounted,
-      loading,
-      setLoading,
+      mounted,
       login,
       user,
       toggleFavorite,
@@ -124,7 +105,6 @@ export default function RootClientWrapper({ children, route }) {
   const hideNavBarOnRoutes = ["/reset-password", "/update-password"];
   const showNavBar = !hideNavBarOnRoutes.includes(route);
 
-  // Se l'autenticazione non è ancora inizializzata, mostra un loader
   if (!isAuthInitialized) {
     return <p>Loading authentication...</p>;
   }
@@ -133,15 +113,16 @@ export default function RootClientWrapper({ children, route }) {
     <I18nextProvider i18n={i18n}>
       <AppContext.Provider value={appStateValue}>
         <AuthContext.Provider value={authContextValue}>
-          {/* aggiungere questo div */}
-          <div className="layout-container">
+            {/* aggiungere questo div */}
+          <div className="layout-container"> 
             <SkipLink />
             {showNavBar && <NavBar t={t} />}
             <LanguageSwitcher />
-            {/* e questa className per bloccare il Footer a fondo pagina */}
+                {/* e questa className per bloccare il Footer a fondo pagina */}
             <main id="main-content" className="layout-main-content">
               <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
             </main>
+
             <BackToTop scrollContainerSelector="body" />
             <FooterLoader />
           </div>

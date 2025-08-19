@@ -1,6 +1,7 @@
 import "@/styles/Favorites.css";
 import { Suspense } from "react";
 import Favorites from "../components/Favorites";
+import Image from "next/image";
 
 export default function FavoritesPage() {
   // const mobileBgFav = "/assets/images/vitaly-girl-566x700.avif";
@@ -8,7 +9,7 @@ export default function FavoritesPage() {
 
   return (
     <div className="favorites-page">
-      <img
+      <Image
         src={desktopBgFav}
         // srcSet={`${mobileBgFav} 566w, ${desktopBgFav} 1920w`}
         sizes="(max-width: 640px) 100vw, 1920px"
@@ -17,6 +18,7 @@ export default function FavoritesPage() {
         className="favorites-bg"
         alt=""
         aria-hidden="true"
+        decoding='async'
       />
       <Suspense>
         <Favorites />

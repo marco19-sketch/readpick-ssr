@@ -18,22 +18,23 @@ export default function NavBar() {
   const isMobile = useIsMobile();
   const pathname = usePathname();
   const { t } = useTranslation();
-  const [mounted, setMounted] = useState(false);
+  // const [mounted, setMounted] = useState(false);
 
   const isLoginPage = pathname === "/login";
 
-  const [loginTransl, setLoginTransl] = useState(false);
+  // const [loginTransl, setLoginTransl] = useState(false);
   
-  useEffect(() => {
-    setLoginTransl(true);
-  }, []);
+  // useEffect(() => {
+  //   setLoginTransl(true);
+  // }, []);
 
-  const loginAccedi = loginTransl ? t("login", { defaultValue: "Accedi" }) : "";
+  const loginBtnText = t("login", { defaultValue: "Accedi" });
+  // const loginAccedi = loginTransl ? t("login", { defaultValue: "Accedi" }) : "";
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-  const count = mounted ? favorites.length : 0;
+  // useEffect(() => {
+  //   setMounted(true)
+  // }, [])
+  // const count = mounted ? favorites.length : 0;
 
   return (
     <nav>
@@ -53,9 +54,9 @@ export default function NavBar() {
         {isMobile ? (
           <MdFavorite />
         ) : (
-          `${mounted ? t("favorites", { defaultValue: "Favorites" }) : ''} ${
-            // (favorites || []).length
-            count
+          `${t("favorites", { defaultValue: "Favorites" })} ${
+            (favorites || []).length
+            // count
           }`
         )}
       </Link>
@@ -63,18 +64,16 @@ export default function NavBar() {
       {login ? (
         <button
           className="logout"
-          aria-label={mounted ? t("logout", {defaultValue: 'Esci'}) : ''}
+          aria-label={t("logout", { defaultValue: "Esci" })}
           onClick={() => {
             logout();
             setLogin(false);
           }}>
-          {isMobile ? <IoLogOut /> : mounted ? t("logout", {defaultValue: 'Esci'}) : ''}
+          {isMobile ? <IoLogOut /> : t("logout", { defaultValue: "Esci" })}
         </button>
       ) : isLoginPage ? null : (
-        <Link href="/login" className="login" aria-label={loginAccedi}>
-          {isMobile ? <IoLogIn /> : loginAccedi}
-        {/* <Link href="/login" className="login" aria-label={t("login", { defaultValue: 'Accedi'})}>
-          {isMobile ? <IoLogIn /> : t("login", { defaultValue: "Accedi" })} */}
+        <Link href="/login" className="login" aria-label={loginBtnText}>
+          {isMobile ? <IoLogIn /> : loginBtnText}
         </Link>
       )}
     </nav>

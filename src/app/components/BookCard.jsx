@@ -3,8 +3,8 @@
 import "@/styles/BookCard.css";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "@/utils/useThumbnail";
-import React, { Suspense, useState, useEffect, useContext } from "react";
-import { AppContext } from '../RootClientWrapper';
+import React, { Suspense, useState, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 const LazyAmazonLink = React.lazy(() => import("./AmazonLink"));
 
@@ -28,13 +28,13 @@ export default function BookCard({
   book,
   onSelect,
   onToggleFavorite,
-  t,
   isFavorite,
   isHighPriority,
 }) {
   const thumbnail = useThumbnail(book);
   const [showAmazon, setShowAmazon] = useState(false);
-  const { mounted } = useContext(AppContext);
+  const { t } = useTranslation();
+ 
 
   // Delaying Amazon render, it does not improve LCP anyway
   useEffect(() => {
