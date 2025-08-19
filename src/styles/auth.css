@@ -1,6 +1,8 @@
 .auth-background {
   background-image: none;
   /* Or set your auth background here */
+  /*proviamo l'attributo fill in <image> di next.js che richiede pos.absolute nel genitore*/
+  /* position: absolute; */
 }
 
 

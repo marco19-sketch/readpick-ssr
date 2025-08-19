@@ -1,17 +1,29 @@
-// app/updatePassword/page.js
-
-// Questo è un Server Component di default
 import { Suspense } from "react";
+import UpdatePasswordForm from "../components/UpdatePasswordForm";
+import "@/styles/auth.css";
 
-// Importa il tuo componente client-side che usa useSearchParams
-import UpdatePassword from "../components/UpdatePassword";
+// Qui puoi definire le immagini, che vengono caricate dal server
+const mobileBg = "/assets/images/leaves-640.avif";
+const desktopBg = "/assets/images/leaves-1280.avif";
 
-// Il "fallback" è quello che viene mostrato mentre il componente client si sta caricando
-// Puoi usare un semplice testo, un loader, o un componente di fallback più complesso
 export default function UpdatePasswordPage() {
   return (
-    <Suspense fallback={<div>Caricamento...</div>}>
-      <UpdatePassword />
-    </Suspense>
+    <div className="auth-background">
+      <img
+        className="auth-bg-auto-size"
+        src={mobileBg}
+        srcSet={`${mobileBg} 907w, ${desktopBg} 1280w`}
+        sizes="(max-width: 640px) 100vw, 1280px"
+        alt=""
+        aria-hidden="true"
+        decoding="auto"
+      />
+      <div className="auth-page">
+        {/* Usiamo <Suspense> per gestire il caricamento del componente client */}
+        <Suspense fallback={<div>Caricamento modulo...</div>}>
+          <UpdatePasswordForm />
+        </Suspense>
+      </div>
+    </div>
   );
 }

@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useEffect, createContext, Suspense } from "react";
-import { useTranslation } from "react-i18next";
-// import "../i18n";
+import { useTranslation, I18nextProvider } from "react-i18next";
+import i18n from "../i18n"; // Importa il file di configurazione di i18next
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import NavBar from "./components/NavBar";
-
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
 import FooterLoader from "./components/FooterLoader";
@@ -28,9 +27,9 @@ export default function RootClientWrapper({ children, route }) {
     setMounted(true);
   }, []);
 
-  const label = t("skipToMain", {
-    defaultValue: "Vai al contenuto principale",
-  });
+  // const label = t("skipToMain", {
+  //   defaultValue: "Vai al contenuto principale"
+  // });
 
   const [favorites, setFavorites] = useState(() => {
     if (typeof window !== "undefined") {
@@ -100,33 +99,43 @@ export default function RootClientWrapper({ children, route }) {
   const showNavBar = !hideNavBarOnRoutes.includes(route);
 
   return (
-    <AppContext.Provider
-      value={{
-        mounted,
-        setMounted,
-        login,
-        setLogin,
-        user,
-        setUser,
-        loading,
-        setLoading,
-        toggleFavorite,
-        favorites,
-        setFavorites,
-        fetchedBooks,
-        setFetchedBooks,
-        t,
-      }}>
-      {showNavBar && <NavBar t={t} />}
-      <LanguageSwitcher />
+    <I18nextProvider i18n={i18n}>
+      <AppContext.Provider
+        value={{
+          mounted,
+          setMounted,
+          login,
+          setLogin,
+          user,
+          setUser,
+          loading,
+          setLoading,
+          toggleFavorite,
+          favorites,
+          setFavorites,
+          fetchedBooks,
+          setFetchedBooks,
+          // t,
+        }}>
+        <a
+        tabIndex='0' 
+        href="#main-content" 
+        className="skip-link">
+                  {t("skipToMain", {
+                    defaultValue: "Vai al contenuto principale",
+                  })}
+                </a>
+        {showNavBar && <NavBar t={t} />}
+        <LanguageSwitcher />
 
-      <main id="main-content">
-        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-      </main>
+        <main id="main-content">
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+        </main>
 
-      {children}
-      <BackToTop scrollContainerSelector="body" />
-      <FooterLoader />
-    </AppContext.Provider>
+        {/* {children} */}
+        <BackToTop scrollContainerSelector="body" />
+        <FooterLoader />
+      </AppContext.Provider>
+    </I18nextProvider>
   );
 }
