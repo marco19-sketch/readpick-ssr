@@ -14,7 +14,7 @@ export default function Home() {
         <h1 className="main-title">Read Pick</h1>
       </header>
       <Image
-        src="/assets/images/pexels-tima-1920.avif"
+        src="/assets/images/pexels-tima-1920.jpg"
         sizes="(max-width: 480px) 480px,
          (max-width: 768px) 768px,
          (max-width: 1024px) 1024px,
