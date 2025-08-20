@@ -41,7 +41,7 @@ export default function Home() {
         aria-hidden="true"
         className="home-bg"
         decoding="async"
-        priority={true}
+        priority='true'
       />
 
       {/* <Suspense> */}
