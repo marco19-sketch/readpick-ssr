@@ -1,10 +1,12 @@
-import { Suspense } from "react";
-import UpdatePasswordForm from "../components/UpdatePasswordForm";
+import { Suspense, lazy } from "react";
 import "@/styles/auth.css";
 import Image from "next/image";
 
+// Importa il Client Component in modo dinamico
+const UpdatePasswordClient = lazy(() => import("../components/UpdatePasswordClient"));
+
 // Qui puoi definire le immagini, che vengono caricate dal server
-// const mobileBg = "/assets/images/leaves-640.avif";
+
 const desktopBg = "/assets/images/leaves-1280.avif";
 
 export default function UpdatePasswordPage() {
@@ -24,7 +26,7 @@ export default function UpdatePasswordPage() {
       <div className="auth-page">
         {/* Usiamo <Suspense> per gestire il caricamento del componente client */}
         <Suspense fallback={<div>Caricamento modulo...</div>}>
-          <UpdatePasswordForm />
+          <UpdatePasswordClient />
         </Suspense>
       </div>
     </div>

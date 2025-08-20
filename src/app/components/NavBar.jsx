@@ -1,7 +1,7 @@
 "use client";
 
-import { useContext, useState, useEffect } from "react";
-import { AppContext } from "@/app/RootClientWrapper";
+import { useContext } from "react";
+import { AppContext } from "./AppContextProvider";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
@@ -18,23 +18,10 @@ export default function NavBar() {
   const isMobile = useIsMobile();
   const pathname = usePathname();
   const { t } = useTranslation();
-  // const [mounted, setMounted] = useState(false);
 
   const isLoginPage = pathname === "/login";
 
-  // const [loginTransl, setLoginTransl] = useState(false);
-  
-  // useEffect(() => {
-  //   setLoginTransl(true);
-  // }, []);
-
   const loginBtnText = t("login", { defaultValue: "Accedi" });
-  // const loginAccedi = loginTransl ? t("login", { defaultValue: "Accedi" }) : "";
-
-  // useEffect(() => {
-  //   setMounted(true)
-  // }, [])
-  // const count = mounted ? favorites.length : 0;
 
   return (
     <nav>

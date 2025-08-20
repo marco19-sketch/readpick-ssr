@@ -1,10 +1,9 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useContext } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import CustomRadio from "./CustomRadio";
 import "@/styles/SearchBar.css";
-import { FaSearch } from "react-icons/fa";
-// import { AppContext } from "@/app/RootClientWrapper";
+// import { FaSearch } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 
 const labelsMap = {
@@ -29,7 +28,7 @@ export default function SearchBar({
   handleFetchNew,
 }) {
   const { t } = useTranslation();
-  // const { mounted } = useContext(AppContext);
+ 
 
   const debounceTimeout = useRef(null);
 
@@ -156,7 +155,7 @@ export default function SearchBar({
             onSearch(query);
             setSuggestions([]);
           }}>
-          <FaSearch />
+          {/* <FaSearch /> */}
           {/* {t("startSearch")} */}
         </button>
       </div>

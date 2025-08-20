@@ -1,7 +1,10 @@
-import { Suspense } from "react";
-import HomePage from "./components/HomePage";
+// import { Suspense, lazy } from "react";
 import "@/styles/Home.css";
 import Image from "next/image";
+import HomeClient from './components/HomeClient';
+
+// Importa il Client Component in modo dinamico
+// const HomePage = lazy(() => import("./components/HomePage"));
 
 export default function Home() {
   return (
@@ -26,9 +29,9 @@ export default function Home() {
         priority="true"
       />
 
-      <Suspense>
-        <HomePage />
-      </Suspense>
+      {/* <Suspense> */}
+        <HomeClient />
+      {/* </Suspense> */}
     </div>
   );
 }

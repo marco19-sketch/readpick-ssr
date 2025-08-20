@@ -4,8 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { auth, confirmPasswordReset } from "@/firebase/firebase";
 import "@/styles/auth.css";
-import { IoMdEyeOff } from "react-icons/io";
-import { IoEye } from "react-icons/io5";
+// import { IoMdEyeOff } from "react-icons/io";
+// import { IoEye } from "react-icons/io5";
 import { validatePassword } from "../../utils/validatePassword";
 import { useTranslation } from "react-i18next";
 import Image from "next/image";
@@ -98,7 +98,8 @@ export default function UpdatePassword() {
             <div className="auth-input-container">
               <input
                 className="auth-input password"
-                type={passwordVisibility ? "text" : "password"}
+                type= "password"
+                // type={passwordVisibility ? "text" : "password"}
                 placeholder={t("enterNewPass", {
                   defaultValue: "Inserisci nuova password...",
                 })}
@@ -107,12 +108,12 @@ export default function UpdatePassword() {
                 onBlur={() => setPasswordTouched(true)}
                 required
               />
-              <button
+              {/* <button
                 className="auth-toggle-visibility"
                 type="button"
                 onClick={handleVisibility}>
                 {passwordVisibility ? <IoEye /> : <IoMdEyeOff />}
-              </button>
+              </button> */}
             </div>
 
             {passwordTouched && !isValid && (

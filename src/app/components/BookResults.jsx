@@ -3,7 +3,8 @@
 import React from 'react'
 import BookCard from "./BookCard";
 import "@/styles/BookResults.css";
-import { AppContext } from "@/app/RootClientWrapper"; // ✅ import context
+import { AppContext } from "./AppContextProvider"; // ✅ import context
+// import { AppContext } from "@/app/RootClientWrapper"; // ✅ import context
 import { useContext } from 'react';
 
 
@@ -11,7 +12,7 @@ export default function BookResults({
   books,
   onSelect,
   favorites,
-  t,
+  // t,
 }) {
   const { toggleFavorite  } = useContext(AppContext); // ✅ get toggleFavorite from context
 
@@ -26,7 +27,7 @@ export default function BookResults({
           <BookCard
             book={book}
             onSelect={() => onSelect(book)}
-            t={t}
+            // t={ t }
             isFavorite={isFavorite}
             isHighPriority={index === 0} // 👈 pass this to BookCard
             onToggleFavorite={() => toggleFavorite(book)}

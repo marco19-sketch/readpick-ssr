@@ -1,7 +1,9 @@
 import "@/styles/auth.css";
-import { Suspense } from "react";
-import LoginForm from "../components/LoginForm";
+import { Suspense, lazy } from "react";
 import Image from "next/image";
+
+// Importa il Client Component in modo dinamico
+const LoginClient = lazy(() => import("../components/LoginClient"));
 
 export default function LoginPage() {
   // const mobileBg = "/assets/images/girl-907x700.avif";
@@ -24,12 +26,9 @@ export default function LoginPage() {
       />
 
       <Suspense>
-        <LoginForm />
+        <LoginClient />
       </Suspense>
     </div>
   );
 }
 
-{
-  /* Immagine resa dal server con il componente Image di Next.js */
-}

@@ -3,7 +3,7 @@ import { Suspense, lazy } from "react";
 import Image from "next/image";
 
 // Importa il Client Component in modo dinamico
-const RegisterClient = lazy(() => import("../components/RegisterClient"));
+const RegisterForm = lazy(() => import("../components/RegisterForm"));
 
 export default function RegisterPage() {
   // const mobileBg = "/assets/images/book-813x711.avif";
@@ -23,7 +23,7 @@ export default function RegisterPage() {
         decoding="async"
       />
       <Suspense>
-        <RegisterClient />
+        <RegisterForm />
       </Suspense>
     </div>
   );

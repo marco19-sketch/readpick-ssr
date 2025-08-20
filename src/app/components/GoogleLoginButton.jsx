@@ -2,17 +2,16 @@
 
 import { signInWithGoogle } from "@/firebase/firebase";
 import { useRouter } from "next/navigation";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import { FcGoogle } from "react-icons/fc";
 import { useContext } from "react";
-import { AppContext } from "@/app/RootClientWrapper";
+import { AppContext } from "./AppContextProvider";
 // import { onAuthStateChanged } from "firebase/auth";
 
-export default function GoogleLoginButton() {
+export default function GoogleLoginButton({ error }) {
   const router = useRouter();
-  const { t } = useTranslation();
-  const { setLogin, loading, setLoading, error } =
-    useContext(AppContext);
+  // const { t } = useTranslation();
+  const { setLogin, loading, setLoading } = useContext(AppContext);
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
@@ -37,7 +36,8 @@ export default function GoogleLoginButton() {
       <span className="google-span">
         <FcGoogle className="google-icon" />
       </span>{" "}
-      {t("googleSingIn", { defaultValue: "Accedi con Google" })}
+      test text
+      {/* {t("googleSingIn", { defaultValue: "Accedi con Google" })} */}
     </button>
   );
 }

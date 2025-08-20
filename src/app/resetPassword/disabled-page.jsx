@@ -4,18 +4,21 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import "@/styles/auth.css";
 import { auth, sendPasswordResetEmail } from "@/firebase/firebase";
+import Image from "next/image";
+ // const mobileBg = "/assets/images/susan-700x394.avif";
+  const desktopBg = "/assets/images/susan-1920.avif";
+
 
 export default function ResetPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [msgGreen, setMsgGreen] = useState(false);
   const { t } = useTranslation();
-
-
+ 
   const resetPassword = async email => {
     const actionCodeSettings = {
       url: `${window.location.origin}/update-password`, // dynamic link to the app
-      handleCodeInApp: true
+      handleCodeInApp: true,
     };
     try {
       await sendPasswordResetEmail(auth, email, actionCodeSettings);
@@ -24,7 +27,6 @@ export default function ResetPassword() {
       return { success: false, error: error.message || error.toString() };
     }
   };
- 
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -46,7 +48,18 @@ export default function ResetPassword() {
 
   return (
     <div className="auth-background">
-    
+      <Image
+        className="auth-bg-auto-size"
+        src={desktopBg}
+        // srcSet={`${mobileBg} 700w, ${desktopBg} 1280w`}
+        sizes="(max-width: 640px) 100vw, 1920px"
+        width="1920"
+        height="1081"
+        alt=""
+        aria-hidden="true"
+        decoding="async"
+      />
+
       <div className="auth-page">
         <form className="auth-form" onSubmit={handleSubmit}>
           <h2 className="auth-header">

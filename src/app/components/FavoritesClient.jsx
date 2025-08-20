@@ -1,14 +1,14 @@
 "use client";
 
 import { useState, useEffect, useContext } from "react";
-import { AppContext } from "../RootClientWrapper";
+import { AppContext } from "./AppContextProvider";
 import { useRouter } from "next/navigation";
-import { useTranslation } from "react-i18next";
-import Modal from "../components/Modal";
-import BookResults from "../components/BookResults";
-import BackToTop from "../components/BackToTop";
-import FavoriteButton from "../components/FavoriteButton";
-import BookCardMinimal from "../components/BookCardMinimal";
+// import { useTranslation } from "react-i18next";
+import Modal from "./Modal";
+import BookResults from "./BookResults";
+import BackToTop from "./BackToTop";
+import FavoriteButton from "./FavoriteButton";
+import BookCardMinimal from "./BookCardMinimal";
 import "@/styles/Favorites.css";
 
 function requestIdleCallbackWithFallback(callback) {
@@ -28,7 +28,7 @@ function cancelIdleCallbackWithFallback(id) {
 }
 
 export default function Favorites() {
-  const { t } = useTranslation();
+  // const { t } = useTranslation();
   const {
     user,
     loading,
@@ -65,16 +65,18 @@ export default function Favorites() {
 
   // ✅ while checking auth
   if (loading) {
-    return <p>{t("loading", { defaultValue: "Loading..." })}</p>;
+    return <p>test text</p>;
+    // return <p>{t("loading", { defaultValue: "Loading..." })}</p>;
   }
 
   // ✅ in case router.push hasn’t redirected yet
   if (!user) {
     return (
       <p>
-        {t("pleaseLogin", {
+        {/* {t("pleaseLogin", {
           defaultValue: "Please log in to view your favorites.",
-        })}
+        })} */}
+        test text
       </p>
     );
   }
@@ -82,12 +84,14 @@ export default function Favorites() {
   return (
     <div className="favorites-main-container">
       <h2 className="favorites-header">
-        {t("yourFavorites", { defaultValue: "I tuoi favoriti" })}:
+        {/* {t("yourFavorites", { defaultValue: "I tuoi favoriti" })}: */}
+        test text
       </h2>
 
       {(favorites || []).length === 0 ? (
         <h2 className="no-favorites-yet">
-          {t("noFavoritesYet", { defaultValue: "Nessun favorito ancora." })}
+          {/* {t("noFavoritesYet", { defaultValue: "Nessun favorito ancora." })} */}
+          test text
         </h2>
       ) : (
         <>
@@ -102,7 +106,7 @@ export default function Favorites() {
               onSelect={handleSelect}
               toggleFavorite={toggleFavorite}
               // onToggleFavorite={toggleFavorite}
-              t={t}
+              // t={t}
             />
           )}
         </>
@@ -116,12 +120,14 @@ export default function Favorites() {
             </h2>
             <p className="full-description">
               <strong>
-                {t("fullDescription", { defaultValue: "Full Description" })}:{" "}
+                {/* {t("fullDescription", { defaultValue: "Full Description" })}:{" "} */}
+                test text
               </strong>{" "}
-              {selectedBook.volumeInfo?.description ||
+              {/* {selectedBook.volumeInfo?.description ||
                 t("noDescription", {
                   defaultValue: "No description available",
-                })}
+                })} */}
+                test text
             </p>
 
             <FavoriteButton

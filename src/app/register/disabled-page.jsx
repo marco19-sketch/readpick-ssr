@@ -1,16 +1,20 @@
 "use client";
 
 import { useState, useCallback, useContext } from "react";
+import { AppContext } from "@/app/RootClientWrapper";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { validatePassword } from "../../utils/validatePassword";
 import "@/styles/auth.css";
 import { useTranslation } from "react-i18next";
-import { IoMdEyeOff } from "react-icons/io";
-import { IoEye } from "react-icons/io5";
+// import { IoMdEyeOff } from "react-icons/io";
+// import { IoEye } from "react-icons/io5";
 import { auth, createUserWithEmailAndPassword } from "@/firebase/firebase";
+import Image from "next/image";
+  // const mobileBg = "/assets/images/book-813x711.avif";
+  const desktopBg = "/assets/images/book-1920.avif";
 
-export default function RegisterForm() {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -20,6 +24,9 @@ export default function RegisterForm() {
   const { t } = useTranslation();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const { rules, isValid } = validatePassword(password);
+  const { setLogin } = useContext(AppContext);
+
+
   const register = t("register", { defaultValue: "Registrati" });
   const placeholder = t("passRegister", {
     defaultValue: "Inserisci una password forte...",
@@ -56,40 +63,53 @@ export default function RegisterForm() {
   };
 
   return (
-    <div className="auth-page">
-      <form onSubmit={handleRegister} className="auth-form">
-        <h2 className="auth-header">{register}</h2>
-        <input
-          className="auth-input"
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-        />
-        <br />
-        <div className="auth-input-container">
+    <div className="auth-background">
+      <Image
+        className="auth-bg-auto-size"
+        src={desktopBg}
+        // srcSet={`${mobileBg} 813w, ${desktopBg} 1280w`}
+        sizes="(max-width: 640px) 100vw, 1280px"
+        width="1920"
+        height="1282"
+        alt=""
+        aria-hidden="true"
+        decoding="async"
+      />
+      <div className="auth-page">
+        <form onSubmit={handleRegister} className="auth-form">
+          <h2 className="auth-header">{register}</h2>
           <input
-            className="auth-input password"
-            type={passwordVisibility ? "text" : "password"}
-            placeholder={placeholder}
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            onBlur={() => setPasswordTouched(true)}
+            className="auth-input"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
-          <button
-            className="auth-toggle-visibility"
-            type="button"
-            onClick={handleVisibility}>
-            {passwordVisibility ? <IoEye /> : <IoMdEyeOff />}
-          </button>
-        </div>
-        {passwordTouched && (
-          <ul style={{ listStyle: "none", padding: 0 }}>
-            <li style={{ color: rules.length ? "green" : "red" }}>
-              {rules.length ? "✅" : "❌"} {chars8}
-            </li>
+          <br />
+          <div className="auth-input-container">
+            <input
+              className="auth-input password"
+              type="password"
+              // type={passwordVisibility ? "text" : "password"}
+              placeholder={placeholder}
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              onBlur={() => setPasswordTouched(true)}
+            />
+            {/* <button
+              className="auth-toggle-visibility"
+              type="button"
+              onClick={handleVisibility}>
+              {passwordVisibility ? <IoEye /> : <IoMdEyeOff />}
+            </button> */}
+          </div>
+          {passwordTouched && (
+            <ul style={{ listStyle: "none", padding: 0 }}>
+              <li style={{ color: rules.length ? "green" : "red" }}>
+                {rules.length ? "✅" : "❌"} {chars8}
+              </li>
 
-            {/* <li style={{ color: rules.uppercase ? "green" : "red" }}>
+              {/* <li style={{ color: rules.uppercase ? "green" : "red" }}>
                 {rules.uppercase ? "✅" : "❌"}{" "}
                 {t("upperCase", {
                   defaultValue: "Almeno una lettera maiuscola",
@@ -106,25 +126,26 @@ export default function RegisterForm() {
                 })}
                 (e.g. !, @, #)
               </li> */}
-          </ul>
-        )}
-        <br />
-        <button className="auth-btn" type="submit" disabled={!isValid}>
-          {createAccount}
-        </button>
-        {error && (
-          <p className="auth-error" style={{ color: "red" }}>
-            {error}
+            </ul>
+          )}
+          <br />
+          <button className="auth-btn" type="submit" disabled={!isValid}>
+            {createAccount}
+          </button>
+          {error && (
+            <p className="auth-error" style={{ color: "red" }}>
+              {error}
+            </p>
+          )}
+          {success && <p className="auth-success">{registerSuccess}</p>}
+          <p className="auth-p-link">
+            {accountAlready}{" "}
+            <Link className="auth-nav-link" href="/login">
+              {loginNow}
+            </Link>
           </p>
-        )}
-        {success && <p className="auth-success">{registerSuccess}</p>}
-        <p className="auth-p-link">
-          {accountAlready}{" "}
-          <Link className="auth-nav-link" href="/login">
-            {loginNow}
-          </Link>
-        </p>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }

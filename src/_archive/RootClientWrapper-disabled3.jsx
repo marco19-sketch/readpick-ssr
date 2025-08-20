@@ -2,27 +2,31 @@
 
 import { useState, useEffect, createContext, Suspense, useMemo } from "react";
 import { useTranslation, I18nextProvider } from "react-i18next";
-import i18n from "../i18n"; // Importa il file di configurazione di i18next
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import i18n from "../i18n-client";
 import NavBar from "./components/NavBar";
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import BackToTop from "./components/BackToTop";
 import FooterLoader from "./components/FooterLoader";
-import SkipLink from './components/SkipLink';
 import useGoogleAnalytics from "./components/hooks/useGoogleAnalytics";
+import SkipLink from "./components/SkipLink";
 
-// Crea il contesto per fornire lo stato di login, i preferiti e il toggle
+// Importa la logica di autenticazione
+import { useMinimalAuth } from "../firebase/firebase";
+
+// Crea il contesto per lo stato dell'app
 export const AppContext = createContext();
 
-// Crea un contesto per l'autenticazione. Questo sostituisce il tuo AuthProvider.
+// Crea il contesto per l'autenticazione
 export const AuthContext = createContext();
 
 export default function RootClientWrapper({ children, route }) {
+  // Stati di autenticazione e di caricamento
+  const { user, loadingAuth, isAuthInitialized } = useMinimalAuth();
+
+  // Stati dell'app
   const [mounted, setMounted] = useState(false);
   const [login, setLogin] = useState(false);
-  const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(false);
-
   const [favorites, setFavorites] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("favorites");
@@ -30,7 +34,6 @@ export default function RootClientWrapper({ children, route }) {
     }
     return [];
   });
-
   const [fetchedBooks, setFetchedBooks] = useState(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("cachedBooks");
@@ -39,29 +42,23 @@ export default function RootClientWrapper({ children, route }) {
     return [];
   });
 
+  // useEffect essenziale per la separazione tra server e client rendering
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Aggiorna lo stato di login in base a user di useMinimalAuth
+  useEffect(() => {
+    setLogin(!!user);
+  }, [user]);
+
+  // Gestione della persistenza locale dei dati
   useEffect(() => {
     if (typeof window !== "undefined") {
       localStorage.setItem("favorites", JSON.stringify(favorites));
       localStorage.setItem("cachedBooks", JSON.stringify(fetchedBooks));
     }
   }, [favorites, fetchedBooks]);
-
-  // Gestione dello stato di autenticazione con Firebase
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, async currentUser => {
-      if (currentUser) {
-        setUser(currentUser);
-        setLogin(true);
-      } else {
-        setUser(null);
-        setLogin(false);
-      }
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
 
   useGoogleAnalytics();
 
@@ -86,41 +83,62 @@ export default function RootClientWrapper({ children, route }) {
   };
 
   const authContextValue = useMemo(
-    () => ({ user, loading, login }),
-    [user, loading, login]
+    () => ({ user, loadingAuth, isAuthInitialized }),
+    [user, loadingAuth, isAuthInitialized]
+  );
+
+  const appStateValue = useMemo(
+    () => ({
+      loading,
+      setLoading,
+      login,
+      setLogin,
+      user,
+      toggleFavorite,
+      favorites,
+      setFavorites,
+      fetchedBooks,
+      setFetchedBooks,
+    }),
+    [
+      loading,
+      setLoading,
+      login,
+      setLogin,
+      user,
+      toggleFavorite,
+      favorites,
+      setFavorites,
+      fetchedBooks,
+      setFetchedBooks,
+    ]
   );
 
   const { t } = useTranslation();
   const hideNavBarOnRoutes = ["/reset-password", "/update-password"];
   const showNavBar = !hideNavBarOnRoutes.includes(route);
 
+  // Se l'autenticazione non è ancora inizializzata, mostra un loader
+  if (!isAuthInitialized) {
+    return <p>Loading authentication...</p>;
+  }
+
   return (
     <I18nextProvider i18n={i18n}>
-      <AppContext.Provider
-        value={{
-          mounted,
-          setMounted,
-          login,
-          setLogin,
-          user,
-          setUser,
-          loading,
-          setLoading,
-          toggleFavorite,
-          favorites,
-          setFavorites,
-          fetchedBooks,
-          setFetchedBooks,
-        }}>
+      <AppContext.Provider value={appStateValue}>
         <AuthContext.Provider value={authContextValue}>
-          <SkipLink />
-          {showNavBar && <NavBar t={t} />}
-          <LanguageSwitcher />
-          <main id="main-content">
-            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
-          </main>
-          <BackToTop scrollContainerSelector="body" />
-          <FooterLoader />
+          {/* aggiungere questo div */}
+          <div className="layout-container">
+            <SkipLink />
+            {showNavBar && <NavBar t={t} />}
+            <LanguageSwitcher />
+            {/* e questa className per bloccare il Footer a fondo pagina */}
+            <main id="main-content" className="layout-main-content">
+              <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
+            </main>
+            <BackToTop scrollContainerSelector="body" />
+            <FooterLoader />
+          </div>
         </AuthContext.Provider>
       </AppContext.Provider>
     </I18nextProvider>

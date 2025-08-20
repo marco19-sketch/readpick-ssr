@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analyze": "next build --analyze"
   },
   "dependencies": {
     "firebase": "^12.1.0",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.4.7",
     "eslint": "^9",
     "eslint-config-next": "15.4.6"
   }

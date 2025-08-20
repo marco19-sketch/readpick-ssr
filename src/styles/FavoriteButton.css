@@ -38,7 +38,17 @@
   color: red;
   animation: pulse 1s ease;
   animation-iteration-count: 1;
-}
+  }
+
+  .filled {
+    font-size: 24px;
+    color: red;
+  }
+
+  .outline {
+    font-size: 24px;
+    color: gray;
+  }
 
 @keyframes pulse-hover {
   0% {

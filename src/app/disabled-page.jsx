@@ -3,18 +3,20 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { useContext } from "react";
-import { AppContext } from "../RootClientWrapper";
-import Modal from "./Modal";
-import SearchBar from "./SearchBar";
-import itaTrendingBooks from "../../data/itaTrendingBooks";
+import { AppContext } from "./RootClientWrapper";
+import Modal from "./components/Modal";
+import SearchBar from "./components/SearchBar";
+import itaTrendingBooks from "./../data/itaTrendingBooks";
 import "@/styles/Home.css";
 // import { scrollUp } from "../utils/scrollUp";
-import FavoriteButton from "./FavoriteButton";
+import FavoriteButton from "./components/FavoriteButton";
 import { devLog } from "@/utils/devLog";
-import BookResults from "./BookResults";
-import LoadingSkeleton from "./LoadingSkeleton";
+import BookResults from "./components/BookResults";
+import LoadingSkeleton from "./components/LoadingSkeleton";
+import Image from "next/image";
 
-export default function HomePage() {
+
+export default function Home() {
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -152,10 +154,26 @@ export default function HomePage() {
   }, [fetchedBooks]);
 
   return (
-    // <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
-    //   <header>
-    //     <h1 className="main-title">Read Pick</h1>
-    //   </header>
+    <div className="home-page">
+        <Image
+                src="/assets/images/pexels-tima-1920.avif"
+                sizes="(max-width: 480px) 480px,
+                 (max-width: 768px) 768px,
+                 (max-width: 1024px) 1024px,
+                 (max-width: 1600px) 1600px,
+                 1920px"
+                height="1280"
+                width="1920"
+                alt=" "
+                aria-hidden="true"
+                className="home-bg"
+                decoding="async"
+                priority="true"
+              />
+    {/* <div className={`home-page ${loading ? "wait-cursor" : ""}`}> */}
+      <header>
+        <h1 className="main-title">Read Pick</h1>
+      </header>
     <div className="main-container" id="main-content">
       <SearchBar
         query={query}
@@ -241,5 +259,7 @@ export default function HomePage() {
         </Modal>
       )}
     </div>
+    </div>
+    // </div>
   );
 }

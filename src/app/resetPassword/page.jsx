@@ -1,14 +1,17 @@
+
 import "@/styles/auth.css";
-import { Suspense } from "react";
-import ResetPasswordForm from "../components/ResetPasswordForm";
+import { Suspense, lazy } from "react";
 import Image from "next/image";
+
+// Importa il Client Component in modo dinamico
+const ResetPasswordClient = lazy(() => import("../components/ResetPasswordClient"));
 
 export default function ResetPasswordPage() {
   // const mobileBg = "/assets/images/susan-700x394.avif";
   const desktopBg = "/assets/images/susan-1920.avif";
 
   return (
-    <>
+    <div className="auth-background">
       <Image
         className="auth-bg-auto-size"
         src={desktopBg}
@@ -21,8 +24,8 @@ export default function ResetPasswordPage() {
         decoding="async"
       />
       <Suspense>
-        <ResetPasswordForm />
+        <ResetPasswordClient />
       </Suspense>
-    </>
+    </div>
   );
 }

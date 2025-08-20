@@ -1,7 +1,10 @@
 import "@/styles/Favorites.css";
-import { Suspense } from "react";
-import Favorites from "../components/Favorites";
+import { Suspense, lazy } from "react";
 import Image from "next/image";
+import FavoritesClient from '../components/FavoritesClient'
+
+// Importa il Client Component in modo dinamico
+// const Favorites = lazy(() => import("../components/Favorites"));
 
 export default function FavoritesPage() {
   // const mobileBgFav = "/assets/images/vitaly-girl-566x700.avif";
@@ -21,7 +24,7 @@ export default function FavoritesPage() {
         decoding='async'
       />
       <Suspense>
-        <Favorites />
+        <FavoritesClient />
       </Suspense>
     </div>
   );
