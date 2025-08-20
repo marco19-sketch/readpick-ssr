@@ -29,7 +29,7 @@ export default function Home() {
         priority='true'
       /> */}
       <Image
-        src="/assets/images/pexels-tima-1920.jpg"
+        src="/assets/images/pexelsTima1920.jpg"
         sizes="(max-width: 480px) 480px,
          (max-width: 768px) 768px,
          (max-width: 1024px) 1024px,
