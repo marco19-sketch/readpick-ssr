@@ -10,7 +10,6 @@
     "analyze": "next build --analyze"
   },
   "dependencies": {
-    "@netlify/plugin-nextjs": "^5.12.0",
     "firebase": "^12.1.0",
     "focus-trap-react": "^11.0.4",
     "i18next": "^25.3.6",
