@@ -1,0 +1,7 @@
+[[redirects]]
+  from = "/assets/images/bgimage.jpg"
+  to = "/assets/images/bgimage.jpg"
+  status = 200
+  force = true
+  [redirects.headers]
+    Content-Type = "image/jpeg"
