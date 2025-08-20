@@ -13,7 +13,7 @@ export default function Home() {
       <header>
         <h1 className="main-title">Read Pick</h1>
       </header>
-      <img
+      {/* <img
         src="/assets/images/pexels-tima-1920.jpg"
         // sizes="(max-width: 480px) 480px,
         //  (max-width: 768px) 768px,
@@ -27,8 +27,8 @@ export default function Home() {
         className="home-bg"
         decoding="async"
         priority='true'
-      />
-      {/* <Image
+      /> */}
+      <Image
         src="/assets/images/pexels-tima-1920.jpg"
         sizes="(max-width: 480px) 480px,
          (max-width: 768px) 768px,
@@ -42,7 +42,7 @@ export default function Home() {
         className="home-bg"
         decoding="async"
         priority={true}
-      /> */}
+      />
 
       {/* <Suspense> */}
         <HomeClient />
