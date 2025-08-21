@@ -4,7 +4,7 @@ import "@/styles/BookCard.css";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "@/utils/useThumbnail";
 import React, { Suspense, useState, useEffect } from "react";
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 
 const LazyAmazonLink = React.lazy(() => import("./AmazonLink"));
 
@@ -33,7 +33,7 @@ export default function BookCard({
 }) {
   const thumbnail = useThumbnail(book);
   const [showAmazon, setShowAmazon] = useState(false);
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
  
 
   // Delaying Amazon render, it does not improve LCP anyway
@@ -58,8 +58,7 @@ export default function BookCard({
   const formatCopiesSold = () => {
     if (!copiesSold) return "N/A";
     if (copiesSold >= 1000000) {
-      return (copiesSold / 1000000).toLocaleString() + "test text" ;
-      // return (copiesSold / 1000000).toLocaleString() + " " + t("Millions", {defaultValue: 'Milioni'});
+      return (copiesSold / 1000000).toLocaleString() + " " + t("Millions", {defaultValue: 'Milioni'});
     } else {
       return copiesSold.toLocaleString() || "N/A";
     }
@@ -106,41 +105,41 @@ export default function BookCard({
           <FavoriteButton
             isFavorite={isFavorite(book)}
             onToggle={onToggleFavorite}
-            // t={t}
+            t={t}
           />
         </div>
       </div>
       <div className="book-detail">
         <p>
-          <strong>test text:{" "}</strong>
-          {/* <strong>{ t("author", {defaultValue: 'Autore(i)'})}:{" "}</strong> */}
+          
+          <strong>{ t("author", {defaultValue: 'Autore(i)'})}:{" "}</strong>
           {Array.isArray(authors) ? authors.join(", ") : authors}
         </p>
         <p>
-          <strong>test text:</strong> {publishedYear}
-          {/* <strong>{ t("published", {defaultValue: 'Pubblicato'})}:</strong> {publishedYear} */}
+          
+          <strong>{ t("published", {defaultValue: 'Pubblicato'})}:</strong> {publishedYear}
         </p>
         <p>
-          <strong>test text:</strong>{" "}
-          {/* <strong>{ t("genre", {defaultValue: 'Genere'})}:</strong>{" "} */}
+          
+          <strong>{ t("genre", {defaultValue: 'Genere'})}:</strong>{" "}
           {Array.isArray(categories) ? categories.join(", ") : categories}
         </p>
 
         <p>
-          <strong>test text</strong>{" "}
-          {/* <strong>{ t("language", {defaultValue: 'Lingua'})}:</strong>{" "} */}
+          
+          <strong>{ t("language", {defaultValue: 'Lingua'})}:</strong>{" "}
           {languageMap[language] || language}
         </p>
         <p>
-          <strong>test text:</strong>{" "}
-          {/* <strong>{ t("copiesSold", {defaultValue: 'Copie vendute'})}:</strong>{" "} */}
+          
+          <strong>{ t("copiesSold", {defaultValue: 'Copie vendute'})}:</strong>{" "}
           <span className="copies-sold">
             {formatCopiesSold(copiesSold) || "N/A"}
           </span>
         </p>
         <p>
-          <strong>test text:</strong>{" "}
-          {/* <strong>{ t("description", {defaultValue: 'Descrizione'})}:</strong>{" "} */}
+          
+          <strong>{ t("description", {defaultValue: 'Descrizione'})}:</strong>{" "}
           {description ? (
             <>
               {description.slice(0, 100)}...
@@ -148,15 +147,15 @@ export default function BookCard({
                 type="button"
                 className="read-more"
                 onClick={() => onSelect(book)}
-                aria-label='test text'>
-                {/* aria-label={ t("readMore", {defaultValue: 'Leggi di più'})}> */}
-                test text
-                {/* {t("readMore", {defaultValue: 'Leggi di più'})} */}
+          
+                aria-label={ t("readMore", {defaultValue: 'Leggi di più'})}>
+          
+                {t("readMore", {defaultValue: 'Leggi di più'})}
               </button>
             </>
           ) : (
-           'test text'
-          //  t("noDescription", {defaultValue: 'Nessuna descrizione disponibile'}) 
+          
+           t("noDescription", {defaultValue: 'Nessuna descrizione disponibile'}) 
           )}
         </p>
 

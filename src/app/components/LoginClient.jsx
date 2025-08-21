@@ -4,7 +4,7 @@ import { useState, useCallback, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import "@/styles/auth.css";
-// import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import {
@@ -12,9 +12,8 @@ import {
   signInWithEmailAndPassword,
 } from "@/firebase/firebase";
 import GoogleLoginButton from "./GoogleLoginButton";
-// import GoogleLoginButton from "../components/GoogleLoginButton";
 import { AppContext } from "./AppContextProvider";
-// import TestGoogleRedirect from "../components/TestGoogleRedirect";
+
 
 export default function Login() {
   // export default function Login({ setLogin, login }) {
@@ -22,28 +21,28 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const { setLogin, login, loading, setLoading } = useContext(AppContext);
 
-  const label = 'test text';
-  // const label = t("login", { defaultValue: "Accedi" });
-  const forgotPass = 'test text'
-  // const forgotPass = t("forgotPassword", {
-  //   defaultValue: "Password dimenticata?",
-  // });
-  const noAccount = 'test text';
-  // const noAccount = t("noAccount", { defaultValue: "Non hai un account?" });
-  const singIn = 'test text';
-  // const singIn = t("signIn", { defaultValue: "Registrati" });
-  const loginSuccess = 'test text';
-  // const loginSuccess = t("loggedSuccess", {
-  //   defaultValue: "Accesso in corso...",
-  // });
-  const missCredential = 'test text'
-  // const missCredential = t("missingCredentials", {
-  //   defaultValue: "Inserisci email e password",
-  // });
+  
+  const label = t("login", { defaultValue: "Accedi" });
+  
+  const forgotPass = t("forgotPassword", {
+    defaultValue: "Password dimenticata?",
+  });
+  
+  const noAccount = t("noAccount", { defaultValue: "Non hai un account?" });
+  
+  const singIn = t("signIn", { defaultValue: "Registrati" });
+  
+  const loginSuccess = t("loggedSuccess", {
+    defaultValue: "Accesso in corso...",
+  });
+  
+  const missCredential = t("missingCredentials", {
+    defaultValue: "Inserisci email e password",
+  });
   const handleVisibility = useCallback(() => {
     setPasswordVisibility(!passwordVisibility);
   }, [passwordVisibility]);
@@ -66,11 +65,11 @@ export default function Login() {
         setLoading(false);
       }, 500);
     } catch (err) {
-      //   console.error("error", err);
-      setError('test text'
-        // t("loginError", {
-        //   defaultValue: "Credenziali errate, riprova",
-        // })
+        console.error("error", err);
+      setError(
+        t("loginError", {
+          defaultValue: "Credenziali errate, riprova",
+        })
       );
       setEmail("");
       setPassword("");
@@ -78,17 +77,7 @@ export default function Login() {
   };
 
   return (
-    // <div className="auth-background">
-    //   <img
-    //     className="auth-bg-auto-size"
-    //     src={mobileBg}
-    //     srcSet={`${mobileBg} 907w, ${desktopBg} 1280w`}
-    //     sizes="(max-width: 640px) 100vw, 1280px"
-    //     alt=""
-    //     aria-hidden="true"
-    //     decoding="auto"
-    //   />
-
+    
     <div className="auth-page">
       <form onSubmit={handleLogin} className="auth-form">
         <h2 className="auth-header">{label}</h2>
@@ -151,6 +140,6 @@ export default function Login() {
         setLogin={setLogin}
       />
     </div>
-    // </div>
+   
   );
 }

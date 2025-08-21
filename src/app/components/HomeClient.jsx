@@ -1,10 +1,9 @@
 "use client";
 
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
-// import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { useContext } from "react";
 import { AppContext } from "./AppContextProvider";
-// import { AppContext } from "../RootClientWrapper";
 import Modal from "./Modal";
 import SearchBar from "./SearchBar";
 import itaTrendingBooks from "../../data/itaTrendingBooks";
@@ -27,7 +26,7 @@ export default function HomePage() {
   const [startIndex, setStartIndex] = useState(0);
   const [maxResult] = useState(10);
   const loadMoreRef = useRef(null);
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const [activeQuery, setActiveQuery] = useState("");
   const [activeMode, setActiveMode] = useState("intitle");
   const [suggestions, setSuggestions] = useState([]);
@@ -178,8 +177,8 @@ export default function HomePage() {
       {!hasSearched && (
         <h2 className="trending-books">
           {" "}
-          {/* {t("trendingBooks", { defaultValue: "Libri del momento" })} */}
-          test title
+          {t("trendingBooks", { defaultValue: "Libri del momento" })}
+          
         </h2>
       )}
 
@@ -190,7 +189,7 @@ export default function HomePage() {
           books={itaTrendingBooks}
           favorites={favorites}
           toggleFavorite={toggleFavorite}
-          // t={ t }
+          t={ t }
           onSelect={handleSelected}
         />
       )}
@@ -201,7 +200,7 @@ export default function HomePage() {
             books={uniqueBooks}
             favorites={favorites}
             toggleFavorite={toggleFavorite}
-            // t={ t }
+            t={ t }
             onSelect={handleSelected}
           />
           <button
@@ -209,7 +208,7 @@ export default function HomePage() {
             type="button"
             ref={loadMoreRef}
             onClick={() => setStartIndex(prev => prev + maxResult)}>
-            {/* {t("loadMore", { defaultValue: "Più risultati" })} */}
+            {t("loadMore", { defaultValue: "Più risultati" })}
             test text
           </button>
         </>
@@ -218,7 +217,7 @@ export default function HomePage() {
       {!loading && showNoResultsModal && (
         <Modal onClose={() => setShowNoResultsModal(false)}>
           <p className="no-results">
-            {/* {t("noResults", { defaultValue: "Nessun risultato" })} */}
+            {t("noResults", { defaultValue: "Nessun risultato" })}
             test text
           </p>
         </Modal>
@@ -230,15 +229,15 @@ export default function HomePage() {
             <h2 id="modal-title">{selectedTitle?.volumeInfo?.title}</h2>
             <p className="full-description">
               <strong>
-                {/* {t("fullDescription", {
+                {t("fullDescription", {
                   defaultValue: "Descrizione completa",
-                })} */}
-                test text
+                })}
+          
                 :
               </strong>{" "}
-              {/* {selectedTitle.volumeInfo?.description ||
-                t("noDescription", { defaultValue: "Nessuna descrizione" })} */}
-                test text
+              {selectedTitle.volumeInfo?.description ||
+                t("noDescription", { defaultValue: "Nessuna descrizione" })}
+          
             </p>
           </div>
           <FavoriteButton

@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { validatePassword } from "../../utils/validatePassword";
 import "@/styles/auth.css";
-// import { useTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { auth, createUserWithEmailAndPassword } from "@/firebase/firebase";
@@ -18,31 +18,31 @@ export default function RegisterClient() {
   const [success, setSuccess] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const router = useRouter();
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const { rules, isValid } = validatePassword(password);
   const { setLogin } = useContext(AppContext);
 
-  const register = 'test text';
-  // const register = t("register", { defaultValue: "Registrati" });
-  const placeholder = 'test text';
-  // const placeholder = t("passRegister", {
-  //   defaultValue: "Inserisci una password forte...",
-  // });
-  const createAccount = 'test text';
-  // const createAccount = t("createAccount", { defaultValue: "Crea account" });
-  const chars8 = 'test text';
-  // const chars8 = t("8chars", { defaultValue: "Almeno 8 caratteri" });
-  const registerSuccess = 'test text';
-  // const registerSuccess = t("regSuccess", {
-  //   defaultValue: "Registrazione avvenuta con successo! Sei connesso. ",
-  // });
-  const accountAlready = 'test text';
-  // const accountAlready = t("alreadyAccount", {
-  //   defaultValue: "Hai già un account?",
-  // });
-  const loginNow = 'test text';
-  // const loginNow = t("login", { defaultValue: "Accedi" });
+  
+  const register = t("register", { defaultValue: "Registrati" });
+  
+  const placeholder = t("passRegister", {
+    defaultValue: "Inserisci una password forte...",
+  });
+  
+  const createAccount = t("createAccount", { defaultValue: "Crea account" });
+  
+  const chars8 = t("8chars", { defaultValue: "Almeno 8 caratteri" });
+  
+  const registerSuccess = t("regSuccess", {
+    defaultValue: "Registrazione avvenuta con successo! Sei connesso. ",
+  });
+  
+  const accountAlready = t("alreadyAccount", {
+    defaultValue: "Hai già un account?",
+  });
+  
+  const loginNow = t("login", { defaultValue: "Accedi" });
 
   const handleVisibility = useCallback(() => {
     setPasswordVisibility(!passwordVisibility);

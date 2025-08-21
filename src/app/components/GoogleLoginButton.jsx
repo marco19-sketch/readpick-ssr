@@ -10,7 +10,7 @@ import { AppContext } from "./AppContextProvider";
 
 export default function GoogleLoginButton({ error }) {
   const router = useRouter();
-  // const { t } = useTranslation();
+  const { t } = useTranslation();
   const { setLogin, loading, setLoading } = useContext(AppContext);
 
   const handleGoogleSignIn = async () => {
@@ -37,7 +37,7 @@ export default function GoogleLoginButton({ error }) {
         <FcGoogle className="google-icon" />
       </span>{" "}
       test text
-      {/* {t("googleSingIn", { defaultValue: "Accedi con Google" })} */}
+    {t("googleSingIn", { defaultValue: "Accedi con Google" })}  
     </button>
   );
 }

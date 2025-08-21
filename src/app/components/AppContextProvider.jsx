@@ -117,20 +117,7 @@ export default function AppContextProvider({ children, route }) {
   );
 }
 
-// "use client";
 
-// import { createContext } from "react";
-
-// export const AppContext = createContext();
-// export const AuthContext = createContext();
-
-// export default function AppContextProvider({ children }) {
-//   return (
-//     <AppContext.Provider value={null}>
-//       <AuthContext.Provider value={null}>{children}</AuthContext.Provider>
-//     </AppContext.Provider>
-//   );
-// }
 
 // //Sopstare qui gli state, la gestione dei dati e dei favoriti
 // "use client";

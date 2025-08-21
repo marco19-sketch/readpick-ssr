@@ -28,7 +28,7 @@ const AmazonLink = ({ title, author}) => {
         onClick={() => {
           console.log("Clicked the Amazon link for:", title, '\nlink url', link);
         }}>
-        🔗 {t('buyOnAmazon')}
+        🔗 {t('buyOnAmazon', { defaultValue: 'Acquista su Amazon'})}
       </a>
     );
 };
