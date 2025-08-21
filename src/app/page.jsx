@@ -2,6 +2,7 @@
 import "@/styles/Home.css";
 import Image from "next/image";
 import HomeClient from './components/HomeClient';
+// import { useTranslation } from './lib/i18n-server';
 
 // Importa il Client Component in modo dinamico
 // const HomePage = lazy(() => import("./components/HomePage"));

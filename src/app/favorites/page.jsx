@@ -1,10 +1,10 @@
 import "@/styles/Favorites.css";
 import { Suspense, lazy } from "react";
 import Image from "next/image";
-import FavoritesClient from '../components/FavoritesClient'
+// import FavoritesClient from '../components/FavoritesClient'
 
 // Importa il Client Component in modo dinamico
-// const Favorites = lazy(() => import("../components/Favorites"));
+const FavoritesClient = lazy(() => import("../components/FavoritesClient"));
 
 export default function FavoritesPage() {
   // const mobileBgFav = "/assets/images/vitaly-girl-566x700.avif";

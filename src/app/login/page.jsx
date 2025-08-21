@@ -1,13 +1,14 @@
 import "@/styles/auth.css";
 import { Suspense, lazy } from "react";
 import Image from "next/image";
+const desktopBg = "/assets/images/girl-1280-cropped.avif";
 
 // Importa il Client Component in modo dinamico
 const LoginClient = lazy(() => import("../components/LoginClient"));
 
 export default function LoginPage() {
   // const mobileBg = "/assets/images/girl-907x700.avif";
-  const desktopBg = "/assets/images/girl-1280-cropped.avif";
+  // const desktopBg = "/assets/images/girl-1280-cropped.avif";
 
   return (
     <div className="auth-background">

@@ -153,10 +153,10 @@ export default function HomePage() {
   }, [fetchedBooks]);
 
   return (
-    <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
-      <header>
-        <h1 className="main-title">Read Pick</h1>
-      </header>
+    // <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
+    //   <header>
+    //     <h1 className="main-title">Read Pick</h1>
+    //   </header>
     <div className="main-container" id="main-content">
       <SearchBar
         query={query}
@@ -247,6 +247,6 @@ export default function HomePage() {
         </Modal>
       )}
     </div>
-    </div>
+    
   );
 }
