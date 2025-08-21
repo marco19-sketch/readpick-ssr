@@ -4,7 +4,6 @@ import { useState, useCallback, useContext } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import "@/styles/auth.css";
-// import { useTranslation } from "react-i18next";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import {
@@ -12,17 +11,13 @@ import {
   signInWithEmailAndPassword,
 } from "@/firebase/firebase";
 import GoogleLoginButton from "./GoogleLoginButton";
-// import GoogleLoginButton from "../components/GoogleLoginButton";
 import { AppContext } from "./AppContextProvider";
-// import TestGoogleRedirect from "../components/TestGoogleRedirect";
 
 export default function Login() {
-  // export default function Login({ setLogin, login }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-  // const { t } = useTranslation();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const { setLogin, login, loading, setLoading } = useContext(AppContext);
 

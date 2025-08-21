@@ -7,7 +7,6 @@ import "@/styles/auth.css";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { validatePassword } from "../../utils/validatePassword";
-// import { useTranslation } from "react-i18next";
 
 export default function UpdatePasswordClient() {
   const [newPassword, setNewPassword] = useState("");
@@ -23,7 +22,6 @@ export default function UpdatePasswordClient() {
 
   const searchParams = useSearchParams();
   const router = useRouter();
-  // const { t } = useTranslation();
 
   useEffect(() => {
     const code = searchParams.get("oobCode");
@@ -33,7 +31,7 @@ export default function UpdatePasswordClient() {
     } else {
       setMessage(
         // t("invalidCode", { defaultValue: "Codice reset non valido o mancante" })
-        'test text'
+        "test text"
       );
     }
   }, [searchParams]);
@@ -66,25 +64,25 @@ export default function UpdatePasswordClient() {
         //   defaultValue:
         //     "Password aggiornata con successo. Reindirizzamento al login...",
         // })
-        'test text'
+        "test text"
       );
       console.log("Successo: Password resettata con successo.");
       setTimeout(() => router.push("/login"), 3000);
     } catch (error) {
       setMsgGreen(false);
       console.error("Errore nel reset della password:", error);
-      setMessage('test text');
+      setMessage("test text");
       // setMessage(t("errorUpdating", { defaultValue: "Errore riprova" }));
     }
   };
 
   return (
-    <div className='auth-page'>
+    <div className="auth-page">
       {oobCode ? (
         <form className="auth-form" onSubmit={handleSubmit}>
           <h2 className="auth-header">
             {/* {t("setNewPass", { defaultValue: "Crea nuova password" })} */}
-          test text
+            test text
           </h2>
           <div className="auth-input-container">
             <input
@@ -129,7 +127,7 @@ export default function UpdatePasswordClient() {
       ) : (
         <p>
           {/* {t("invalidCode", { defaultValue: "Codice non valido o mancante." })} */}
-        test text
+          test text
         </p>
       )}
     </div>

@@ -18,7 +18,6 @@ export default function RegisterClient() {
   const [success, setSuccess] = useState(false);
   const [passwordTouched, setPasswordTouched] = useState(false);
   const router = useRouter();
-  // const { t } = useTranslation();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const { rules, isValid } = validatePassword(password);
   const { setLogin } = useContext(AppContext);

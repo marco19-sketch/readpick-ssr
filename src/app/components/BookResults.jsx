@@ -4,7 +4,6 @@ import React from 'react'
 import BookCard from "./BookCard";
 import "@/styles/BookResults.css";
 import { AppContext } from "./AppContextProvider"; // ✅ import context
-// import { AppContext } from "@/app/RootClientWrapper"; // ✅ import context
 import { useContext } from 'react';
 
 
@@ -12,7 +11,6 @@ export default function BookResults({
   books,
   onSelect,
   favorites,
-  // t,
 }) {
   const { toggleFavorite  } = useContext(AppContext); // ✅ get toggleFavorite from context
 

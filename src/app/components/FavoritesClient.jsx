@@ -3,7 +3,6 @@
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "./AppContextProvider";
 import { useRouter } from "next/navigation";
-// import { useTranslation } from "react-i18next";
 import Modal from "./Modal";
 import BookResults from "./BookResults";
 import BackToTop from "./BackToTop";
@@ -28,7 +27,6 @@ function cancelIdleCallbackWithFallback(id) {
 }
 
 export default function Favorites() {
-  // const { t } = useTranslation();
   const {
     user,
     loading,

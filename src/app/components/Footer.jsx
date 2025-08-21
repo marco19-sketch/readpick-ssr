@@ -1,13 +1,9 @@
-'use client'
+"use client";
 
-import { useEffect } from 'react';
+import { useEffect } from "react";
 import { FaEnvelope } from "react-icons/fa";
-import { useTranslation } from 'react-i18next';
-
 
 export default function Footer() {
-  const { t } = useTranslation();
-
   useEffect(() => {
     // This will load the CSS asynchronously, Vite will handle hashed filename
     import("@/styles/Footer.css");
@@ -75,7 +71,7 @@ export default function Footer() {
           Jose Antonio Alba
         </a>{" "}
         <p>
-          from{' '}
+          from{" "}
           <a
             rel="noopener noreferrer"
             target="_blank"
@@ -107,10 +103,9 @@ export default function Footer() {
           </a>
         </div>
         <p className="copyright">© 2025 Marco Brusca. All rights reserved. </p>
-        <a  
-        id='contact'
-        href="mailto:marco19_70@hotmail.it" rel="me">
-          <FaEnvelope />{' '}{t('contact', {defaultValue: 'Contattami'})}
+        <a id="contact" href="mailto:marco19_70@hotmail.it" rel="me">
+          <FaEnvelope /> Contattami
+          {/* <FaEnvelope />{' '}{t('contact', {defaultValue: 'Contattami'})} */}
         </a>
       </div>
     </footer>

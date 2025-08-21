@@ -4,7 +4,7 @@ import "@/styles/BookCard.css";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "@/utils/useThumbnail";
 import React, { Suspense, useState, useEffect } from "react";
-// import { useTranslation } from 'react-i18next';
+
 
 const LazyAmazonLink = React.lazy(() => import("./AmazonLink"));
 

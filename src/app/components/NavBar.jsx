@@ -4,7 +4,6 @@ import { useContext } from "react";
 import { AppContext } from "./AppContextProvider";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { useTranslation } from "react-i18next";
 import { FaHome } from "react-icons/fa";
 import { MdFavorite } from "react-icons/md";
 import { IoLogIn, IoLogOut } from "react-icons/io5";
@@ -17,11 +16,12 @@ export default function NavBar() {
   const logout = useLogout();
   const isMobile = useIsMobile();
   const pathname = usePathname();
-  const { t } = useTranslation();
+  
 
   const isLoginPage = pathname === "/login";
 
-  const loginBtnText = t("login", { defaultValue: "Accedi" });
+  const loginBtnText = "Accedi";
+  // const loginBtnText = t("login", { defaultValue: "Accedi" });
 
   return (
     <nav>
@@ -41,22 +41,25 @@ export default function NavBar() {
         {isMobile ? (
           <MdFavorite />
         ) : (
-          `${t("favorites", { defaultValue: "Favorites" })} ${
+          "Favoriti" +
+          // `${t("favorites", { defaultValue: "Favorites" })} ${
             (favorites || []).length
             // count
-          }`
+          
         )}
       </Link>
 
       {login ? (
         <button
           className="logout"
-          aria-label={t("logout", { defaultValue: "Esci" })}
+          aria-label="Esci"
+          // aria-label={t("logout", { defaultValue: "Esci" })}
           onClick={() => {
             logout();
             setLogin(false);
           }}>
-          {isMobile ? <IoLogOut /> : t("logout", { defaultValue: "Esci" })}
+          {isMobile ? <IoLogOut /> : "Esci"}
+          {/* {isMobile ? <IoLogOut /> : t("logout", { defaultValue: "Esci" })} */}
         </button>
       ) : isLoginPage ? null : (
         <Link href="/login" className="login" aria-label={loginBtnText}>

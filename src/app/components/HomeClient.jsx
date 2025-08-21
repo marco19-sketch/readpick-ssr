@@ -1,10 +1,8 @@
 "use client";
 
 import { useState, useRef, useCallback, useMemo, useEffect } from "react";
-// import { useTranslation } from "react-i18next";
 import { useContext } from "react";
 import { AppContext } from "./AppContextProvider";
-// import { AppContext } from "../RootClientWrapper";
 import Modal from "./Modal";
 import SearchBar from "./SearchBar";
 import itaTrendingBooks from "../../data/itaTrendingBooks";
@@ -27,7 +25,6 @@ export default function HomePage() {
   const [startIndex, setStartIndex] = useState(0);
   const [maxResult] = useState(10);
   const loadMoreRef = useRef(null);
-  // const { t } = useTranslation();
   const [activeQuery, setActiveQuery] = useState("");
   const [activeMode, setActiveMode] = useState("intitle");
   const [suggestions, setSuggestions] = useState([]);

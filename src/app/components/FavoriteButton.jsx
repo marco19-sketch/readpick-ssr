@@ -3,7 +3,6 @@
 import { useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { FaHeart } from "react-icons/fa";
-import { useTranslation } from "react-i18next";
 import "@/styles/FavoriteButton.css";
 
 export default function FavoriteButton({ isFavorite, onToggle }) {
@@ -12,7 +11,6 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
   const remove2SoundRef = useRef(null);
   const [soundsReady, setSoundsReady] = useState(false);
 
-  const { t } = useTranslation();
   const pathname = usePathname();
   const isFavoritesPage = pathname === "/favorites";
 
@@ -54,9 +52,9 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
       onMouseEnter={preloadSounds} // preload on hover
       onFocus={preloadSounds} // preload on keyboard focus
       aria-label={
-        isFavorite
-          ? t("removeFromFavorites", { defaultValue: "Rimuovi dai favoriti" })
-          : t("addToFavorites", { defaultValue: "Aggiungi ai favoriti" })
+        isFavorite ? ("Rimuovi dai favoriti") : ("Aggiungi ai favoriti")
+        // ? t("removeFromFavorites", { defaultValue: "Rimuovi dai favoriti" })
+        // : t("addToFavorites", { defaultValue: "Aggiungi ai favoriti" })
       }>
       <FaHeart className={`heart-icon ${isFavorite ? "active" : ""}`} />
     </button>
