@@ -2,10 +2,7 @@
 
 import { useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-// import { FaHeart } from "react-icons/fa";
-// import { IoHeart } from "react-icons/io/IoHeart";
-// import { IoHeart } from "react-icons/io5/IoHeart";
-// import { IoHeart, IoHeartOutline } from "react-icons/io5"; // Importazione corretta da io5
+import { FaHeart } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import "@/styles/FavoriteButton.css";
 
@@ -61,12 +58,7 @@ export default function FavoriteButton({ isFavorite, onToggle }) {
           ? t("removeFromFavorites", { defaultValue: "Rimuovi dai favoriti" })
           : t("addToFavorites", { defaultValue: "Aggiungi ai favoriti" })
       }>
-      {/* <FaHeart className={`heart-icon ${isFavorite ? "active" : ""}`} /> */}
-      {/* {isFavorite ? (
-        <IoHeart className="filled" />
-      ) : (
-        <IoHeartOutline className="outline" />
-      )} */}
+      <FaHeart className={`heart-icon ${isFavorite ? "active" : ""}`} />
     </button>
   );
 }
