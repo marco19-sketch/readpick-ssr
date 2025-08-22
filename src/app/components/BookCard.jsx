@@ -3,14 +3,9 @@
 import "@/styles/BookCard.css";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "@/utils/useThumbnail";
-import React, {
-  Suspense,
-  useState,
-  useEffect,
-  useContext
-} from "react";
+import React, { Suspense, useState, useEffect, useContext } from "react";
 import { AppContext } from "./AppContextProvider";
-import Image from "next/image";
+import Image from 'next/image'
 const LazyAmazonLink = React.lazy(() => import("./AmazonLink"));
 
 const languageMap = {
@@ -39,8 +34,11 @@ export default function BookCard({
   const thumbnail = useThumbnail(book);
   const [showAmazon, setShowAmazon] = useState(false);
   const { italian } = useContext(AppContext);
-  // const [canRenderImage, setCanRenderImage] = useState(isHighPriority);
-  // const cardRef = useRef(null);
+  const [lowPriority, setLowPriority] = useState(false);
+
+  setTimeout(() => {
+    setLowPriority(true);
+  }, 4000);
 
   // Delaying Amazon render, it does not improve LCP anyway
   useEffect(() => {
@@ -86,31 +84,63 @@ export default function BookCard({
       <h2 className="single-book-title">{title}</h2>
 
       <div className="cover-favorite-btn">
-        <button
-          className="thumb-btn"
-          onClick={() => onSelect(book)}
-          onKeyDown={e =>
-            (e.key === "Enter" || e.key === " ") && onSelect(book)
-          }
-          aria-label="View book full description">
-          {hasThumbnail ? (
+        {hasThumbnail ? (
+          <button
+            className="thumb-btn"
+            onClick={() => onSelect(book)}
+            onKeyDown={e =>
+              (e.key === "Enter" || e.key === " ") && onSelect(book)
+            }
+            aria-label="View book full description">
+              {lowPriority ? (
+                 <Image
+              // id={isHighPriority ? "lcp-cover" : undefined}
+              tabIndex="0"
+              className="thumbnail"
+              src={thumbnail}
+              alt={`${italian ? 'Copertina di' : 'Cover of'} ${title}`}
+              // loading={isHighPriority ? "eager" : "lazy"}
+              // priority={isHighPriority} 
+              // fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
+              width="200"
+              height="300"
+              // decoding={isHighPriority ? 'async' : 'auto'}
+              loading='lazy'
+            />
+              ) : (
             <Image
               id={isHighPriority ? "lcp-cover" : undefined}
               tabIndex="0"
               className="thumbnail"
               src={thumbnail}
-              alt={`${italian ? "Copertina di" : "Cover of"} ${title}`}
-              priority={isHighPriority}
+              alt={`${italian ? 'Copertina di' : 'Cover of'} ${title}`}
+              // loading={isHighPriority ? "eager" : "lazy"}
+              priority={isHighPriority} 
+              // fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
               width="200"
               height="300"
-              decoding={isHighPriority ? "async" : "auto"}
-              loading={isHighPriority ? "eager" : "lazy"}
-            />
-          ) : (
-            <span className="no-thumbnail-para">No cover image available</span>
-          )}
-        </button>
-
+              decoding={isHighPriority ? 'async' : 'auto'}
+              loading={isHighPriority ? 'eager' : 'lazy'}
+            />)}
+            {/* <Image
+              id={isHighPriority ? "lcp-cover" : undefined}
+              tabIndex="0"
+              className="thumbnail"
+              src={thumbnail}
+              alt={`${italian ? 'Copertina di' : 'Cover of'} ${title}`}
+              // loading={isHighPriority ? "eager" : "lazy"}
+              priority={isHighPriority} 
+              // fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
+              width="200"
+              height="300"
+              decoding={isHighPriority ? 'async' : 'auto'}
+              loading={isHighPriority ? 'eager' : 'lazy'}
+            /> */}
+            
+          </button>
+        ) : (
+          <p className="no-thumbnail-para">No cover image available</p>
+        )}
         <div className="book-card-fav-btn">
           <FavoriteButton
             isFavorite={isFavorite(book)}
@@ -153,8 +183,8 @@ export default function BookCard({
                 className="read-more"
                 onClick={() => onSelect(book)}
                 aria-label={italian ? "Leggi di più" : "Read more"}>
-                {italian ? "leggi di più" : "read more"}
-              </button>
+                  {italian ? 'leggi di più' : 'read more'}
+                </button>
             </>
           ) : italian ? (
             "Nessuna descrizione disponibile"
