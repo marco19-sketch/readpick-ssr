@@ -12,15 +12,16 @@ import useIsMobile from "./hooks/useIsMobile";
 import "@/styles/NavBar.css";
 
 export default function NavBar() {
-  const {login, setLogin, favorites } = useContext(AppContext);
+  const { login, setLogin, favorites, italian, setItalian } =
+    useContext(AppContext);
   const logout = useLogout();
   const isMobile = useIsMobile();
   const pathname = usePathname();
-  
 
   const isLoginPage = pathname === "/login";
 
-  const loginBtnText = "Accedi";
+  const loginBtnText = italian ? "Accedi" : "Login";
+  // const loginBtnText = "Accedi";
   // const loginBtnText = t("login", { defaultValue: "Accedi" });
 
   return (
@@ -28,7 +29,9 @@ export default function NavBar() {
       <Link
         href="/"
         className={pathname === "/" ? "home-active-link" : "home"}
-        aria-label="link to home page">
+        aria-label={
+          italian ? "Collegamento alla home page" : "link to home page"
+        }>
         {isMobile ? <FaHome /> : "Home"}
       </Link>
 
@@ -37,22 +40,22 @@ export default function NavBar() {
         className={
           pathname === "/favorites" ? "favorites-active-link" : "favorites"
         }
-        aria-label="link to favorites page">
+        aria-label={
+          italian
+            ? "Collegamento alla pagina dei favoriti"
+            : "link to favorites page"
+        }>
         {isMobile ? (
           <MdFavorite />
         ) : (
-          "Favoriti" +
-          // `${t("favorites", { defaultValue: "Favorites" })} ${
-            (favorites || []).length
-            // count
-          
+          `${italian ? "Favoriti" : "Favorites"} ${(favorites || []).length}`
         )}
       </Link>
 
       {login ? (
         <button
           className="logout"
-          aria-label="Esci"
+          aria-label={italian ? "Esci" : "Logout"}
           // aria-label={t("logout", { defaultValue: "Esci" })}
           onClick={() => {
             logout();
@@ -69,4 +72,3 @@ export default function NavBar() {
     </nav>
   );
 }
-

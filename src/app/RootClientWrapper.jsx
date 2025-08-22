@@ -3,8 +3,6 @@
 import { Suspense } from "react";
 import AppContextProvider from "./components/AppContextProvider";
 import { usePathname } from "next/navigation";
-
-//testing
 import LanguageSwitcher from "./components/LanguageSwitcher";
 import NavBar from "./components/NavBar";
 import BackToTop from "./components/BackToTop";
@@ -12,27 +10,24 @@ import FooterLoader from "./components/FooterLoader";
 import SkipLink from "./components/SkipLink";
 
 export default function RootClientWrapper({ children }) {
-  
   const route = usePathname();
   const hideNavBarOnRoutes = ["/reset-password", "/update-password"];
   const showNavBar = !hideNavBarOnRoutes.includes(route);
 
   return (
-    
-      <AppContextProvider route={route}>
-        {" "}
-        <div className="layout-container">
-          <SkipLink />
-          {showNavBar && <NavBar />}
-          <LanguageSwitcher />{" "}
-          <main id="main-content" className="layout-main-content">
-            <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>{" "}
-          </main>
-          <BackToTop scrollContainerSelector="body" />
-          <FooterLoader />{" "}
-        </div>{" "}
-      </AppContextProvider>
-   
+    <AppContextProvider route={route}>
+      {" "}
+      <div className="layout-container">
+        <SkipLink />
+        {showNavBar && <NavBar />}
+        <LanguageSwitcher />{" "}
+        <main id="main-content" className="layout-main-content">
+          <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>{" "}
+        </main>
+        <BackToTop scrollContainerSelector="body" />
+        <FooterLoader />{" "}
+      </div>{" "}
+    </AppContextProvider>
   );
 }
 

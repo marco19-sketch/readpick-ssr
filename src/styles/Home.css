@@ -18,14 +18,14 @@
   flex: 1;
 }
 
-.wait-cursor {
+/* .wait-cursor {
   cursor: wait !important;
 }
 
 .wait-cursor * {
   cursor: wait !important;
   pointer-events: none !important;
-}
+} */
 
 h1.main-title {
   color: var(--main-color);

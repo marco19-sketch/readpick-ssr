@@ -2,7 +2,6 @@
 
 import { signInWithGoogle } from "@/firebase/firebase";
 import { useRouter } from "next/navigation";
-// import { useTranslation } from "react-i18next";
 import { FcGoogle } from "react-icons/fc";
 import { useContext } from "react";
 import { AppContext } from "./AppContextProvider";
@@ -10,7 +9,6 @@ import { AppContext } from "./AppContextProvider";
 
 export default function GoogleLoginButton({ error }) {
   const router = useRouter();
-  // const { t } = useTranslation();
   const { setLogin, loading, setLoading } = useContext(AppContext);
 
   const handleGoogleSignIn = async () => {

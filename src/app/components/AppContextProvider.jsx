@@ -14,6 +14,7 @@ export default function AppContextProvider({ children, route }) {
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
   const [fetchedBooks, setFetchedBooks] = useState([]);
+  const [italian, setItalian] = useState(true);
 
   useGoogleAnalytics();
 
@@ -88,7 +89,9 @@ export default function AppContextProvider({ children, route }) {
       setFavorites,
       fetchedBooks,
       setFetchedBooks,
-      toggleFavorite
+      toggleFavorite,
+      italian,
+      setItalian
     }),
     [
       loading,
@@ -100,7 +103,9 @@ export default function AppContextProvider({ children, route }) {
       setFavorites,
       fetchedBooks,
       setFetchedBooks,
-      toggleFavorite
+      toggleFavorite,
+      italian,
+      setItalian
     ]
   );
 

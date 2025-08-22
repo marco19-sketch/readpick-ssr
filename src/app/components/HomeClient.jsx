@@ -13,7 +13,6 @@ import { devLog } from "@/utils/devLog";
 import BookResults from "./BookResults";
 import LoadingSkeleton from "./LoadingSkeleton";
 
-
 export default function HomePage() {
   const [selectedTitle, setSelectedTitle] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -28,7 +27,7 @@ export default function HomePage() {
   const [activeQuery, setActiveQuery] = useState("");
   const [activeMode, setActiveMode] = useState("intitle");
   const [suggestions, setSuggestions] = useState([]);
-  const { favorites, toggleFavorite, fetchedBooks, setFetchedBooks } =
+  const { favorites, toggleFavorite, fetchedBooks, setFetchedBooks, italian } =
     useContext(AppContext);
 
   const placeholderMap = {
@@ -151,10 +150,6 @@ export default function HomePage() {
   }, [fetchedBooks]);
 
   return (
-    <div className={`home-page ${loading ? "wait-cursor" : ""}`}>
-      <header>
-        <h1 className="main-title">Read Pick</h1>
-      </header>
     <div className="main-container" id="main-content">
       <SearchBar
         query={query}
@@ -176,7 +171,7 @@ export default function HomePage() {
         <h2 className="trending-books">
           {" "}
           {/* {t("trendingBooks", { defaultValue: "Libri del momento" })} */}
-          test title
+          {italian ? "Libri del momento" : "Trending book"}
         </h2>
       )}
 
@@ -187,7 +182,6 @@ export default function HomePage() {
           books={itaTrendingBooks}
           favorites={favorites}
           toggleFavorite={toggleFavorite}
-          // t={ t }
           onSelect={handleSelected}
         />
       )}
@@ -198,7 +192,6 @@ export default function HomePage() {
             books={uniqueBooks}
             favorites={favorites}
             toggleFavorite={toggleFavorite}
-            // t={ t }
             onSelect={handleSelected}
           />
           <button
@@ -206,8 +199,7 @@ export default function HomePage() {
             type="button"
             ref={loadMoreRef}
             onClick={() => setStartIndex(prev => prev + maxResult)}>
-            {/* {t("loadMore", { defaultValue: "Più risultati" })} */}
-            test text
+            {italian ? "Più risultati" : "Load more"}
           </button>
         </>
       )}
@@ -227,15 +219,13 @@ export default function HomePage() {
             <h2 id="modal-title">{selectedTitle?.volumeInfo?.title}</h2>
             <p className="full-description">
               <strong>
-                {/* {t("fullDescription", {
-                  defaultValue: "Descrizione completa",
-                })} */}
-                test text
-                :
+                {italian ? "Descrizione completa" : "Full description"}:
               </strong>{" "}
-              {/* {selectedTitle.volumeInfo?.description ||
-                t("noDescription", { defaultValue: "Nessuna descrizione" })} */}
-                test text
+              {selectedTitle.volumeInfo?.description
+                ? (selectedTitle.volumeInfo?.description)
+                : (italian
+                ? ("Nessuna descrizione")
+                : ("No description"))}
             </p>
           </div>
           <FavoriteButton
@@ -244,7 +234,6 @@ export default function HomePage() {
           />
         </Modal>
       )}
-    </div>
     </div>
   );
 }
