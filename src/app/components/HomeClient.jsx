@@ -222,10 +222,10 @@ export default function HomePage() {
                 {italian ? "Descrizione completa" : "Full description"}:
               </strong>{" "}
               {selectedTitle.volumeInfo?.description
-                ? (selectedTitle.volumeInfo?.description)
-                : (italian
-                ? ("Nessuna descrizione")
-                : ("No description"))}
+                ? selectedTitle.volumeInfo?.description
+                : italian
+                ? "Nessuna descrizione"
+                : "No description"}
             </p>
           </div>
           <FavoriteButton

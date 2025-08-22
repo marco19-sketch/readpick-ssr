@@ -77,8 +77,8 @@
   min-width: 24%;
 }
 
-.read-more {
-/* button.read-more { */
+
+button.read-more {
   color: yellow;
   width: fit-content;
 }
