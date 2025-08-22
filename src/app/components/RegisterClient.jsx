@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { validatePassword } from "../../utils/validatePassword";
 import "@/styles/auth.css";
-// import { useTranslation } from "react-i18next";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { auth, createUserWithEmailAndPassword } from "@/firebase/firebase";
@@ -22,26 +21,14 @@ export default function RegisterClient() {
   const { rules, isValid } = validatePassword(password);
   const { setLogin } = useContext(AppContext);
 
-  const register = 'test text';
-  // const register = t("register", { defaultValue: "Registrati" });
-  const placeholder = 'test text';
-  // const placeholder = t("passRegister", {
-  //   defaultValue: "Inserisci una password forte...",
-  // });
-  const createAccount = 'test text';
-  // const createAccount = t("createAccount", { defaultValue: "Crea account" });
-  const chars8 = 'test text';
-  // const chars8 = t("8chars", { defaultValue: "Almeno 8 caratteri" });
-  const registerSuccess = 'test text';
-  // const registerSuccess = t("regSuccess", {
-  //   defaultValue: "Registrazione avvenuta con successo! Sei connesso. ",
-  // });
-  const accountAlready = 'test text';
-  // const accountAlready = t("alreadyAccount", {
-  //   defaultValue: "Hai già un account?",
-  // });
-  const loginNow = 'test text';
-  // const loginNow = t("login", { defaultValue: "Accedi" });
+  const register = italian ? 'Registrati' : 'Sign in';
+  const placeholder = italian ? 'Inserisci una password forte' : 'Input a strong password';
+  const createAccount = italian ? 'Crea account' : 'Create account';
+  const chars8 = italian ? 'Usa password di min. 8 caratteri' : 'Use 8 characters min. password';
+  const registerSuccess = italian ? 'Registrazione andata a buon fine e accesso eseguito.' : 'Sign in successful you are logged in.';
+  const accountAlready = italian ? 'Hai già un account?' : 'Have already an account?';
+  const loginNow = italian ? 'Accedi' : 'Log in';
+  
 
   const handleVisibility = useCallback(() => {
     setPasswordVisibility(!passwordVisibility);

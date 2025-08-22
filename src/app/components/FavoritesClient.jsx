@@ -32,14 +32,13 @@ export default function Favorites() {
     loading,
     favorites = [],
     toggleFavorite,
+    italian
   } = useContext(AppContext);
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
   const [showFullList, setShowFullList] = useState(false);
-  //   const mobileBgFav = "/assets/images/vitaly-girl-566x700.avif";
-  //   const desktopBgFav = "/assets/images/vitaly-girl-1920.avif";
-
+ 
   // ✅ redirect if not logged in
   useEffect(() => {
     if (!loading && !user) {
@@ -63,18 +62,16 @@ export default function Favorites() {
 
   // ✅ while checking auth
   if (loading) {
-    return <p>test text</p>;
-    // return <p>{t("loading", { defaultValue: "Loading..." })}</p>;
+    return <p>Loading...</p>;
+   
   }
 
   // ✅ in case router.push hasn’t redirected yet
   if (!user) {
     return (
-      <p>
-        {/* {t("pleaseLogin", {
-          defaultValue: "Please log in to view your favorites.",
-        })} */}
-        test text
+      <p> 
+        {italian ? 'Accedi per vedere i tuoi libri preferiti' : 'Please login to see your favorite books'}
+       
       </p>
     );
   }
@@ -82,14 +79,14 @@ export default function Favorites() {
   return (
     <div className="favorites-main-container">
       <h2 className="favorites-header">
-        {/* {t("yourFavorites", { defaultValue: "I tuoi favoriti" })}: */}
-        test text
+        { italian ? 'I tuoi libri preferiti' : 'Your favorite books'}
+        
       </h2>
 
       {(favorites || []).length === 0 ? (
         <h2 className="no-favorites-yet">
-          {/* {t("noFavoritesYet", { defaultValue: "Nessun favorito ancora." })} */}
-          test text
+          {italian ? 'Non hai salvato nessun libro preferito ancora' : 'No saved favorite books yet'}
+        
         </h2>
       ) : (
         <>
@@ -103,8 +100,7 @@ export default function Favorites() {
               favorites={favorites}
               onSelect={handleSelect}
               toggleFavorite={toggleFavorite}
-              // onToggleFavorite={toggleFavorite}
-              // t={t}
+             
             />
           )}
         </>
@@ -118,14 +114,12 @@ export default function Favorites() {
             </h2>
             <p className="full-description">
               <strong>
-                {/* {t("fullDescription", { defaultValue: "Full Description" })}:{" "} */}
-                test text
+                {italian ? 'Descrizione completa' : 'Full description'}
+                
               </strong>{" "}
-              {/* {selectedBook.volumeInfo?.description ||
-                t("noDescription", {
-                  defaultValue: "No description available",
-                })} */}
-                test text
+              { selectedBook.volumeInfo?.description 
+               ? (selectedBook.volumeInfo.description)
+                : (italian ? 'Nessuna descrizione disponibile' : 'No description available')}
             </p>
 
             <FavoriteButton

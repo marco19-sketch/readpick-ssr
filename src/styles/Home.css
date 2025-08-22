@@ -18,15 +18,6 @@
   flex: 1;
 }
 
-/* .wait-cursor {
-  cursor: wait !important;
-}
-
-.wait-cursor * {
-  cursor: wait !important;
-  pointer-events: none !important;
-} */
-
 h1.main-title {
   color: var(--main-color);
   background-color: transparent;

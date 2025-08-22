@@ -82,9 +82,9 @@
   text-shadow: 3px 3px 10px;
 }
 
-.full-description {
+/* .full-description {
   text-shadow: 1px 1px 5px;
-}
+} */
 
 @media (hover: hover) {
   .modal-close:hover {

@@ -1,10 +1,10 @@
-'use client'
+"use client";
 
 import "@/styles/BookCard.css";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "@/utils/useThumbnail";
-import React, { Suspense, useState, useEffect } from "react";
-
+import React, { Suspense, useState, useEffect, useContext } from "react";
+import { AppContext } from "./AppContextProvider";
 
 const LazyAmazonLink = React.lazy(() => import("./AmazonLink"));
 
@@ -33,8 +33,7 @@ export default function BookCard({
 }) {
   const thumbnail = useThumbnail(book);
   const [showAmazon, setShowAmazon] = useState(false);
-  // const { t } = useTranslation();
- 
+  const { italian } = useContext(AppContext);
 
   // Delaying Amazon render, it does not improve LCP anyway
   useEffect(() => {
@@ -58,8 +57,9 @@ export default function BookCard({
   const formatCopiesSold = () => {
     if (!copiesSold) return "N/A";
     if (copiesSold >= 1000000) {
-      return (copiesSold / 1000000).toLocaleString() + "test text" ;
-      // return (copiesSold / 1000000).toLocaleString() + " " + t("Millions", {defaultValue: 'Milioni'});
+      return `${(copiesSold / 1000000).toLocaleString()} ${
+        italian ? "Milioni" : "Millions"
+      }`;
     } else {
       return copiesSold.toLocaleString() || "N/A";
     }
@@ -112,35 +112,30 @@ export default function BookCard({
       </div>
       <div className="book-detail">
         <p>
-          <strong>test text:{" "}</strong>
-          {/* <strong>{ t("author", {defaultValue: 'Autore(i)'})}:{" "}</strong> */}
+          <strong>{italian ? "Autore/i" : "Author/s"}:</strong>{" "}
           {Array.isArray(authors) ? authors.join(", ") : authors}
         </p>
         <p>
-          <strong>test text:</strong> {publishedYear}
-          {/* <strong>{ t("published", {defaultValue: 'Pubblicato'})}:</strong> {publishedYear} */}
+          <strong>{italian ? "Pubblicato" : "Published"}:</strong>
+          {publishedYear}
         </p>
         <p>
-          <strong>test text:</strong>{" "}
-          {/* <strong>{ t("genre", {defaultValue: 'Genere'})}:</strong>{" "} */}
+          <strong>{italian ? "Genere" : "Genre"}:</strong>
           {Array.isArray(categories) ? categories.join(", ") : categories}
         </p>
 
         <p>
-          <strong>test text</strong>{" "}
-          {/* <strong>{ t("language", {defaultValue: 'Lingua'})}:</strong>{" "} */}
+          <strong>{italian ? "Lingua" : "Language"}:</strong>
           {languageMap[language] || language}
         </p>
         <p>
-          <strong>test text:</strong>{" "}
-          {/* <strong>{ t("copiesSold", {defaultValue: 'Copie vendute'})}:</strong>{" "} */}
+          <strong>{italian ? "Copie vendute" : "Copies sold"}:</strong>
           <span className="copies-sold">
             {formatCopiesSold(copiesSold) || "N/A"}
           </span>
         </p>
         <p>
-          <strong>test text:</strong>{" "}
-          {/* <strong>{ t("description", {defaultValue: 'Descrizione'})}:</strong>{" "} */}
+          <strong>{italian ? "Descrizione" : "Description"}:</strong>{" "}
           {description ? (
             <>
               {description.slice(0, 100)}...
@@ -148,26 +143,24 @@ export default function BookCard({
                 type="button"
                 className="read-more"
                 onClick={() => onSelect(book)}
-                aria-label='test text'>
-                {/* aria-label={ t("readMore", {defaultValue: 'Leggi di più'})}> */}
-                test text
-                {/* {t("readMore", {defaultValue: 'Leggi di più'})} */}
-              </button>
+                aria-label={italian ? "Leggi di più" : "Read more"}>
+                  {italian ? 'leggi di più' : 'read more'}
+                </button>
             </>
+          ) : italian ? (
+            "Nessuna descrizione disponibile"
           ) : (
-           'test text'
-          //  t("noDescription", {defaultValue: 'Nessuna descrizione disponibile'}) 
+            "No description available"
           )}
         </p>
 
         <div className="amazon-buy-link-container">
-          {showAmazon &&(
-          <Suspense fallback={<div>Loading...</div>}>
-            <LazyAmazonLink title={title} author={authors} />
-          </Suspense>
+          {showAmazon && (
+            <Suspense fallback={<div>Loading...</div>}>
+              <LazyAmazonLink title={title} author={authors} />
+            </Suspense>
           )}
           <p className="affiliate-para">Affiliate link</p>
-          
         </div>
       </div>
     </div>

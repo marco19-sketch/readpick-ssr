@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useContext } from "react";
 import CustomRadio from "./CustomRadio";
 import "@/styles/SearchBar.css";
 import { FaSearch } from "react-icons/fa";
-
+import { AppContext } from "./AppContextProvider";
 
 const labelsMap = {
   intitle: "Title",
@@ -26,8 +26,7 @@ export default function SearchBar({
   setSuggestions,
   handleFetchNew,
 }) {
-  
- 
+  const { italian } = useContext(AppContext);
 
   const debounceTimeout = useRef(null);
 
@@ -86,16 +85,15 @@ export default function SearchBar({
           <CustomRadio
             key={mode}
             // Passa un oggetto con la chiave 'defaultValue'
-            label={labelsMap[mode] === "Title"
+            label={
+              labelsMap[mode] === "Title"
+                ? italian
                   ? "Cerca per titolo"
-                  : "Cerca per autore"
+                  : "Search by title"
+                : italian
+                ? "Cerca per autore"
+                : "Search by author"
             }
-            // label={t(`searchBy${labelsMap[mode]}`, {
-            //   defaultValue:
-            //     labelsMap[mode] === "Title"
-            //       ? "Search by Title"
-            //       : "Search by Author",
-            // })}
             name="searchMode"
             value={mode}
             checked={searchMode === mode}
@@ -110,15 +108,16 @@ export default function SearchBar({
           className="input-element"
           value={query}
           onChange={handleInputChange}
-          placeholder={placeholderDefault[searchMode] === 'titolo' 
-            ? 'Cerca per titolo'
-            : 'Cerca per autore'
+          placeholder={
+            placeholderDefault[searchMode] === "titolo"
+              ? italian
+                ? "Inserisci titolo..."
+                : "Input title..."
+              : italian
+              ? "Inserisci nome..."
+              : "Input name..."
           }
-          // placeholder={t(placeholderMap[searchMode], {
-          //   defaultValue: placeholderDefault[searchMode] === 'titolo' 
-          //   ? 'Cerca per titolo'
-          //   : 'Cerca per autore'
-          // })}
+          
           onKeyDown={e => {
             if (e.key === "Escape") {
               setSuggestions([]);
@@ -157,14 +156,13 @@ export default function SearchBar({
         <button
           className="btn-element"
           type="button"
-          aria-label="Avvia la ricerca"
-          // aria-label={t("startSearch", { defaultValue: "Avvia la ricerca" })}
+          aria-label={ italian ? "Avvia la ricerca" : 'Start search'}
+          
           onClick={() => {
             onSearch(query);
             setSuggestions([]);
           }}>
           <FaSearch />
-          {/* {t("startSearch")} */}
         </button>
       </div>
 

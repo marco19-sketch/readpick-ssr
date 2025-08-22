@@ -6,10 +6,7 @@ import { useRouter } from "next/navigation";
 import "@/styles/auth.css";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
-import {
-  auth,
-  signInWithEmailAndPassword,
-} from "@/firebase/firebase";
+import { auth, signInWithEmailAndPassword } from "@/firebase/firebase";
 import GoogleLoginButton from "./GoogleLoginButton";
 import { AppContext } from "./AppContextProvider";
 
@@ -19,26 +16,20 @@ export default function Login() {
   const [error, setError] = useState("");
   const router = useRouter();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
-  const { setLogin, login, loading, setLoading } = useContext(AppContext);
+  const { setLogin, login, loading, setLoading, italian } =
+    useContext(AppContext);
 
-  const label = 'test text';
-  // const label = t("login", { defaultValue: "Accedi" });
-  const forgotPass = 'test text'
-  // const forgotPass = t("forgotPassword", {
-  //   defaultValue: "Password dimenticata?",
-  // });
-  const noAccount = 'test text';
-  // const noAccount = t("noAccount", { defaultValue: "Non hai un account?" });
-  const singIn = 'test text';
-  // const singIn = t("signIn", { defaultValue: "Registrati" });
-  const loginSuccess = 'test text';
-  // const loginSuccess = t("loggedSuccess", {
-  //   defaultValue: "Accesso in corso...",
-  // });
-  const missCredential = 'test text'
-  // const missCredential = t("missingCredentials", {
-  //   defaultValue: "Inserisci email e password",
-  // });
+  const label = italian ? "Accedi" : "Login";
+  const forgotPass = italian ? "Password dimenticata?" : "Forgot password?";
+  const noAccount = italian
+    ? "Non hai un account?"
+    : "Don't have an account yet?";
+  const signIn = italian ? "Registrati" : "Sign in";
+  const loginSuccess = italian ? "Accesso in corso..." : "Logging in...";
+  const missCredential = italian
+    ? "Inserisci email e password"
+    : "Input email and password";
+
   const handleVisibility = useCallback(() => {
     setPasswordVisibility(!passwordVisibility);
   }, [passwordVisibility]);
@@ -61,11 +52,9 @@ export default function Login() {
         setLoading(false);
       }, 500);
     } catch (err) {
-      //   console.error("error", err);
-      setError('test text'
-        // t("loginError", {
-        //   defaultValue: "Credenziali errate, riprova",
-        // })
+      console.error("error", err);
+      setError(
+        italian ? "Credenziali errate, riprova" : "Wrong credentials, retry"
       );
       setEmail("");
       setPassword("");
@@ -73,17 +62,6 @@ export default function Login() {
   };
 
   return (
-    // <div className="auth-background">
-    //   <img
-    //     className="auth-bg-auto-size"
-    //     src={mobileBg}
-    //     srcSet={`${mobileBg} 907w, ${desktopBg} 1280w`}
-    //     sizes="(max-width: 640px) 100vw, 1280px"
-    //     alt=""
-    //     aria-hidden="true"
-    //     decoding="auto"
-    //   />
-
     <div className="auth-page">
       <form onSubmit={handleLogin} className="auth-form">
         <h2 className="auth-header">{label}</h2>
@@ -135,7 +113,7 @@ export default function Login() {
       <p className="auth-p-link">
         {noAccount}{" "}
         <Link className="auth-nav-link" href="/register">
-          {singIn}
+          {signIn}
         </Link>
       </p>
       <p className="oppure">oppure</p>
@@ -146,6 +124,5 @@ export default function Login() {
         setLogin={setLogin}
       />
     </div>
-    // </div>
   );
 }

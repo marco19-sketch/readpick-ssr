@@ -48,7 +48,7 @@ export default function NavBar() {
         {isMobile ? (
           <MdFavorite />
         ) : (
-          `${italian ? "Favoriti" : "Favorites"} ${(favorites || []).length}`
+          `${italian ? "Preferiti" : "Favorites"} ${(favorites || []).length}`
         )}
       </Link>
 

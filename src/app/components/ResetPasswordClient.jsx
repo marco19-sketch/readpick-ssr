@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
-// import { useTranslation } from "react-i18next";
+import { useState, useContext } from "react";
 import "@/styles/auth.css";
 import { auth, sendPasswordResetEmail } from "@/firebase/firebase";
+import { AppContext } from "./AppContextProvider";
 
 export default function ResetPasswordClient() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [msgGreen, setMsgGreen] = useState(false);
-  // const { t } = useTranslation();
+  const { italian } = useContext(AppContext);
 
   const resetPassword = async email => {
     const actionCodeSettings = {
@@ -29,16 +29,15 @@ export default function ResetPasswordClient() {
     const { success, error } = await resetPassword(email);
     if (success) {
       setMsgGreen(true);
-      setMessage('test text'
-        // t("passwordSent", {
-        //   defaultValue: `Email inviata, controlla la posta in arrivo`,
-        // })
+      setMessage(
+        italian
+          ? "Email inviata, controlla la posta in arrivo"
+          : "Email sent, check you inbox"
       );
     } else {
       setMsgGreen(false);
       setMessage(
-        'test text'
-        // t("invalidEmail", { error, defaultValue: `Email non valida. ${error}` })
+        `${italian ? "Email non valida" : "Invalid email"} ${error.message}`
       );
     }
   };
@@ -49,21 +48,18 @@ export default function ResetPasswordClient() {
     <div className="auth-page">
       <form className="auth-form" onSubmit={handleSubmit}>
         <h2 className="auth-header">
-          test text
-          {/* {t("resetPassword") || "Reimposta password"} */}
+          {italian ? "Reimposta password" : "Reset password"}
         </h2>
         <input
           className="auth-input"
           type="email"
           required
-          // placeholder={t("enterEmail", {
-          //   defaultValue: "Inserisci email...",
-          // })}
+          placeholder={italian ? "Inserisci email..." : "Enter email..."}
           value={email}
           onChange={e => setEmail(e.target.value)}
         />
         <button className="auth-btn" type="submit">
-          {/* {t("sendEmail", { defaultValue: "Invia email " })} */}
+          {italian ? "Invia email" : "Send email"}
         </button>
       </form>
 
@@ -71,6 +67,5 @@ export default function ResetPasswordClient() {
         <p className={`auth-${msgGreen ? "success" : "error"}`}>{message}</p>
       )}
     </div>
-    // </div>
   );
 }

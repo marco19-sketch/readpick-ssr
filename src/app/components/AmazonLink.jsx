@@ -1,9 +1,11 @@
 "use client";
 
 import PropTypes from "prop-types";
+import { AppContext } from './AppContextProvider';
+import { useContext } from 'react';
 
 const AmazonLink = ({ title, author }) => {
- 
+ const { italian } = useContext(AppContext);
 
   if (!title) return null;
 
@@ -25,8 +27,8 @@ const AmazonLink = ({ title, author }) => {
       onClick={() => {
         console.log("Clicked the Amazon link for:", title, "\nlink url", link);
       }}>
-      🔗 Acquistalo su Amazon
-      {/* 🔗 {t("buyOnAmazon")} */}
+      🔗 { italian ? 'Acquistalo su Amazon' : 'Buy it on Amazon'}
+     
     </a>
   );
 };

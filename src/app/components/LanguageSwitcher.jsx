@@ -6,18 +6,14 @@ import { useContext } from "react";
 export default function LanguageSwitcher() {
   const { italian, setItalian } = useContext(AppContext);
 
-  // const changeLanguage = lng => {
-  //   i18n.changeLanguage(lng);
-  // };
-
   return (
     <div>
       <button
-        className={`english ${!italian ? "" : "selected"}`}
         // className={`english ${ i18n.language === "en" ? "selected" : ""}`}
         // className={`english ${mounted && i18n.language === "en" ? "selected" : ""}`}
 
-        onClick={() => setItalian(false)}>
+        onClick={() => setItalian(false)}
+        className={`english ${italian ? "" : "selected"}`}>
         <img
           width="20"
           height="16"
@@ -30,10 +26,10 @@ export default function LanguageSwitcher() {
         />
       </button>
       <button
-        className={`italiano ${italian ? 'selected' : ''}`}
         // className={`italiano ${ i18n.language === "it" ? "selected" : ""}`}
         // className={`italiano ${mounted && i18n.language === "it" ? "selected" : ""}`}
-        onClick={() => setItalian(true)}>
+        onClick={() => setItalian(true)}
+        className={`italiano ${italian ? "selected" : ""}`}>
         <img
           width="20"
           height="16"
