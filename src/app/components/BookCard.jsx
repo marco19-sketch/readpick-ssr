@@ -94,10 +94,12 @@ export default function BookCard({
               src={thumbnail}
               alt={`${italian ? 'Copertina di' : 'Cover of'} ${title}`}
               // loading={isHighPriority ? "eager" : "lazy"}
-              priority={isHighPriority ? true : false} 
+              priority={isHighPriority} 
               // fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
               width="200"
               height="300"
+              decoding={isHighPriority ? 'async' : 'auto'}
+              loading={isHighPriority ? 'eager' : 'lazy'}
             />
             {/* <img
               id={isHighPriority ? "lcp-cover" : undefined}
