@@ -34,6 +34,11 @@ export default function BookCard({
   const thumbnail = useThumbnail(book);
   const [showAmazon, setShowAmazon] = useState(false);
   const { italian } = useContext(AppContext);
+  const [lowPriority, setLowPriority] = useState(false);
+
+  setTimeout(() => {
+    setLowPriority(true);
+  }, 4000);
 
   // Delaying Amazon render, it does not improve LCP anyway
   useEffect(() => {
@@ -87,6 +92,22 @@ export default function BookCard({
               (e.key === "Enter" || e.key === " ") && onSelect(book)
             }
             aria-label="View book full description">
+              {lowPriority ? (
+                 <Image
+              // id={isHighPriority ? "lcp-cover" : undefined}
+              tabIndex="0"
+              className="thumbnail"
+              src={thumbnail}
+              alt={`${italian ? 'Copertina di' : 'Cover of'} ${title}`}
+              // loading={isHighPriority ? "eager" : "lazy"}
+              // priority={isHighPriority} 
+              // fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
+              width="200"
+              height="300"
+              // decoding={isHighPriority ? 'async' : 'auto'}
+              loading='lazy'
+            />
+              ) : (
             <Image
               id={isHighPriority ? "lcp-cover" : undefined}
               tabIndex="0"
@@ -100,18 +121,22 @@ export default function BookCard({
               height="300"
               decoding={isHighPriority ? 'async' : 'auto'}
               loading={isHighPriority ? 'eager' : 'lazy'}
-            />
-            {/* <img
+            />)}
+            {/* <Image
               id={isHighPriority ? "lcp-cover" : undefined}
               tabIndex="0"
               className="thumbnail"
               src={thumbnail}
-              alt={`Cover of ${title}`}
-              loading={isHighPriority ? "eager" : "lazy"}
-              fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
+              alt={`${italian ? 'Copertina di' : 'Cover of'} ${title}`}
+              // loading={isHighPriority ? "eager" : "lazy"}
+              priority={isHighPriority} 
+              // fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
               width="200"
               height="300"
+              decoding={isHighPriority ? 'async' : 'auto'}
+              loading={isHighPriority ? 'eager' : 'lazy'}
             /> */}
+            
           </button>
         ) : (
           <p className="no-thumbnail-para">No cover image available</p>
