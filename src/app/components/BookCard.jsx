@@ -3,9 +3,9 @@
 import "@/styles/BookCard.css";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "@/utils/useThumbnail";
-import React, { Suspense, useState, useEffect, useContext } from "react";
+import React, { Suspense, useState, useEffect, useContext, useRef } from "react";
 import { AppContext } from "./AppContextProvider";
-import Image from 'next/image'
+import Image from "next/image";
 const LazyAmazonLink = React.lazy(() => import("./AmazonLink"));
 
 const languageMap = {
@@ -34,11 +34,42 @@ export default function BookCard({
   const thumbnail = useThumbnail(book);
   const [showAmazon, setShowAmazon] = useState(false);
   const { italian } = useContext(AppContext);
-  const [lowPriority, setLowPriority] = useState(false);
+  const [canRenderImage, setCanRenderImage] = useState(isHighPriority);
+  const cardRef = useRef(null);
 
-  setTimeout(() => {
-    setLowPriority(true);
-  }, 4000);
+  useEffect(() => {
+    if (isHighPriority) {
+      setCanRenderImage(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      entries => {
+        // Se la card è in vista, impostiamo lo stato su true
+        if (entries[0].isIntersecting) {
+          setCanRenderImage(true);
+          // E smettiamo di osservare per evitare carichi di lavoro inutili
+          observer.disconnect();
+        }
+      },
+      {
+        // L'immagine viene caricata quando è a 200px di distanza dal viewport
+        rootMargin: "200px",
+      }
+    );
+
+    // Se la card esiste, inizia a osservarla
+    if (cardRef.current) {
+      observer.observe(cardRef.current);
+    }
+
+    // Pulisce l'observer quando il componente si smonta
+    return () => {
+      if (cardRef.current) {
+        observer.unobserve(cardRef.current);
+      }
+    };
+  }, [isHighPriority]); // La dipendenza isHighPriority è essenziale
 
   // Delaying Amazon render, it does not improve LCP anyway
   useEffect(() => {
@@ -75,8 +106,11 @@ export default function BookCard({
       ? new Date(publishedDate).getFullYear()
       : "Unknown";
 
+  console.log("priority", canRenderImage);
+
   return (
     <div
+      ref={cardRef}
       className="single-book"
       role="listitem"
       aria-label={`Book: ${title}`}
@@ -84,7 +118,7 @@ export default function BookCard({
       <h2 className="single-book-title">{title}</h2>
 
       <div className="cover-favorite-btn">
-        {hasThumbnail ? (
+        {canRenderImage ? ( // Usa il nuovo stato per il rendering condizionale
           <button
             className="thumb-btn"
             onClick={() => onSelect(book)}
@@ -92,54 +126,33 @@ export default function BookCard({
               (e.key === "Enter" || e.key === " ") && onSelect(book)
             }
             aria-label="View book full description">
-              {lowPriority ? (
-                 <Image
-              // id={isHighPriority ? "lcp-cover" : undefined}
-              tabIndex="0"
-              className="thumbnail"
-              src={thumbnail}
-              alt={`${italian ? 'Copertina di' : 'Cover of'} ${title}`}
-              // loading={isHighPriority ? "eager" : "lazy"}
-              // priority={isHighPriority} 
-              // fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
-              width="200"
-              height="300"
-              // decoding={isHighPriority ? 'async' : 'auto'}
-              loading='lazy'
-            />
-              ) : (
-            <Image
-              id={isHighPriority ? "lcp-cover" : undefined}
-              tabIndex="0"
-              className="thumbnail"
-              src={thumbnail}
-              alt={`${italian ? 'Copertina di' : 'Cover of'} ${title}`}
-              // loading={isHighPriority ? "eager" : "lazy"}
-              priority={isHighPriority} 
-              // fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
-              width="200"
-              height="300"
-              decoding={isHighPriority ? 'async' : 'auto'}
-              loading={isHighPriority ? 'eager' : 'lazy'}
-            />)}
-            {/* <Image
-              id={isHighPriority ? "lcp-cover" : undefined}
-              tabIndex="0"
-              className="thumbnail"
-              src={thumbnail}
-              alt={`${italian ? 'Copertina di' : 'Cover of'} ${title}`}
-              // loading={isHighPriority ? "eager" : "lazy"}
-              priority={isHighPriority} 
-              // fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
-              width="200"
-              height="300"
-              decoding={isHighPriority ? 'async' : 'auto'}
-              loading={isHighPriority ? 'eager' : 'lazy'}
-            /> */}
-            
+            {hasThumbnail ? (
+              <Image
+                id={isHighPriority ? "lcp-cover" : undefined}
+                tabIndex="0"
+                className="thumbnail"
+                src={thumbnail}
+                alt={`${italian ? "Copertina di" : "Cover of"} ${title}`}
+                priority={isHighPriority}
+                width="200"
+                height="300"
+                decoding={isHighPriority ? "async" : "auto"}
+                loading={isHighPriority ? "eager" : "lazy"}
+              />
+            ) : (
+              <span className="no-thumbnail-para">No cover image available</span>
+            )}
           </button>
         ) : (
-          <p className="no-thumbnail-para">No cover image available</p>
+          // Placeholder per l'immagine non ancora caricata.
+          // È cruciale che abbia le stesse dimensioni (width/height)
+          // per prevenire il CLS.
+          <div
+            style={{
+              width: 200,
+              height: 300,
+              backgroundColor: "#f0f0f0",
+            }}></div>
         )}
         <div className="book-card-fav-btn">
           <FavoriteButton
@@ -183,8 +196,8 @@ export default function BookCard({
                 className="read-more"
                 onClick={() => onSelect(book)}
                 aria-label={italian ? "Leggi di più" : "Read more"}>
-                  {italian ? 'leggi di più' : 'read more'}
-                </button>
+                {italian ? "leggi di più" : "read more"}
+              </button>
             </>
           ) : italian ? (
             "Nessuna descrizione disponibile"
