@@ -5,7 +5,7 @@ import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "@/utils/useThumbnail";
 import React, { Suspense, useState, useEffect, useContext } from "react";
 import { AppContext } from "./AppContextProvider";
-
+import Image from 'next/image'
 const LazyAmazonLink = React.lazy(() => import("./AmazonLink"));
 
 const languageMap = {
@@ -87,7 +87,19 @@ export default function BookCard({
               (e.key === "Enter" || e.key === " ") && onSelect(book)
             }
             aria-label="View book full description">
-            <img
+            <Image
+              id={isHighPriority ? "lcp-cover" : undefined}
+              tabIndex="0"
+              className="thumbnail"
+              src={thumbnail}
+              alt={`${italian ? 'Copertina di' : 'Cover of'} ${title}`}
+              // loading={isHighPriority ? "eager" : "lazy"}
+              priority={isHighPriority ? true : false} 
+              // fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
+              width="200"
+              height="300"
+            />
+            {/* <img
               id={isHighPriority ? "lcp-cover" : undefined}
               tabIndex="0"
               className="thumbnail"
@@ -97,7 +109,7 @@ export default function BookCard({
               fetchPriority={isHighPriority ? "high" : "low"} // 👈 this is key
               width="200"
               height="300"
-            />
+            /> */}
           </button>
         ) : (
           <p className="no-thumbnail-para">No cover image available</p>
