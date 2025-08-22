@@ -1,19 +1,18 @@
-// import { Suspense, lazy } from "react";
+
 import "@/styles/Home.css";
 import Image from "next/image";
-import HomeClient from './components/HomeClient';
+import HomeClient from "./components/HomeClient";
 
-// Importa il Client Component in modo dinamico
-// const HomePage = lazy(() => import("./components/HomePage"));
+
 
 export default function Home() {
   return (
-    <div className='home-page'>
-    {/* <div className={`home-page ${loading ? "wait-cursor" : ""}`}> */}
+    <div className="home-page">
+     
       <header>
         <h1 className="main-title">Read Pick</h1>
       </header>
-     
+
       <Image
         src="/assets/images/pexelsTima1920.jpg"
         sizes="(max-width: 480px) 480px,
@@ -27,12 +26,10 @@ export default function Home() {
         aria-hidden="true"
         className="home-bg"
         decoding="async"
-        priority='true'
+        priority="true"
       />
 
-      {/* <Suspense> */}
-        <HomeClient />
-      {/* </Suspense> */}
+      <HomeClient />
     </div>
   );
 }

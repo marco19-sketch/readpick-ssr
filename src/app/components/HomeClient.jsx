@@ -170,7 +170,6 @@ export default function HomePage() {
       {!hasSearched && (
         <h2 className="trending-books">
           {" "}
-          {/* {t("trendingBooks", { defaultValue: "Libri del momento" })} */}
           {italian ? "Libri del momento" : "Trending book"}
         </h2>
       )}
@@ -207,8 +206,7 @@ export default function HomePage() {
       {!loading && showNoResultsModal && (
         <Modal onClose={() => setShowNoResultsModal(false)}>
           <p className="no-results">
-            {/* {t("noResults", { defaultValue: "Nessun risultato" })} */}
-            test text
+            {italian ? "Nessun risultato" : "No results"}
           </p>
         </Modal>
       )}
