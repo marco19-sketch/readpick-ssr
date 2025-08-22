@@ -7,8 +7,7 @@ import React, {
   Suspense,
   useState,
   useEffect,
-  useContext,
-  useRef,
+  useContext
 } from "react";
 import { AppContext } from "./AppContextProvider";
 import Image from "next/image";
