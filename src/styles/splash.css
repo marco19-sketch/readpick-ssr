@@ -17,11 +17,11 @@
 }
 
 .layout-main-content.background {
+    margin: 1vh auto;
     position: fixed;
     width: auto;
-    max-width: 100%;
-    height: 100vh;
-    max-height: 100%;
+    height: 98vh;
+    max-height: 98%;
     object-fit: cover;
 }
 
@@ -30,5 +30,6 @@
         width: 100vw;
         max-width: 100%;
         height: auto;
+        object-fit: cover;
     }
 }
