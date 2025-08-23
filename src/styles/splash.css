@@ -1,7 +1,3 @@
-*{
-    cursor: progress;
-}
-
 .splash-title {
   position: absolute;
   top: 50%;
@@ -9,6 +5,7 @@
   transform: translateX(-50%);
   background-color: rgba(0, 0, 0, 0.849);
   border-radius: 5px;
+  cursor: progress;
 }
 
 .splash-subtitle {
@@ -18,6 +15,7 @@
   transform: translateX(-50%);
   color: white;
   background-color: rgba(0, 0, 0, 0.849);
+  cursor: progress;
 }
 
 .layout-main-content.background {
@@ -27,6 +25,7 @@
   height: 98vh;
   max-height: 98%;
   object-fit: cover;
+  cursor: progress;
 }
 
 .dot-1 {
