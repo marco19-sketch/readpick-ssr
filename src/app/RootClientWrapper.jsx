@@ -19,7 +19,7 @@ export default function RootClientWrapper({ children }) {
     // You can adjust this timeout duration as needed (e.g., 3000ms = 3 seconds).
     const timer = setTimeout(() => {
       setIsSplashVisible(false);
-    }, 3000);
+    }, 1500);
 
     // Clean up the timer when the component unmounts to prevent memory leaks.
     return () => clearTimeout(timer);
