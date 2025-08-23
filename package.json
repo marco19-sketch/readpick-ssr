@@ -10,6 +10,7 @@
     "analyze": "next build --analyze"
   },
   "dependencies": {
+    "@vercel/speed-insights": "^1.2.0",
     "firebase": "^12.1.0",
     "focus-trap-react": "^11.0.4",
     "i18next-browser-languagedetector": "^8.2.0",
