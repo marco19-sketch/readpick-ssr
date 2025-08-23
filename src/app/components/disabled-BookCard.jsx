@@ -3,15 +3,9 @@
 import "@/styles/BookCard.css";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "@/utils/useThumbnail";
-import React, {
-  Suspense,
-  useState,
-  useEffect,
-  useContext,
-  useRef,
-} from "react";
+import React, { Suspense, useState, useEffect, useContext, useRef } from "react";
 import { AppContext } from "./AppContextProvider";
-import Image from "next/image";
+import Image from 'next/image'
 const LazyAmazonLink = React.lazy(() => import("./AmazonLink"));
 
 const languageMap = {
@@ -44,36 +38,40 @@ export default function BookCard({
   const cardRef = useRef(null);
 
   useEffect(() => {
-    // We only need the observer for non-priority images
     if (isHighPriority) {
-      // For the high-priority image, we don't need to do anything.
-      // It will be rendered directly on the server.
+      setCanRenderImage(true);
       return;
     }
 
     const observer = new IntersectionObserver(
       entries => {
+        // Se la card è in vista, impostiamo lo stato su true
         if (entries[0].isIntersecting) {
           setCanRenderImage(true);
+          // E smettiamo di osservare per evitare carichi di lavoro inutili
           observer.disconnect();
         }
       },
       {
+        // L'immagine viene caricata quando è a 200px di distanza dal viewport
         rootMargin: "200px",
       }
     );
 
+    // Se la card esiste, inizia a osservarla
     if (cardRef.current) {
       observer.observe(cardRef.current);
     }
 
+    // Pulisce l'observer quando il componente si smonta
     return () => {
       if (cardRef.current) {
         observer.unobserve(cardRef.current);
       }
     };
-  }, [isHighPriority]);
+  }, [isHighPriority]); // La dipendenza isHighPriority è essenziale
 
+  // Delaying Amazon render, it does not improve LCP anyway
   useEffect(() => {
     const timer = setTimeout(() => setShowAmazon(true), 1000);
     return () => clearTimeout(timer);
@@ -118,64 +116,49 @@ export default function BookCard({
       <h2 className="single-book-title">{title}</h2>
 
       <div className="cover-favorite-btn">
-        <button
-          className="thumb-btn"
-          onClick={() => onSelect(book)}
-          onKeyDown={e =>
-            (e.key === "Enter" || e.key === " ") && onSelect(book)
-          }
-          aria-label="View book full description">
-          {isHighPriority ? (
-            // For the LCP image, we render it directly.
-            hasThumbnail ? (
+        {canRenderImage ? ( // Usa il nuovo stato per il rendering condizionale
+          <button
+            className="thumb-btn"
+            onClick={() => onSelect(book)}
+            onKeyDown={e =>
+              (e.key === "Enter" || e.key === " ") && onSelect(book)
+            }
+            aria-label="View book full description">
+            {hasThumbnail ? (
               <Image
-                id="lcp-cover"
+                id={isHighPriority ? "lcp-cover" : undefined}
                 tabIndex="0"
                 className="thumbnail"
                 src={thumbnail}
                 alt={`${italian ? "Copertina di" : "Cover of"} ${title}`}
-                priority={true}
+                priority={isHighPriority}
                 width="200"
                 height="300"
-                decoding="async"
+                decoding={isHighPriority ? "async" : "auto"}
+                loading={isHighPriority ? "eager" : "lazy"}
               />
             ) : (
               <span className="no-thumbnail-para">
                 No cover image available
               </span>
-            )
-          ) : canRenderImage ? ( // For other images, we use the state-based rendering.
-            hasThumbnail ? (
-              <Image
-                tabIndex="0"
-                className="thumbnail"
-                src={thumbnail}
-                alt={`${italian ? "Copertina di" : "Cover of"} ${title}`}
-                priority={false}
-                width="200"
-                height="300"
-                decoding="auto"
-                loading="lazy"
-              />
-            ) : (
-              <span className="no-thumbnail-para">
-                No cover image available
-              </span>
-            )
-          ) : (
-            // The placeholder is rendered when `canRenderImage` is false
-            <div
-              style={{
-                width: 200,
-                height: 300,
-                backgroundColor: "#f0f0f0",
-              }}></div>
-          )}
-        </button>
+            )}
+          </button>
+        ) : (
+          // Placeholder per l'immagine non ancora caricata.
+          // È cruciale che abbia le stesse dimensioni (width/height)
+          // per prevenire il CLS.
+          <div
+            style={{
+              width: 200,
+              height: 300,
+              backgroundColor: "#f0f0f0",
+            }}></div>
+        )}
         <div className="book-card-fav-btn">
           <FavoriteButton
             isFavorite={isFavorite(book)}
             onToggle={onToggleFavorite}
+            // t={t}
           />
         </div>
       </div>
