@@ -4,7 +4,7 @@ import '@/styles/splash.css';
 export default function SplashScreen() {
     return (
       <div className='splash-page'>
-        <Image
+        <Image 
           src="/assets/images/leaves-1280.avif"
           sizes="(max-width: 480px) 480px,
          (max-width: 768px) 768px,
