@@ -1,10 +1,10 @@
-// import Image from 'next/image';
+import Image from 'next/image';
 import '@/styles/splash.css';
 
 export default function SplashScreen() {
     return (
       <div className='splash-page'>
-        {/* <Image
+        <Image
           src="/assets/images/leaves-1280.avif"
           sizes="(max-width: 480px) 480px,
          (max-width: 768px) 768px,
@@ -18,7 +18,7 @@ export default function SplashScreen() {
          className='splash-image'
          decoding='async'
          priority='true'
-        /> */}
+        />
         <h1 className='splash-title'>WELCOME</h1>
            </div>
     );
