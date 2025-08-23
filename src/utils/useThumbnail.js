@@ -28,7 +28,6 @@ export function useThumbnail(book) {
 
       const openLibUrl = `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
 
-     
       const testImage = new Image();
       testImage.src = openLibUrl;
 
@@ -41,13 +40,6 @@ export function useThumbnail(book) {
           }
         }
       };
-
-      // testImage.onerror = () => {
-      //   if (!cancelled) {
-      //     const fallbackOpenLib = `https://covers.openlibrary.org/b/isbn/${isbn}-M.jpg`;
-      //     setThumbnail(googleThumb || fallbackOpenLib || PLACEHOLDER_URL);
-      //   }
-      // };
 
       testImage.onerror = () => {
         if (cancelled) return;
@@ -74,10 +66,6 @@ export function useThumbnail(book) {
           }
         };
       };
-
-
-
-
     };
 
     resolveThumbnail();
@@ -86,6 +74,6 @@ export function useThumbnail(book) {
       cancelled = true;
     };
   }, [isbn, googleThumb]);
-
+  console.log('thumbnail', thumbnail)
   return thumbnail;
 }
