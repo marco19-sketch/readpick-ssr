@@ -38,6 +38,7 @@ export default function Footer() {
             href="http://bit.ly/3IMARbi">
             Vitaly Gariev
           </a>{" "}
+          <a href="https://shorturl.at/AmiGB">Laurentiu Morariu</a>{' '}
           su{" "}
           <a
             rel="noopener noreferrer"

@@ -19,7 +19,7 @@ export default function RegisterClient() {
   const router = useRouter();
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const { rules, isValid } = validatePassword(password);
-  const { setLogin } = useContext(AppContext);
+  const { setLogin, italian } = useContext(AppContext);
 
   const register = italian ? 'Registrati' : 'Sign in';
   const placeholder = italian ? 'Inserisci una password forte' : 'Input a strong password';
