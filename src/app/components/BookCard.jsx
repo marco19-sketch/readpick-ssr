@@ -108,6 +108,7 @@ export default function BookCard({
 
   return (
     <div
+      ref={cardRef}
       className="single-book"
       role="listitem"
       aria-label={`Book: ${title}`}
@@ -137,7 +138,9 @@ export default function BookCard({
                 loading={isHighPriority ? "eager" : "lazy"}
               />
             ) : (
-              <span className="no-thumbnail-para">No cover image available</span>
+              <span className="no-thumbnail-para">
+                No cover image available
+              </span>
             )}
           </button>
         ) : (
@@ -193,8 +196,8 @@ export default function BookCard({
                 className="read-more"
                 onClick={() => onSelect(book)}
                 aria-label={italian ? "Leggi di più" : "Read more"}>
-                  {italian ? 'leggi di più' : 'read more'}
-                </button>
+                {italian ? "leggi di più" : "read more"}
+              </button>
             </>
           ) : italian ? (
             "Nessuna descrizione disponibile"
