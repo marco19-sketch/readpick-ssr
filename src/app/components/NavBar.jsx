@@ -21,8 +21,7 @@ export default function NavBar() {
   const isLoginPage = pathname === "/login";
 
   const loginBtnText = italian ? "Accedi" : "Login";
-  // const loginBtnText = "Accedi";
-  // const loginBtnText = t("login", { defaultValue: "Accedi" });
+ 
 
   return (
     <nav>
@@ -61,8 +60,9 @@ export default function NavBar() {
             logout();
             setLogin(false);
           }}>
-          {isMobile ? <IoLogOut /> : "Esci"}
-          {/* {isMobile ? <IoLogOut /> : t("logout", { defaultValue: "Esci" })} */}
+         
+          {isMobile ? <IoLogOut />  : italian ? 'Esci' : 'Log out'}
+          
         </button>
       ) : isLoginPage ? null : (
         <Link href="/login" className="login" aria-label={loginBtnText}>

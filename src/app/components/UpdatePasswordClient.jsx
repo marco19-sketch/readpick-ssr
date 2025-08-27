@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useContext } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { auth, confirmPasswordReset } from "@/firebase/firebase";
 import "@/styles/auth.css";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { validatePassword } from "../../utils/validatePassword";
+import { AppContext } from "./AppContextProvider";
 
 export default function UpdatePasswordClient() {
   const [newPassword, setNewPassword] = useState("");
@@ -15,6 +16,7 @@ export default function UpdatePasswordClient() {
   const [passwordTouched, setPasswordTouched] = useState(false);
   const [message, setMessage] = useState(null);
   const [msgGreen, setMsgGreen] = useState(false);
+  const { italian } = useContext(AppContext);
 
   const handleVisibility = useCallback(() => {
     setPasswordVisibility(prev => !prev);
@@ -27,15 +29,14 @@ export default function UpdatePasswordClient() {
     const code = searchParams.get("oobCode");
     if (code) {
       setOobCode(code);
-      console.log("Codice OOB trovato.");
     } else {
       setMessage(
-        // t("invalidCode", { defaultValue: "Codice reset non valido o mancante" })
-        "test text"
+        italian
+          ? "Codice reset non valido o mancante"
+          : "Invalid or missing reset code"
       );
     }
   }, [searchParams]);
-  // }, [searchParams, t]);
 
   const { isValid, errors } = validatePassword(newPassword);
 
@@ -50,9 +51,7 @@ export default function UpdatePasswordClient() {
     }
     if (!isValid) {
       setMsgGreen(false);
-      setMessage(
-        t("fixPassword", { defaultValue: "Crea una password adeguata" })
-      );
+      setMessage(italian ? "Crea password adeguata" : "Input strong password");
       return;
     }
 
@@ -60,19 +59,17 @@ export default function UpdatePasswordClient() {
       await confirmPasswordReset(auth, oobCode, newPassword);
       setMsgGreen(true);
       setMessage(
-        // t("updateSuccess", {
-        //   defaultValue:
-        //     "Password aggiornata con successo. Reindirizzamento al login...",
-        // })
-        "test text"
+        italian
+          ? "Password aggiornata con successo. Reindirizzamento al log in..."
+          : "Password reset successful. Redirecting to log in..."
       );
-      console.log("Successo: Password resettata con successo.");
+
       setTimeout(() => router.push("/login"), 3000);
     } catch (error) {
       setMsgGreen(false);
       console.error("Errore nel reset della password:", error);
-      setMessage("test text");
-      // setMessage(t("errorUpdating", { defaultValue: "Errore riprova" }));
+      setMessage(italian ? 'Errore, riprova' : 'Error, try again');
+      
     }
   };
 
@@ -81,16 +78,15 @@ export default function UpdatePasswordClient() {
       {oobCode ? (
         <form className="auth-form" onSubmit={handleSubmit}>
           <h2 className="auth-header">
-            {/* {t("setNewPass", { defaultValue: "Crea nuova password" })} */}
-            test text
+            {italian ? 'Crea nouva password': 'Input new password'}
+           
           </h2>
           <div className="auth-input-container">
             <input
               className="auth-input password"
               type={passwordVisibility ? "text" : "password"}
-              // placeholder={t("enterNewPass", {
-              //   defaultValue: "Inserisci nuova password...",
-              // })}
+              placeholder={italian ? 'Inserisci nuova password' : 'Input new password'}
+              
               value={newPassword}
               onChange={e => setNewPassword(e.target.value)}
               onBlur={() => setPasswordTouched(true)}
@@ -126,8 +122,8 @@ export default function UpdatePasswordClient() {
         </form>
       ) : (
         <p>
-          {/* {t("invalidCode", { defaultValue: "Codice non valido o mancante." })} */}
-          test text
+          {italian ? 'Codice non valido o mancante' : 'Invalid or missing code'}
+          
         </p>
       )}
     </div>

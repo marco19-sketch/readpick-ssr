@@ -40,7 +40,7 @@ export default function SearchBar({
         const res = await fetch(url);
         const data = await res.json();
         const docs = data.docs || [];
-
+        
         const extracted = docs
           .map(doc => {
             if (searchMode === "intitle") return doc.title;

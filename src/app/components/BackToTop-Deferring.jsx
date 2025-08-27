@@ -2,14 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { FaArrowUp } from "react-icons/fa";
-
-// The CSS import is REMOVED from the top of the file.
-// We will now load it conditionally using the custom hook.
-
-// This is the new custom hook to defer the CSS.
-// You will need to create this file: `src/hooks/useDeferredStyleSheet.js`
-import useDeferredStyleSheet from "./hooks/useDeferredStyleSheet";
-// import "@/styles/BackToTop.css";
+import "@/styles/BackToTop.css";
 
 export default function BackToTop({ scrollContainerSelector = ".root" }) {
   const [isVisible, setIsVisible] = useState(false);
@@ -17,12 +10,7 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
     typeof window !== "undefined" && window.innerWidth < 500
   ); //'to avoid errors'
 
-  // 1. Use the custom hook to manage CSS loading.
-  // The hook will handle creating the link tag and loading the stylesheet.
-  // It returns a boolean to indicate when the stylesheet has been loaded.
-  const isStylesheetLoaded = useDeferredStyleSheet("@/styles/BackToTop.css");
-
-  const containerRef = useRef(null);
+  const containerRef = useRef(null); 
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 500);
@@ -34,7 +22,8 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
   useEffect(() => {
     if (isMobile) return;
 
-    const container =
+   
+    const container = 
       document.querySelector(scrollContainerSelector) ||
       document.documentElement;
     containerRef.current = container;
@@ -47,17 +36,17 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
     };
 
     container.addEventListener("scroll", toggleVisibility);
-    toggleVisibility();
+    toggleVisibility(); 
 
     return () => {
       container.removeEventListener("scroll", toggleVisibility);
     };
   }, [scrollContainerSelector, isMobile]);
 
-  if (isMobile || !isStylesheetLoaded) return null;
+  if (isMobile) return null;
 
   const scrollToTop = () => {
-    const container = containerRef.current;
+    const container = containerRef.current; 
     if (container) {
       container.scrollTo({
         top: 0,

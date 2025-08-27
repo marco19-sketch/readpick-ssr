@@ -63,7 +63,7 @@ export default function HomePage() {
 
       const data = await res.json();
       const items = data.items ?? [];
-
+      
       if (!items || items.length === 0) {
         setShowNoResultsModal(true);
       }
