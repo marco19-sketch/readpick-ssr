@@ -8,7 +8,7 @@ import { FaArrowUp } from "react-icons/fa";
 
 // This is the new custom hook to defer the CSS.
 // You will need to create this file: `src/hooks/useDeferredStyleSheet.js`
-import useDeferredStylesheet from "./hooks/useDeferredStyleSheet";
+import useDeferredStylesheet from "./hooks/useDeferredStylesheet";
 // import "@/styles/BackToTop.css";
 
 export default function BackToTop({ scrollContainerSelector = ".root" }) {
