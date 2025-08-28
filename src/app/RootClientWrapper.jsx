@@ -8,31 +8,31 @@ import NavBar from "./components/NavBar";
 import BackToTop from "./components/BackToTop";
 import FooterLoader from "./components/FooterLoader";
 import SkipLink from "./components/SkipLink";
-import SplashScreen from "./splash/page";
+// import SplashScreen from "./splash/page";
 
 export default function RootClientWrapper({ children }) {
   // State to control the visibility of the splash screen.
-  const [isSplashVisible, setIsSplashVisible] = useState(true);
+  // const [isSplashVisible, setIsSplashVisible] = useState(true);
 
   // Use useEffect to hide the splash screen after a set duration.
-  useEffect(() => {
+  // useEffect(() => {
     // You can adjust this timeout duration as needed (e.g., 3000ms = 3 seconds).
-    const timer = setTimeout(() => {
-      setIsSplashVisible(false);
-    }, 1000);
+    // const timer = setTimeout(() => {
+    //   setIsSplashVisible(false);
+    // }, 1000);
 
     // Clean up the timer when the component unmounts to prevent memory leaks.
-    return () => clearTimeout(timer);
-  }, []);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
   const route = usePathname();
   const hideNavBarOnRoutes = ["/reset-password", "/update-password"];
   const showNavBar = !hideNavBarOnRoutes.includes(route);
 
   // If the splash screen is visible, render it and nothing else.
-  if (isSplashVisible) {
-    return <SplashScreen />;
-  }
+  // if (isSplashVisible) {
+  //   return <SplashScreen />;
+  // }
 
   return (
     <AppContextProvider route={route}>
