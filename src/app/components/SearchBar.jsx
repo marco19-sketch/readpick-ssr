@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useContext } from "react";
 import CustomRadio from "./CustomRadio";
-// import "@/styles/SearchBar.css";
+import "@/styles/SearchBar.css";
 import { FaSearch } from "react-icons/fa";
 import { AppContext } from "./AppContextProvider";
 
@@ -79,95 +79,98 @@ export default function SearchBar({
   }, [searchMode, resetResults]);
 
   return (
-    <div className="search-bar">
-      <div className="label-container">
-        {["intitle", "inauthor"].map(mode => (
-          <CustomRadio
-            key={mode}
-            // Passa un oggetto con la chiave 'defaultValue'
-            label={
-              labelsMap[mode] === "Title"
+    <>
+      <div className="search-bar">
+        <div className="label-container">
+          {["intitle", "inauthor"].map(mode => (
+            <CustomRadio
+              key={mode}
+              // Passa un oggetto con la chiave 'defaultValue'
+              label={
+                labelsMap[mode] === "Title"
+                  ? italian
+                    ? "Cerca per titolo"
+                    : "Search by title"
+                  : italian
+                  ? "Cerca per autore"
+                  : "Search by author"
+              }
+              name="searchMode"
+              value={mode}
+              checked={searchMode === mode}
+              onChange={() => setSearchMode(mode)}
+            />
+          ))}
+        </div>
+        <div className="input-suggestion-container">
+          <input
+            name="search"
+            aria-label="Search for books"
+            className="input-element"
+            value={query}
+            onChange={handleInputChange}
+            placeholder={
+              placeholderDefault[searchMode] === "titolo"
                 ? italian
-                  ? "Cerca per titolo"
-                  : "Search by title"
+                  ? "Inserisci titolo..."
+                  : "Input title..."
                 : italian
-                ? "Cerca per autore"
-                : "Search by author"
+                ? "Inserisci nome..."
+                : "Input name..."
             }
-            name="searchMode"
-            value={mode}
-            checked={searchMode === mode}
-            onChange={() => setSearchMode(mode)}
+            onKeyDown={e => {
+              if (e.key === "Escape") {
+                setSuggestions([]);
+              }
+            }}
           />
-        ))}
-      </div>
-      <div className="input-suggestion-container">
-        <input
-          name="search"
-          aria-label="Search for books"
-          className="input-element"
-          value={query}
-          onChange={handleInputChange}
-          placeholder={
-            placeholderDefault[searchMode] === "titolo"
-              ? italian
-                ? "Inserisci titolo..."
-                : "Input title..."
-              : italian
-              ? "Inserisci nome..."
-              : "Input name..."
-          }
-          onKeyDown={e => {
-            if (e.key === "Escape") {
-              setSuggestions([]);
-            }
-          }}
-        />
 
-        {suggestions.length > 0 && (
-          <ul className="suggestion-item">
-            {suggestions.map((sugg, idx) => (
-              <li
-                key={idx}
-                tabIndex="0"
-                onKeyDown={e => {
-                  if (e.key === "Enter") {
-                    setQuery(sugg);
+          {suggestions.length > 0 && (
+            <ul className="suggestion-item">
+              {suggestions.map((sugg, idx) => (
+                <li
+                  key={idx}
+                  tabIndex="0"
+                  onKeyDown={e => {
+                    if (e.key === "Enter") {
+                      setQuery(sugg);
+                      setSuggestions([]);
+                      handleFetchNew(sugg);
+                      e.currentTarget.blur();
+                    }
+                    if (e.key === "Escape") {
+                      setSuggestions([]);
+                    }
+                  }}
+                  onClick={e => {
+                    setQuery(sugg); // 👈 this value will be passed to Home when you click search
                     setSuggestions([]);
                     handleFetchNew(sugg);
                     e.currentTarget.blur();
-                  }
-                  if (e.key === "Escape") {
-                    setSuggestions([]);
-                  }
-                }}
-                onClick={e => {
-                  setQuery(sugg); // 👈 this value will be passed to Home when you click search
-                  setSuggestions([]);
-                  handleFetchNew(sugg);
-                  e.currentTarget.blur();
-                }}>
-                {sugg}
-              </li>
-            ))}
-          </ul>
-        )}
-        <button
-          className="btn-element"
-          type="button"
-          aria-label={italian ? "Avvia la ricerca" : "Start search"}
-          onClick={() => {
-            onSearch(query);
-            setSuggestions([]);
-          }}>
-          <FaSearch />
+                  }}>
+                  {sugg}
+                </li>
+              ))}
+            </ul>
+          )}
+          <button
+            className="btn-element"
+            type="button"
+            aria-label={italian ? "Avvia la ricerca" : "Start search"}
+            onClick={() => {
+              onSearch(query);
+              setSuggestions([]);
+            }}>
+            <FaSearch />
+          </button>
+        </div>
+
+        <button className="reset-btn" type="button" onClick={onReset}>
+          Reset
         </button>
       </div>
-
-      <button className="reset-btn" type="button" onClick={onReset}>
-        Reset
-      </button>
-      <style>{`.label-container {
+      <style>{`
+    .label-container {
   box-shadow: var(--shadow);
   margin: 10px auto;
   padding: 10px;
@@ -293,6 +296,6 @@ export default function SearchBar({
   }
 }
 `}</style>
-    </div>
+    </>
   );
 }
