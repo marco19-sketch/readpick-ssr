@@ -14,7 +14,7 @@
   --shadow: 4px 4px 8px rgb(7, 6, 7);
   --overlay: rgba(0, 0, 0, 0.61);
 
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
   line-height: 1.5;
   font-weight: 400;
 
