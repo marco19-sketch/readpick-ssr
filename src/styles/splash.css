@@ -1,46 +1,69 @@
+.layout-container.splash {
+    /* background-image: radial-gradient(var(--text-color), var(--main-color)); */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-shadow: var(--shadow);
+    background-color: rgb(68, 57, 57);
+}
+
+
 .splash-title {
-  position: absolute;
-  top: 50%;
+  /* position: absolute; */
+  /* top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  background-color: rgba(0, 0, 0, 0.849);
+  transform: translateX(-50%); */
+  /* background-color: rgba(0, 0, 0, 0.849); */
+  color: var(--main-color);
   border-radius: 5px;
   cursor: progress;
 }
 
 .splash-subtitle {
-  position: absolute;
+  /* position: absolute;
   top: 57%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%); */
   color: white;
-  background-color: rgba(0, 0, 0, 0.849);
+  /* background-color: rgba(0, 0, 0, 0.849); */
   cursor: progress;
+  color: var(--main-color);
 }
 
-.layout-main-content.background {
+.size-6 {
+/* .layout-main-content.background { */
   margin: 1vh auto;
-  position: fixed;
-  width: auto;
-  height: 98vh;
-  max-height: 98%;
-  object-fit: cover;
+  /* position: fixed; */
+  width: 30%;
+  height: 30vh;
+  max-height: 30%;
+  /* object-fit: cover; */
   cursor: progress;
+  font-size: 5rem;
+  filter: drop-shadow(var(--shadow));
+  color: var(--main-color);
 }
 
 .dot-1 {
   color: white;
   animation: dot-flash 1.5s 1s infinite ;
+  text-shadow: inherit;
+  color: var(--main-color);
 }
 
 .dot-2 {
   color: white;
  animation: dot-flash 1.5s 0.5s infinite ;
+ text-shadow: inherit;
+ color: var(--main-color);
 }
 
 .dot-3 {
   color: white;
   animation: dot-flash 1.5s  infinite ;
+  text-shadow: inherit;
+  color: var(--main-color);
 }
 
 @keyframes dot-flash {
