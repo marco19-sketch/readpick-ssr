@@ -143,9 +143,8 @@ export default function SplashScreen() {
 /* .layout-main-content.background { */
   margin: 1vh auto;
   /* position: fixed; */
-  width: 30%;
-  height: 30vh;
-  max-height: 30%;
+  width: 40%;
+  height: 40vh;
   /* object-fit: cover; */
   cursor: progress;
   font-size: 5rem;
