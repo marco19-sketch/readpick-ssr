@@ -131,9 +131,9 @@ export default function SplashScreen() {
 }
 
 .splash-subtitle.to {
-        color: var(--main-color);
-        font-size: 2rem;
-
+  color: var(--main-color);
+  font-size: 2rem;
+  margin-bottom: 0;
 }
 
 .splash-subtitle {
@@ -152,13 +152,14 @@ export default function SplashScreen() {
 /* .layout-main-content.background { */
   margin: 1vh auto;
   /* position: fixed; */
-  width: 60vw;
-  height: 50vh;
+  width: 70vw;
+  height: 70vh;
   /* object-fit: cover; */
   cursor: progress;
   font-size: 5rem;
   filter: drop-shadow(var(--shadow));
   color: var(--main-color);
+  margin: -40px auto;
 }
 
 .dot-1 {
