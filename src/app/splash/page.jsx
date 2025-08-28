@@ -145,7 +145,7 @@ export default function SplashScreen() {
   /* background-color: rgba(0, 0, 0, 0.849); */
   cursor: progress;
   color: var(--main-color);
-  font-size: 4rem;
+  font-size: 3rem;
 }
 
 .size-6 {
@@ -202,6 +202,10 @@ export default function SplashScreen() {
     height: auto;
     object-fit: cover;
   }
+
+  .splash-subtitle {
+  font-size: 4rem;
+}
 }
 `}</style>
     </>
