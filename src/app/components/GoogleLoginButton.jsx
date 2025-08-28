@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import { FcGoogle } from "react-icons/fc";
 import { useContext } from "react";
 import { AppContext } from "./AppContextProvider";
-// import { onAuthStateChanged } from "firebase/auth";
+
 
 export default function GoogleLoginButton({ error }) {
   const router = useRouter();
-  const { setLogin, loading, setLoading } = useContext(AppContext);
+  const { setLogin, loading, setLoading, italian } = useContext(AppContext);
 
   const handleGoogleSignIn = async () => {
     setLoading(true);
@@ -34,8 +34,7 @@ export default function GoogleLoginButton({ error }) {
       <span className="google-span">
         <FcGoogle className="google-icon" />
       </span>{" "}
-      test text
-      {/* {t("googleSingIn", { defaultValue: "Accedi con Google" })} */}
+      {italian ? 'Accedi con Google' : 'Log in with Google'}
     </button>
   );
 }

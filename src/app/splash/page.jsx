@@ -11,7 +11,7 @@ export default function SplashScreen() {
           sizes="(max-width: 480px) 480px,
 =======
 import Image from 'next/image';
-import '@/styles/splash.css';
+// import '@/styles/splash.css';
 
 export default function SplashScreen() {
     return (
@@ -69,8 +69,12 @@ export default function SplashScreen() {
           </h2>
         </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <style>{`.splash-title {
 >>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
+=======
+        <style>{`.splash-title {
+>>>>>>> 0981d73 (Using deferred styles in new folder and inlining on styles in Home page as well)
   position: absolute;
   top: 50%;
   left: 50%;
@@ -93,21 +97,31 @@ export default function SplashScreen() {
 .layout-main-content.background {
   margin: 1vh auto;
 <<<<<<< HEAD
+<<<<<<< HEAD
   position: fixed;
 =======
   /* position: fixed; */
 >>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
+=======
+  /* position: fixed; */
+>>>>>>> 0981d73 (Using deferred styles in new folder and inlining on styles in Home page as well)
   width: auto;
   height: 98vh;
   max-height: 98%;
   object-fit: cover;
   cursor: progress;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
 >>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
+=======
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+>>>>>>> 0981d73 (Using deferred styles in new folder and inlining on styles in Home page as well)
 }
 
 .dot-1 {
@@ -146,6 +160,7 @@ export default function SplashScreen() {
   }
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 `}</style> */}
  
     </>
@@ -156,6 +171,9 @@ export default function SplashScreen() {
 =======
         
 >>>>>>> bdad91a (Removed inline style that seemed to worse performance)
+=======
+`}</style>
+>>>>>>> 0981d73 (Using deferred styles in new folder and inlining on styles in Home page as well)
       </>
     );
 }
