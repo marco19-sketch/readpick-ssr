@@ -74,6 +74,6 @@ export function useThumbnail(book) {
       cancelled = true;
     };
   }, [isbn, googleThumb]);
-  console.log('thumbnail', thumbnail)
+  
   return thumbnail;
 }

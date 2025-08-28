@@ -1,6 +1,6 @@
 "use client";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "./AppContextProvider";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -21,7 +21,15 @@ export default function NavBar() {
   const isLoginPage = pathname === "/login";
 
   const loginBtnText = italian ? "Accedi" : "Login";
- 
+
+  // Start the timer when the component function is called
+  const start = performance.now();
+
+  useEffect(() => {
+    // End the timer and log the result after the component has rendered
+    const end = performance.now();
+    console.log(`The NavBar component rendered in ${end - start} milliseconds.`);
+  }, []); // The empty dependency array ensures this effect runs only once after the initial render
 
   return (
     <nav>
@@ -60,9 +68,7 @@ export default function NavBar() {
             logout();
             setLogin(false);
           }}>
-         
-          {isMobile ? <IoLogOut />  : italian ? 'Esci' : 'Log out'}
-          
+          {isMobile ? <IoLogOut /> : italian ? "Esci" : "Log out"}
         </button>
       ) : isLoginPage ? null : (
         <Link href="/login" className="login" aria-label={loginBtnText}>

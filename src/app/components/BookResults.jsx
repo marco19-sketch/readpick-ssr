@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import BookCard from "./BookCard";
 import "@/styles/BookResults.css";
 import { AppContext } from "./AppContextProvider"; // ✅ import context
@@ -12,7 +12,16 @@ export default function BookResults({
   onSelect,
   favorites,
 }) {
-  const { toggleFavorite  } = useContext(AppContext); // ✅ get toggleFavorite from context
+  const { toggleFavorite } = useContext(AppContext); // ✅ get toggleFavorite from context
+
+  // Start the timer when the component function is called
+  const start = performance.now();
+
+  useEffect(() => {
+    // End the timer and log the result after the component has rendered
+    const end = performance.now();
+    console.log(`The BookResults component rendered in ${end - start} milliseconds.`);
+  }, []); // The empty dependency array ensures this effect runs only once after the initial render
 
   const isFavorite = book => (favorites || []).some(fav => fav.id === book.id);
 
