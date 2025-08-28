@@ -46,6 +46,7 @@
 /* .layout-main-content.background { */
   margin: 1vh auto;
   /* position: fixed; */
+<<<<<<< HEAD
   width: 70vw;
   height: 70vh;
   /* object-fit: cover; */
@@ -54,6 +55,16 @@
   filter: drop-shadow(var(--shadow));
   color: var(--main-color);
   margin: -40px auto;
+=======
+  width: auto;
+  height: 98vh;
+  max-height: 98%;
+  object-fit: cover;
+  cursor: progress;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+>>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
 }
 
 .dot-1 {

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import Image from "next/image";
 import "@/styles/splash.css";
 
@@ -8,10 +9,23 @@ export default function SplashScreen() {
         {/* <Image
           src="/assets/images/laurentiu-1920-rot.jpg"
           sizes="(max-width: 480px) 480px,
+=======
+import Image from 'next/image';
+// import '@/styles/splash.css';
+
+export default function SplashScreen() {
+    return (
+      <>
+        <div className="layout-container">
+          <Image
+            src="/assets/images/laurentiu-1920-rot.jpg"
+            sizes="(max-width: 480px) 480px,
+>>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
          (max-width: 768px) 768px,
          (max-width: 1024px) 1024px,
          (max-width: 1600px) 1600px,
          1920px"
+<<<<<<< HEAD
           height="2560"
           width="1920"
           alt=""
@@ -38,6 +52,24 @@ export default function SplashScreen() {
       </div>
       {/* <style>{`
         .splash-title {
+=======
+            height="2560"
+            width="1920"
+            alt=""
+            aria-label="splash-page"
+            className="layout-main-content background"
+            decoding="async"
+            priority="true"
+          />
+          <h1 className="splash-title">WELCOME</h1>
+          <h2 className="splash-subtitle">
+            to Read Pick<span className="dot-1">.</span>
+            <span className="dot-2">.</span>
+            <span className="dot-3">.</span>
+          </h2>
+        </div>
+        <style>{`.splash-title {
+>>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
   position: absolute;
   top: 50%;
   left: 50%;
@@ -59,12 +91,22 @@ export default function SplashScreen() {
 
 .layout-main-content.background {
   margin: 1vh auto;
+<<<<<<< HEAD
   position: fixed;
+=======
+  /* position: fixed; */
+>>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
   width: auto;
   height: 98vh;
   max-height: 98%;
   object-fit: cover;
   cursor: progress;
+<<<<<<< HEAD
+=======
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+>>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
 }
 
 .dot-1 {
@@ -102,8 +144,15 @@ export default function SplashScreen() {
     object-fit: cover;
   }
 }
+<<<<<<< HEAD
 `}</style> */}
  
     </>
   );
 }
+=======
+`}</style>
+      </>
+    );
+}
+>>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
