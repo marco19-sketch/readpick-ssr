@@ -49,6 +49,47 @@ export default function HomePage() {
     console.log("DOM Content Loaded Time:", pageLoadTime, "ms");
   }
 
+
+ useEffect(() => {
+   // Check if the browser supports the PerformanceObserver API
+   if (typeof window !== "undefined" && "PerformanceObserver" in window) {
+     // Create a new PerformanceObserver
+     const observer = new PerformanceObserver(list => {
+       // Get all the long task entries
+       const entries = list.getEntries();
+       for (const entry of entries) {
+         // Log the details of the long task
+         console.log("Long task detected!");
+         console.log(`Duration: ${entry.duration.toFixed(2)}ms`);
+         console.log("Details:", entry);
+
+         // Check if there is a detailed attribution
+         if (entry.attribution) {
+           console.log("Attribution details:");
+           console.log(`Name: ${entry.attribution.name}`);
+           console.log(`Entry Type: ${entry.attribution.entryType}`);
+           console.log(
+             `URL: ${
+               entry.attribution.containerSrc || entry.attribution.scriptURL
+             }`
+           );
+           console.log(
+             `Attributed Target:`,
+             entry.attribution.attributedTarget
+           );
+         }
+         console.log("-------------------");
+       }
+     });
+
+     // Start observing 'longtask' performance entries
+     observer.observe({ entryTypes: ["longtask"] });
+
+     // Clean up the observer when the component unmounts
+     return () => observer.disconnect();
+   }
+ }, []);
+
   const placeholderMap = {
     intitle: "searchPlaceholder.intitle",
     inauthor: "searchPlaceholder.inauthor",
