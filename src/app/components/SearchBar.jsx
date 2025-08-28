@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useContext } from "react";
 import CustomRadio from "./CustomRadio";
-import "@/styles/SearchBar.css";
+// import "@/styles/SearchBar.css";
 import { FaSearch } from "react-icons/fa";
 import { AppContext } from "./AppContextProvider";
 
@@ -117,7 +117,6 @@ export default function SearchBar({
               ? "Inserisci nome..."
               : "Input name..."
           }
-          
           onKeyDown={e => {
             if (e.key === "Escape") {
               setSuggestions([]);
@@ -156,8 +155,7 @@ export default function SearchBar({
         <button
           className="btn-element"
           type="button"
-          aria-label={ italian ? "Avvia la ricerca" : 'Start search'}
-          
+          aria-label={italian ? "Avvia la ricerca" : "Start search"}
           onClick={() => {
             onSearch(query);
             setSuggestions([]);
@@ -169,6 +167,140 @@ export default function SearchBar({
       <button className="reset-btn" type="button" onClick={onReset}>
         Reset
       </button>
+      <style>{`.label-container {
+  box-shadow: var(--shadow);
+  margin: 10px auto;
+  padding: 10px;
+  height: 30px;
+}
+
+.label-container label {
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width: 550px) {
+  .label-container {
+    display: block;
+    margin-bottom: 20px;
+    height: fit-content;
+  }
+}
+
+.btn-element {
+  position: absolute;
+  top: 2px;
+  right: 0;
+  background-color: transparent;
+  color: var(--text-color);
+  font-size: 1.3rem;
+  padding: 5px;
+  border: none;
+}
+
+
+.btn-element:focus {
+  color: white; 
+  outline: none;
+}
+
+.btn-element:active {
+  color: green;
+}
+
+.reset-btn {
+  display: block;
+  margin: 20px auto;
+  width: 100px;
+  font-size: 1.2rem;
+  padding: 5px;
+}
+
+.input-element {
+  display: block;
+  margin: 20px auto;
+  width: 200px;
+  font-size: 1.5rem;
+}
+
+.input-element:focus,
+.reset-btn:focus {
+  outline: 3px solid white;
+  outline-offset: 3px;
+}
+
+.input-suggestion-container {
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.input-element {
+  width: 300px;
+  border-radius: 5px;
+  color: var(--text-color);
+  background-color: var(--main-color);
+  text-align: center;
+  padding: 5px;
+}
+
+.suggestion-item {
+  display: block;
+  text-align: center;
+  list-style: none;
+  background: var(--overlay);
+  backdrop-filter: blur(5px);
+  border-radius: 5px;
+  padding: 0;
+  color: var(--main-color);
+  width: 200px;
+
+
+  z-index: 10;
+  position: absolute;
+  top: 42px;
+  left: 50%;
+  transform: translateX(-50%)
+}
+
+.suggestion-item li {
+  cursor: pointer;
+  padding: 8px;
+  z-index: 10;
+}
+
+.reset-btn {
+  background-color: var(--main-color);
+  color: var(--text-color);
+  box-shadow: var(--shadow);
+  text-shadow: 3px 3px 6px rgb(113, 30, 136);
+}
+
+.btn-element:active,
+.reset-btn:active {
+  transform: scale(0.9);
+}
+
+@media (hover: hover) {
+  .label-container label:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
+
+  .suggestion-item li:hover {
+    transform: scale(1.1);
+  }
+
+  .btn-element:hover {
+    transform: scale(1.4);
+  }
+
+  
+  .reset-btn:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+  }
+}
+`}</style>
     </div>
   );
 }
