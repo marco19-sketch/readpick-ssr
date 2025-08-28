@@ -20,12 +20,15 @@
 
 .layout-main-content.background {
   margin: 1vh auto;
-  position: fixed;
+  /* position: fixed; */
   width: auto;
   height: 98vh;
   max-height: 98%;
   object-fit: cover;
   cursor: progress;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .dot-1 {
