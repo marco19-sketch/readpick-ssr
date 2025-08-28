@@ -1,10 +1,19 @@
 "use client";
 
 import { AppContext } from "./AppContextProvider";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 export default function LanguageSwitcher() {
   const { italian, setItalian } = useContext(AppContext);
+
+  // Start the timer when the component function is called
+  const start = performance.now();
+
+  useEffect(() => {
+    // End the timer and log the result after the component has rendered
+    const end = performance.now();
+    console.log(`The LanguageSwitcher component rendered in ${end - start} milliseconds.`);
+  }, []); // The empty dependency array ensures this effect runs only once after the initial render
 
   return (
     <div>

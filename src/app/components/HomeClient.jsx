@@ -30,6 +30,25 @@ export default function HomePage() {
   const { favorites, toggleFavorite, fetchedBooks, setFetchedBooks, italian } =
     useContext(AppContext);
 
+  // Start the timer when the component function is called
+  const start = performance.now();
+
+  useEffect(() => {
+    // End the timer and log the result after the component has rendered
+    const end = performance.now();
+    console.log(`The HomePage component rendered in ${end - start} milliseconds.`);
+  }, []); // The empty dependency array ensures this effect runs only once after the initial render
+
+  let [navigationTiming] = performance.getEntriesByType("navigation");
+
+  if (navigationTiming instanceof PerformanceNavigationTiming) {
+    // Calculate time from navigation start to DOM content loaded
+    const pageLoadTime =
+      navigationTiming.domContentLoadedEventEnd - navigationTiming.startTime;
+
+    console.log("DOM Content Loaded Time:", pageLoadTime, "ms");
+  }
+
   const placeholderMap = {
     intitle: "searchPlaceholder.intitle",
     inauthor: "searchPlaceholder.inauthor",
@@ -63,7 +82,7 @@ export default function HomePage() {
 
       const data = await res.json();
       const items = data.items ?? [];
-      
+
       if (!items || items.length === 0) {
         setShowNoResultsModal(true);
       }

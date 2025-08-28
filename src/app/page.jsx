@@ -2,7 +2,10 @@ import "@/styles/Home.css";
 import Image from "next/image";
 import HomeClient from "./components/HomeClient";
 
+
 export default function Home() {
+  
+
   return (
     <>
       <style>{`
