@@ -167,7 +167,7 @@ export default function SearchBar({
       <button className="reset-btn" type="button" onClick={onReset}>
         Reset
       </button>
-      <styles>{`.label-container {
+      <style>{`.label-container {
   box-shadow: var(--shadow);
   margin: 10px auto;
   padding: 10px;
@@ -300,7 +300,7 @@ export default function SearchBar({
     transition: transform 0.3s ease;
   }
 }
-`}</styles>
+`}</style>
     </div>
   );
 }
