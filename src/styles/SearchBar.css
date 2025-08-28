@@ -9,6 +9,14 @@
   font-size: 1.2rem;
 }
 
+@media screen and (max-width: 550px) {
+  .label-container {
+    display: block;
+    margin-bottom: 20px;
+    height: fit-content;
+  }
+}
+
 .btn-element {
   position: absolute;
   top: 2px;
