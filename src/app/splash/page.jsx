@@ -18,7 +18,7 @@ export default function SplashScreen() {
       <>
         <div className="layout-container">
           <Image
-            src="/assets/images/laurentiu-1920-rot.jpg"
+            src="/assets/images/laurentiu-1920-rot.avif"
             sizes="(max-width: 480px) 480px,
 >>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
          (max-width: 768px) 768px,
