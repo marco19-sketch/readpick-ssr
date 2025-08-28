@@ -1,5 +1,5 @@
 import Image from "next/image";
-// import "@/styles/splash.css";
+import "@/styles/splash.css";
 
 export default function SplashScreen() {
   return (
@@ -103,111 +103,7 @@ export default function SplashScreen() {
   }
 }
 `}</style> */}
-      <style>{`
-      .layout-container.splash {
-    /* background-image: radial-gradient(var(--text-color), var(--main-color)); */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-shadow: var(--shadow);
-    /* background-color: rgba(65, 59, 44, 1);*/
-    width: 90vw;
-    height: 90vh;
-    margin: 5vh auto;
-}
-
-
-.splash-title {
-  /* position: absolute; */
-  /* top: 50%;
-  left: 50%;
-  transform: translateX(-50%); */
-  /* background-color: rgba(0, 0, 0, 0.849); */
-  color: var(--main-color);
-  border-radius: 5px;
-  cursor: progress;
-  font-size: 3rem;
-}
-
-.splash-subtitle.to {
-  color: var(--main-color);
-  font-size: 2rem;
-  margin-bottom: 0;
-}
-
-.splash-subtitle {
-  /* position: absolute;
-  top: 57%;
-  left: 50%;
-  transform: translateX(-50%); */
-  color: white;
-  /* background-color: rgba(0, 0, 0, 0.849); */
-  cursor: progress;
-  color: var(--main-color);
-  font-size: 3rem;
-}
-
-.size-6 {
-/* .layout-main-content.background { */
-  margin: 1vh auto;
-  /* position: fixed; */
-  width: 70vw;
-  height: 70vh;
-  /* object-fit: cover; */
-  cursor: progress;
-  font-size: 5rem;
-  filter: drop-shadow(var(--shadow));
-  color: var(--main-color);
-  margin: -40px auto;
-}
-
-.dot-1 {
-  color: white;
-  animation: dot-flash 1.5s 1s infinite ;
-  text-shadow: inherit;
-  color: var(--main-color);
-}
-
-.dot-2 {
-  color: white;
- animation: dot-flash 1.5s 0.5s infinite ;
- text-shadow: inherit;
- color: var(--main-color);
-}
-
-.dot-3 {
-  color: white;
-  animation: dot-flash 1.5s  infinite ;
-  text-shadow: inherit;
-  color: var(--main-color);
-}
-
-@keyframes dot-flash {
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@media screen and (min-width: 600px) {
-  .layout-main-content.background {
-    width: 100vw;
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-  }
-
-  .splash-subtitle {
-  font-size: 4rem;
-}
-}
-`}</style>
+ 
     </>
   );
 }
