@@ -111,7 +111,7 @@ export default function SplashScreen() {
     justify-content: center;
     align-items: center;
     text-shadow: var(--shadow);
-    background-color: rgba(65, 59, 44, 1);
+    // background-color: rgba(65, 59, 44, 1);
     width: 90vw;
     height: 90vh;
     margin: 5vh auto;

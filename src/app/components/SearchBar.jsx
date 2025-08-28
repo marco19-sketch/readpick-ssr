@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useContext } from "react";
 import CustomRadio from "./CustomRadio";
-import "@/styles/SearchBar.css";
+// import "@/styles/SearchBar.css";
 import { FaSearch } from "react-icons/fa";
 import { AppContext } from "./AppContextProvider";
 
