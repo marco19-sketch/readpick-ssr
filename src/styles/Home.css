@@ -1,44 +1,4 @@
-.home-bg {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  display: block;
-}
-
-.home-page {
-  position: relative;
-  z-index: 1;
-  min-height: 100vh;
-}
-
-.main-container {
-  flex: 1;
-}
-
-h1.main-title {
-  color: var(--main-color);
-  background-color: transparent;
-  text-align: center;
-  text-shadow: var(--shadow);
-  font-size: 3rem;
-  /* font-size: 4rem; */
-  line-height: 1.1;
-  margin: 60px auto 30px;
-  height: 3.5rem;
-  /* height: 4.5rem; */
-  position: relative;
-  z-index: 1;
-}
-
-.trending-books {
-  text-align: center;
-  color: var(--main-color);
-  text-shadow: var(--shadow);
-  font-size: 2rem;
-}
+/*the rest of the rules are inline in Home page*/
 
 .no-results {
   color: var(--main-color);

@@ -64,7 +64,7 @@ export default function UpdatePasswordClient() {
           : "Password reset successful. Redirecting to log in..."
       );
 
-      setTimeout(() => router.push("/login"), 3000);
+      setTimeout(() => router.push("/login"), 2000);
     } catch (error) {
       setMsgGreen(false);
       console.error("Errore nel reset della password:", error);
