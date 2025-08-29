@@ -2,7 +2,7 @@ import RootClientWrapper from "./RootClientWrapper";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Head from "next/head";
+// import Head from "next/head";
 
 const inter = Inter({
   subsets: ["latin"],
