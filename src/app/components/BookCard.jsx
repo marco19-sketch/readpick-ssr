@@ -107,114 +107,147 @@ export default function BookCard({
       : "Unknown";
 
   return (
-    <div
-      ref={cardRef}
-      className="single-book"
-      role="listitem"
-      aria-label={`Book: ${title}`}
-      tabIndex="0">
-      <h2 className="single-book-title">{title}</h2>
+    <>
+      <style>{`.single-book h2 {
+  text-align: center;
+  grid-area: header;
+  text-shadow: 2px 2px 6px;
+  padding: 10px;
+  color: var(--main-color);
+}
 
-      <div className="cover-favorite-btn">
-        {canRenderImage ? ( // Usa il nuovo stato per il rendering condizionale
-          <button
-            className="thumb-btn"
-            onClick={() => onSelect(book)}
-            onKeyDown={e =>
-              (e.key === "Enter" || e.key === " ") && onSelect(book)
-            }
-            aria-label="View book full description">
-            {hasThumbnail ? (
-              <Image
-                id={isHighPriority ? "lcp-cover" : undefined}
-                tabIndex="0"
-                className="thumbnail"
-                src={thumbnail}
-                alt={`${italian ? "Copertina di" : "Cover of"} ${title}`}
-                priority={isHighPriority}
-                width="200"
-                height="300"
-                decoding={isHighPriority ? "async" : "auto"}
-                loading={isHighPriority ? "eager" : "lazy"}
-              />
-            ) : (
-              <span className="no-thumbnail-para">
-                No cover image available
-              </span>
-            )}
-          </button>
-        ) : (
-          // Placeholder per l'immagine non ancora caricata.
-          // È cruciale che abbia le stesse dimensioni (width/height)
-          // per prevenire il CLS.
-          <div
-            style={{
-              width: 200,
-              height: 300,
-              backgroundColor: "#f0f0f0",
-            }}></div>
-        )}
-        <div className="book-card-fav-btn">
-          <FavoriteButton
-            isFavorite={isFavorite(book)}
-            onToggle={onToggleFavorite}
-            // t={t}
-          />
-        </div>
-      </div>
-      <div className="book-detail">
-        <p>
-          <strong>{italian ? "Autore/i" : "Author/s"}:</strong>{" "}
-          {Array.isArray(authors) ? authors.join(", ") : authors}
-        </p>
-        <p>
-          <strong>{italian ? "Pubblicato" : "Published"}:</strong>
-          {publishedYear}
-        </p>
-        <p>
-          <strong>{italian ? "Genere" : "Genre"}:</strong>
-          {Array.isArray(categories) ? categories.join(", ") : categories}
-        </p>
+.single-book {
+  margin: 20px auto;
+  width: 60%;
 
-        <p>
-          <strong>{italian ? "Lingua" : "Language"}:</strong>
-          {languageMap[language] || language}
-        </p>
-        <p>
-          <strong>{italian ? "Copie vendute" : "Copies sold"}:</strong>
-          <span className="copies-sold">
-            {formatCopiesSold(copiesSold) || "N/A"}
-          </span>
-        </p>
-        <p>
-          <strong>{italian ? "Descrizione" : "Description"}:</strong>{" "}
-          {description ? (
-            <>
-              {description.slice(0, 100)}...
-              <button
-                type="button"
-                className="read-more"
-                onClick={() => onSelect(book)}
-                aria-label={italian ? "Leggi di più" : "Read more"}>
-                {italian ? "leggi di più" : "read more"}
-              </button>
-            </>
-          ) : italian ? (
-            "Nessuna descrizione disponibile"
+  /* trying min-height to get a better CLS scoring */
+  min-height: 222px;
+  /* didn't see any change, leave it for now */
+
+  border-radius: 5px;
+  background-color: var(--overlay);
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "header header"
+    "img details";
+}
+
+.cover-favorite-btn {
+  display: flex;
+  justify-content: center;
+}
+`}</style>
+      <div
+        ref={cardRef}
+        className="single-book"
+        role="listitem"
+        aria-label={`Book: ${title}`}
+        tabIndex="0">
+        <h2 className="single-book-title">{title}</h2>
+
+        <div className="cover-favorite-btn">
+          {canRenderImage ? ( // Usa il nuovo stato per il rendering condizionale
+            <button
+              className="thumb-btn"
+              onClick={() => onSelect(book)}
+              onKeyDown={e =>
+                (e.key === "Enter" || e.key === " ") && onSelect(book)
+              }
+              aria-label="View book full description">
+              {hasThumbnail ? (
+                <Image
+                  id={isHighPriority ? "lcp-cover" : undefined}
+                  tabIndex="0"
+                  className="thumbnail"
+                  src={thumbnail}
+                  alt={`${italian ? "Copertina di" : "Cover of"} ${title}`}
+                  priority={isHighPriority}
+                  width="200"
+                  height="300"
+                  decoding={isHighPriority ? "async" : "auto"}
+                  loading={isHighPriority ? "eager" : "lazy"}
+                />
+              ) : (
+                <span className="no-thumbnail-para">
+                  No cover image available
+                </span>
+              )}
+            </button>
           ) : (
-            "No description available"
+            // Placeholder per l'immagine non ancora caricata.
+            // È cruciale che abbia le stesse dimensioni (width/height)
+            // per prevenire il CLS.
+            <div
+              style={{
+                width: 200,
+                height: 300,
+                backgroundColor: "#f0f0f0",
+              }}></div>
           )}
-        </p>
+          <div className="book-card-fav-btn">
+            <FavoriteButton
+              isFavorite={isFavorite(book)}
+              onToggle={onToggleFavorite}
+              // t={t}
+            />
+          </div>
+        </div>
+        <div className="book-detail">
+          <p>
+            <strong>{italian ? "Autore/i" : "Author/s"}:</strong>{" "}
+            {Array.isArray(authors) ? authors.join(", ") : authors}
+          </p>
+          <p>
+            <strong>{italian ? "Pubblicato" : "Published"}:</strong>
+            {publishedYear}
+          </p>
+          <p>
+            <strong>{italian ? "Genere" : "Genre"}:</strong>
+            {Array.isArray(categories) ? categories.join(", ") : categories}
+          </p>
 
-        <div className="amazon-buy-link-container">
-          {showAmazon && (
-            <Suspense fallback={<div>Loading...</div>}>
-              <LazyAmazonLink title={title} author={authors} />
-            </Suspense>
-          )}
-          <p className="affiliate-para">Affiliate link</p>
+          <p>
+            <strong>{italian ? "Lingua" : "Language"}:</strong>
+            {languageMap[language] || language}
+          </p>
+          <p>
+            <strong>{italian ? "Copie vendute" : "Copies sold"}:</strong>
+            <span className="copies-sold">
+              {formatCopiesSold(copiesSold) || "N/A"}
+            </span>
+          </p>
+          <p>
+            <strong>{italian ? "Descrizione" : "Description"}:</strong>{" "}
+            {description ? (
+              <>
+                {description.slice(0, 100)}...
+                <button
+                  type="button"
+                  className="read-more"
+                  onClick={() => onSelect(book)}
+                  aria-label={italian ? "Leggi di più" : "Read more"}>
+                  {italian ? "leggi di più" : "read more"}
+                </button>
+              </>
+            ) : italian ? (
+              "Nessuna descrizione disponibile"
+            ) : (
+              "No description available"
+            )}
+          </p>
+
+          <div className="amazon-buy-link-container">
+            {showAmazon && (
+              <Suspense fallback={<div>Loading...</div>}>
+                <LazyAmazonLink title={title} author={authors} />
+              </Suspense>
+            )}
+            <p className="affiliate-para">Affiliate link</p>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
