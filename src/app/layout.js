@@ -3,7 +3,10 @@ import "./globals.css";
 import { Inter } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap", // This is the key! It adds the font-display: swap rule for you
+});
 
 export const metadata = {
   title: "Read Pick",
