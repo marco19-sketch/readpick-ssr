@@ -30,6 +30,9 @@ export default function HomePage() {
   const { favorites, toggleFavorite, fetchedBooks, setFetchedBooks, italian } =
     useContext(AppContext);
 
+
+
+  //*****Testing tools ******/
   // Start the timer when the component function is called
   const start = performance.now();
 
@@ -89,6 +92,9 @@ export default function HomePage() {
      return () => observer.disconnect();
    }
  }, []);
+//*****Testing tools end ******/
+
+
 
   const placeholderMap = {
     intitle: "searchPlaceholder.intitle",
