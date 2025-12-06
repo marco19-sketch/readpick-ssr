@@ -30,6 +30,72 @@ export default function HomePage() {
   const { favorites, toggleFavorite, fetchedBooks, setFetchedBooks, italian } =
     useContext(AppContext);
 
+
+
+  //*****Testing tools ******/
+  // Start the timer when the component function is called
+  const start = performance.now();
+
+  useEffect(() => {
+    // End the timer and log the result after the component has rendered
+    const end = performance.now();
+    console.log(`The HomePage component rendered in ${end - start} milliseconds.`);
+  }, []); // The empty dependency array ensures this effect runs only once after the initial render
+
+  let [navigationTiming] = performance.getEntriesByType("navigation");
+
+  if (navigationTiming instanceof PerformanceNavigationTiming) {
+    // Calculate time from navigation start to DOM content loaded
+    const pageLoadTime =
+      navigationTiming.domContentLoadedEventEnd - navigationTiming.startTime;
+
+    console.log("DOM Content Loaded Time:", pageLoadTime, "ms");
+  }
+
+
+ useEffect(() => {
+   // Check if the browser supports the PerformanceObserver API
+   if (typeof window !== "undefined" && "PerformanceObserver" in window) {
+     // Create a new PerformanceObserver
+     const observer = new PerformanceObserver(list => {
+       // Get all the long task entries
+       const entries = list.getEntries();
+       for (const entry of entries) {
+         // Log the details of the long task
+         console.log("Long task detected!");
+         console.log(`Duration: ${entry.duration.toFixed(2)}ms`);
+         console.log("Details:", entry);
+
+         // Check if there is a detailed attribution
+         if (entry.attribution) {
+           console.log("Attribution details:");
+           console.log(`Name: ${entry.attribution.name}`);
+           console.log(`Entry Type: ${entry.attribution.entryType}`);
+           console.log(
+             `URL: ${
+               entry.attribution.containerSrc || entry.attribution.scriptURL
+             }`
+           );
+           console.log(
+             `Attributed Target:`,
+             entry.attribution.attributedTarget
+           );
+         }
+         console.log("-------------------");
+       }
+     });
+
+     // Start observing 'longtask' performance entries
+     observer.observe({ entryTypes: ["longtask"] });
+
+     // Clean up the observer when the component unmounts
+     return () => observer.disconnect();
+   }
+ }, []);
+//*****Testing tools end ******/
+
+
+
   const placeholderMap = {
     intitle: "searchPlaceholder.intitle",
     inauthor: "searchPlaceholder.inauthor",
@@ -63,7 +129,7 @@ export default function HomePage() {
 
       const data = await res.json();
       const items = data.items ?? [];
-      
+
       if (!items || items.length === 0) {
         setShowNoResultsModal(true);
       }

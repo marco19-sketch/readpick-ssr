@@ -2,6 +2,13 @@
 
 import { useState, useEffect, useRef } from "react";
 import { FaArrowUp } from "react-icons/fa";
+
+// The CSS import is REMOVED from the top of the file.
+// We will now load it conditionally using the custom hook.
+
+// This is the new custom hook to defer the CSS.
+// You will need to create this file: `src/hooks/useDeferredStyleSheet.js`
+import useDeferredStylesheet from "./hooks/useDeferredStylesheet";
 // import "@/styles/BackToTop.css";
 
 export default function BackToTop({ scrollContainerSelector = ".root" }) {
@@ -10,7 +17,12 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
     typeof window !== "undefined" && window.innerWidth < 500
   ); //'to avoid errors'
 
-  const containerRef = useRef(null); 
+  // 1. Use the custom hook to manage CSS loading.
+  // The hook will handle creating the link tag and loading the stylesheet.
+  // It returns a boolean to indicate when the stylesheet has been loaded.
+  const isStylesheetLoaded = useDeferredStylesheet("@/styles/BackToTop.css");
+
+  const containerRef = useRef(null);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 500);
@@ -22,8 +34,7 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
   useEffect(() => {
     if (isMobile) return;
 
-   
-    const container = 
+    const container =
       document.querySelector(scrollContainerSelector) ||
       document.documentElement;
     containerRef.current = container;
@@ -36,17 +47,17 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
     };
 
     container.addEventListener("scroll", toggleVisibility);
-    toggleVisibility(); 
+    toggleVisibility();
 
     return () => {
       container.removeEventListener("scroll", toggleVisibility);
     };
   }, [scrollContainerSelector, isMobile]);
 
-  if (isMobile) return null;
+  if (isMobile || !isStylesheetLoaded) return null;
 
   const scrollToTop = () => {
-    const container = containerRef.current; 
+    const container = containerRef.current;
     if (container) {
       container.scrollTo({
         top: 0,
@@ -57,42 +68,6 @@ export default function BackToTop({ scrollContainerSelector = ".root" }) {
 
   return (
     <>
-      <style>{`.back-to-top {
-  position: fixed;
-  right: 4%;
-  bottom: 250px;
-  border-radius: 50%;
-  padding: 10px;
-  font-size: 25px;
-  z-index: 1000;
-  background-color: var(--overlay);
-  color: white;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  pointer-events: none;
-}
-
-.back-to-top.show {
-  outline: none;
-  opacity: 1;
-  border: none;
-  pointer-events: auto;
-  color: var(--main-color);
-}
-
-.back-to-top.show:active {
-  transform: scale(0.9);
-  color: white;
-  border-color: white;
-}
-
-@media (hover: hover) {
-  .back-to-top.show:hover {
-    border: 2px solid var(--main-color);
-    box-shadow: 3px 3px 6px var(--main-color);
-  }
-}
-`}</style>
       <button
         className={`back-to-top ${isVisible ? "show" : ""}`}
         onClick={scrollToTop}

@@ -3,9 +3,15 @@
 import "@/styles/BookCard.css";
 import FavoriteButton from "./FavoriteButton";
 import { useThumbnail } from "@/utils/useThumbnail";
-import React, { Suspense, useState, useEffect, useContext, useRef } from "react";
+import React, {
+  Suspense,
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+} from "react";
 import { AppContext } from "./AppContextProvider";
-import Image from 'next/image'
+import Image from "next/image";
 const LazyAmazonLink = React.lazy(() => import("./AmazonLink"));
 
 const languageMap = {

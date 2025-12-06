@@ -9,6 +9,7 @@ import "@/styles/auth.css";
 import { IoMdEyeOff } from "react-icons/io";
 import { IoEye } from "react-icons/io5";
 import { auth, createUserWithEmailAndPassword } from "@/firebase/firebase";
+import translation from '@/locales/translation';
 
 export default function RegisterClient() {
   const [email, setEmail] = useState("");
@@ -21,14 +22,15 @@ export default function RegisterClient() {
   const { rules, isValid } = validatePassword(password);
   const { setLogin, italian } = useContext(AppContext);
 
-  const register = italian ? 'Registrati' : 'Sign in';
-  const placeholder = italian ? 'Inserisci una password forte' : 'Input a strong password';
-  const createAccount = italian ? 'Crea account' : 'Create account';
-  const chars8 = italian ? 'Usa password di min. 8 caratteri' : 'Use 8 characters min. password';
-  const registerSuccess = italian ? 'Registrazione andata a buon fine e accesso eseguito.' : 'Sign in successful you are logged in.';
-  const accountAlready = italian ? 'Hai già un account?' : 'Have already an account?';
-  const loginNow = italian ? 'Accedi' : 'Log in';
+  // const register = italian ? 'Registrati' : 'Sign in';
+  // const placeholder = italian ? 'Inserisci una password forte' : 'Input a strong password';
+  // const createAccount = italian ? 'Crea account' : 'Create account';
+  // const chars8 = italian ? 'Usa password di min. 8 caratteri' : 'Use 8 characters min. password';
+  // const registerSuccess = italian ? 'Registrazione andata a buon fine e accesso eseguito.' : 'Sign in successful you are logged in.';
+  // const accountAlready = italian ? 'Hai già un account?' : 'Have already an account?';
+  // const loginNow = italian ? 'Accedi' : 'Log in';
   
+  const lang = italian ? translation.it : translation.en;
 
   const handleVisibility = useCallback(() => {
     setPasswordVisibility(!passwordVisibility);
@@ -54,7 +56,7 @@ export default function RegisterClient() {
   return (
     <div className="auth-page">
       <form onSubmit={handleRegister} className="auth-form">
-        <h2 className="auth-header">{register}</h2>
+        <h2 className="auth-header">{lang.register}</h2>
         <input
           className="auth-input"
           type="email"
@@ -67,7 +69,7 @@ export default function RegisterClient() {
           <input
             className="auth-input password"
             type={passwordVisibility ? "text" : "password"}
-            placeholder={placeholder}
+            placeholder={lang.placeholder}
             value={password}
             onChange={e => setPassword(e.target.value)}
             onBlur={() => setPasswordTouched(true)}
@@ -82,7 +84,7 @@ export default function RegisterClient() {
         {passwordTouched && (
           <ul style={{ listStyle: "none", padding: 0 }}>
             <li style={{ color: rules.length ? "green" : "red" }}>
-              {rules.length ? "✅" : "❌"} {chars8}
+              {rules.length ? "✅" : "❌"} {lang.chars8}
             </li>
 
             {/* <li style={{ color: rules.uppercase ? "green" : "red" }}>
@@ -106,18 +108,18 @@ export default function RegisterClient() {
         )}
         <br />
         <button className="auth-btn" type="submit" disabled={!isValid}>
-          {createAccount}
+          {lang.createAccount}
         </button>
         {error && (
           <p className="auth-error" style={{ color: "red" }}>
-            {error}
+            {lang.error}
           </p>
         )}
         {success && <p className="auth-success">{registerSuccess}</p>}
         <p className="auth-p-link">
-          {accountAlready}{" "}
+          {lang.accountAlready}{" "}
           <Link className="auth-nav-link" href="/login">
-            {loginNow}
+            {lang.loginNow}
           </Link>
         </p>
       </form>
