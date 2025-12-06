@@ -11,7 +11,7 @@ export default function SplashScreen() {
           sizes="(max-width: 480px) 480px,
 =======
 import Image from 'next/image';
-// import '@/styles/splash.css';
+import '@/styles/splash.css';
 
 export default function SplashScreen() {
     return (
@@ -68,6 +68,7 @@ export default function SplashScreen() {
             <span className="dot-3">.</span>
           </h2>
         </div>
+<<<<<<< HEAD
         <style>{`.splash-title {
 >>>>>>> f5ea8d5 (Centered image position on mobile and inlined splash css)
   position: absolute;
@@ -152,6 +153,9 @@ export default function SplashScreen() {
 }
 =======
 `}</style>
+=======
+        
+>>>>>>> bdad91a (Removed inline style that seemed to worse performance)
       </>
     );
 }
